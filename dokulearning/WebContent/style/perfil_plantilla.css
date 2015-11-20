@@ -1,0 +1,38 @@
+#cuerpo{
+    padding-top:40px;
+    padding-bottom:40px;
+}
+
+.datos{
+    font-size:30px;
+}
+
+.barra img{
+    width:75%;
+}
+#bSuperior span{
+    float:left;
+}
+.barra span:hover{
+    color:#34a853;
+}
+.logro img{
+    height:75px;
+    width:75px;
+}
+.logro{
+    margin-left:14px;
+}
+#bMedio,#bInferior{
+	text-align:center;
+}
+#bSuperior, #bMedio,#bInferior{
+	width:100%;
+}
+.limpiador{
+    clear:both;
+}
+
+#imgPerfil{
+	width:50%;
+}

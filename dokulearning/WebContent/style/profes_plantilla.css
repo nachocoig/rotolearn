@@ -1,0 +1,187 @@
+body{
+  background-color:#2B2B2B;
+}
+
+.red{/*para los asteriscos rojos*/
+    color: red;
+    margin-right:5px;
+}
+
+.rojo{/*para los glyphicons rojos*/
+    color:#CC271C;
+}
+
+.formleccion{
+  background-color:white;
+  margin:0px;
+  padding-bottom:10px;
+  margin-bottom:0px;
+  padding-top:10px;
+}
+
+.material{
+  margin-left:5px;
+}
+
+#formCupon{
+	background-color:#0c5192;
+	padding-bottom:20px;
+	padding-top:20px;
+}
+
+#formCupon h2{
+	color:white;
+	margin-top:0px;
+	padding-top:0px;
+}
+
+#formCupon label{
+	color:white;
+}
+
+#cuerpo{
+  background-color:white;
+  padding:0px;
+  margin:0px;
+  padding-bottom:20px;
+  min-height:400px;
+}
+
+.container-fluid{
+  padding:0px;
+  margin:0px;
+}
+
+.row{
+	padding-right:0px;
+	margin-right:0px;
+}
+
+.navbar-nav li a {/*Para cambiar el tamaño de la navbar*/
+ line-height: 30px;
+}
+
+.imgfor{
+    margin-top:30px;
+    margin-bottom:20px;
+}
+
+p{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+textarea { 
+    resize: vertical; 
+}
+
+.navbar-default {
+  background-color: #045fb4;
+  border-color: #045fb4;
+  border-radius:0px;
+  margin:0px;
+}
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-text {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #ffffff;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #ffffff;
+  background-color: #0c5192;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #ffffff;
+  background-color: #0c5192;
+}
+.navbar-default .navbar-toggle {
+  border-color: #0c5192;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #0c5192;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ffffff;
+}
+.navbar-default .navbar-link {
+  color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    background-color: #0c5192;
+  }
+}
+
+.navbar .glyphicon{
+  margin-right:6px;
+}
+
+.panel .glyphicon{
+  margin-left:10px;
+}
+
+textarea { 
+    resize: vertical; 
+}
+
+.logotipo{
+	margin:0px;
+	height:55px;
+}
+
+.navbar li:hover{
+  background-color:#0c5192;
+}
+
+.titulo{
+  margin-left:20px;
+}
+
+.opcionPanel span{
+  font-size:70pt;
+}
+
+.opcionPanel{
+  height:200px;
+  width:200px;
+  text-align:center;
+  font-size:15pt;
+  margin:5px;
+}
+
+.navbar .activa{
+  background-color:#0c5192;
+}
+
+header{
+	background-color:white;
+}
+#miga{
+	margin-left:50px;
+	margin-top:10px;
+}

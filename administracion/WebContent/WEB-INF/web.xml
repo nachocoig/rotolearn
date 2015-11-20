@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp">
+  <display-name>administracion</display-name>
+  <context-param>
+    <param-name>autor</param-name>
+    <param-value>Rotolearn</param-value>
+  </context-param>
+  <filter>
+  	<filter-name>LogueadoFiltro</filter-name>
+  	<display-name>LogueadoFiltro</display-name>
+  	<filter-class>es.rotolearn.filtro.LogueadoFiltro</filter-class>
+  </filter>
+  <filter-mapping>
+	<filter-name>LogueadoFiltro</filter-name>
+	<url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <display-name>ControladorServlet</display-name>
+    <servlet-name>ControladorServlet</servlet-name>
+    <servlet-class>es.rotolearn.servlet.ControladorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControladorServlet</servlet-name>
+    <url-pattern>*.form</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>admin_login.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+  	<!-- Missing resource -->
+	<error-code>404</error-code>
+	<location>/error404.jsp</location>
+  </error-page>
+  <error-page>
+	<!-- Uncaught exception -->
+	<error-code>500</error-code>
+	<location>/error500.jsp</location>
+  </error-page>
+</web-app>

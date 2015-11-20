@@ -1,0 +1,72 @@
+.vcenter {
+float:none;
+display:inline-block;
+vertical-align:middle;
+}
+
+.estilo_container {
+border: 5px;
+text-align:center;
+padding-bottom:10px;
+}
+
+.info{
+    font-weight:bold;
+    margin-bottom:10px;
+    margin-right:5px;
+}
+#imgConectado, #nombreConectado{
+    float:right;
+    margin:10px;
+}
+#nombreConectado{
+    margin-top:20px;
+}
+#nombreConectado a{
+    color:white;
+    font-weight:bold;
+}
+#nombreConectado a:hover{
+    color:black;
+}
+#imgConectado{
+    border-radius:100px;
+}
+
+.breg{
+    margin-top:5px;
+}
+
+#imagenCurso{
+    padding-bottom:10px;
+}
+
+.titulo{
+    background-color:#34a853;
+    color:white;
+}
+.tituloCurso{
+    text-align:center;
+    padding-top:15px;
+    font-weight:bold;
+    font-size:50px;
+    color:#1f6431;
+}
+
+#descrip{
+    padding-bottom:50px;
+}
+
+#cabeza{
+    padding-top:40px;
+    padding-bottom:10px;
+    background-repeat:no-repeat;
+    background-color:#2b2b2b;
+    background-position: center;
+}
+h2{
+    color:#34A853;
+   /* text-shadow: #999 1px 1px 2px;*/
+    font-family: 'Lato', sans-serif;
+  
+}

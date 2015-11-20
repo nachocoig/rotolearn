@@ -1,0 +1,179 @@
+@import url(https://fonts.googleapis.com/css?family=Comfortaa);
+
+.container-fluid{
+    padding:0;
+}
+.limpiador{
+    clear:both;
+}
+
+#portada{
+    height: 100vh;
+    background:url("../images/index/back.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+#porque{
+    text-align:center;
+    width:100%;
+    padding:20px;
+}
+#bienvenida{
+    font-family: 'Comfortaa', cursive;    float:left;
+    color:white;
+    text-align:center;
+    margin-top:15%;
+}
+#bienvenida span{
+    color:#33a652;
+}
+#bienvenida h1{
+    font-size:40pt;
+
+}
+.btn-registro{
+    background:#33a652;
+    color:white;
+    transition:background-color 0.3s linear;
+    -webkit-transition: background-color 0.3s linear; /* Chrome y Safari */
+    -o-transition: background-color 0.3s linear; /* Opera */
+    -moz-transition: background-color 0.3s linear; /* Mozilla Firefox */
+    -ms-transition: background-color 0.3s linear; /* Internet Explorer */
+}
+.btn-masinfo{
+    color:white;
+    transition:background-color 0.3s linear;
+    -webkit-transition: background-color 0.3s linear; /* Chrome y Safari */
+    -o-transition: background-color 0.3s linear; /* Opera */
+    -moz-transition: background-color 0.3s linear; /* Mozilla Firefox */
+    -ms-transition: background-color 0.3s linear; /* Internet Explorer */
+}
+.btn-masinfo:hover{
+    background:white;
+    color:#33a652;
+}
+.btn-registro:hover{
+    background:#fff;
+    color:#33a652;
+}
+#imgConectado, #nombreConectado{
+    float:right;
+    margin:10px;
+}
+#nombreConectado{
+    margin-top:20px;
+}
+#nombreConectado a{
+    color:white;
+    font-weight:bold;
+}
+#nombreConectado a:hover{
+    color:#33a652;
+}
+#imgConectado{
+    border-radius:100px;
+}
+
+#porque img{
+    -webkit-box-shadow: 3px 2px 43px -8px rgba(0,0,0,1);
+    -moz-box-shadow: 3px 2px 43px -8px rgba(0,0,0,1);
+    box-shadow: 3px 2px 43px -8px rgba(0,0,0,1);
+    max-width:100%;
+}
+#funciona img{
+    max-width:100%;
+}
+#porque h1{
+    font-size:40pt;
+    padding:30px;
+font-family: 'Comfortaa', cursive;}
+#porque p{
+    font-size:20pt;
+    color:#424242;
+font-family: 'Comfortaa', cursive;}
+#porque span{
+    color:#33a652;
+}
+#porque .imagen{
+    margin-top:1%;
+}
+#botones{
+    position:relative;
+    top:50%;
+    height:100px;
+    margin-top:50px;
+    text-align:center;  
+}
+#funciona{
+font-family: 'Comfortaa', cursive;    color:white;
+    text-align:center;
+    width:100%;
+    background:#d4225a;
+    background-image:url("../images/index/funciona.jpg");
+    background-position: left top;
+    padding-top:50px;
+    padding-bottom:100px;
+}
+#funciona h1{
+    color:#33a652;
+    font-size:40pt;
+    padding:30px;
+}
+#funciona p{
+    font-size:20pt;
+    color:white;
+}
+#funciona span{
+    color:#33a652;
+}
+#funciona .imagen{
+    margin-top:2%;
+}
+#topCursos{
+    background:url('../images/wp.png') no-repeat ;
+}
+#topCursos h1{
+    font-family: 'Comfortaa', cursive;    color:#33a652;
+    font-size:40pt;
+    padding:30px;
+    text-align:center;
+}
+
+/*Codigo de las cartas*/
+/*CODIGO DE LAS CARTAS*/
+
+.contenedor {
+    text-align:center;
+	height: 250px;
+	width: 200px;
+}
+
+.carta {
+	width: 200px;
+}
+
+.carta img { height: 100px; width: 200px; }
+
+#pie{
+    margin-top:30px;
+    padding-top:30px;
+    background:#333;
+}
+
+#verMas{
+	margin-top:30px;
+	/*width: 100%;*/
+	text-align: center;
+}
+#verMas a{
+	padding-top:15px;
+	padding-bottom:15px;
+	color:white;
+	font-size:20pt;
+	background-color:#33A652;
+	text-decoration:none;
+}
+#verMas a:hover{
+	background-color:white;
+	color:#33A652; 
+}
