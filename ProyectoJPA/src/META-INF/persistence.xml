@@ -6,6 +6,7 @@
 		<class>entities.CursoAlumno</class>
 		<class>entities.CursoAlumnoPK</class>
 		<class>entities.Usuario</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rotolearnbd"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>

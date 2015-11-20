@@ -11,14 +11,14 @@ import java.util.List;
  */
 @Entity
 @Table(name="CURSO")
-//@NamedQuery(name="Curso.findAll", query="SELECT c FROM Curso c")
+@NamedQuery(name="Curso.findAll", query="SELECT c FROM Curso c")
 public class Curso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="Titulo")
-	private String titulo;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
 
 	@Column(name="Categoria")
 	private String categoria;
@@ -44,6 +44,9 @@ public class Curso implements Serializable {
 	@Column(name="Precio")
 	private int precio;
 
+	@Column(name="Titulo")
+	private String titulo;
+
 	@Column(name="Validado")
 	private String validado;
 
@@ -59,12 +62,12 @@ public class Curso implements Serializable {
 	public Curso() {
 	}
 
-	public String getTitulo() {
-		return this.titulo;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getCategoria() {
@@ -129,6 +132,14 @@ public class Curso implements Serializable {
 
 	public void setPrecio(int precio) {
 		this.precio = precio;
+	}
+
+	public String getTitulo() {
+		return this.titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getValidado() {

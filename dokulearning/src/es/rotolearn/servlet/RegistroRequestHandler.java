@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import entities.Usuario;
 import es.rotolearn.javaBean.RegistroBean;
 
 public class RegistroRequestHandler implements RequestHandler {
@@ -27,12 +28,8 @@ public class RegistroRequestHandler implements RequestHandler {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "login.jsp";
-		System.out.println("Creamos el usuario");
-		
-		//Creamos el usuario a buscar en la BBDD
-		String nick = request.getParameter("nick");		
-		
-		/*Insercion a BBDD con DataSource*/
+
+		/*Insercion a BBDD con DataSource
 		System.out.println("Vamos a probar a hacer la insercion por DATASOURCE");
 		InitialContext miInitialContext;
 		DataSource miDS;
@@ -91,62 +88,56 @@ public class RegistroRequestHandler implements RequestHandler {
 			}
 		}
 
+	*/	
 		
+		/* ESTO NO FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
 		
+	//////////////////JPA///////////////////////////////////
 		
-		
-	/*//////////////////JPA///////////////////////////////////
-		/  LA CONSULTA A LA BBDD
 		// 1 Create the factory of Entity Manager
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("dokulearning");//ESTO ES CLAVE
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
 
 		// 2 Create the Entity Manager
 		EntityManager em = factory.createEntityManager();
-
+		
+		//Creamos el usuario a buscar en la BBDD
+		Usuario nAux = new Usuario();
+		nAux.setNickname(request.getParameter("nick"));
+		
 		// 3 Get one EntityTransaction
 		em.getTransaction().begin();
-
-		//Creamos el usuario a buscar en la BBDD
-		Usuario newUsuario = new Usuario();
-		
-		newUsuario.setNickname(request.getParameter("nick"));
-		Usuario resultado = em.find(newUsuario.getClass(), newUsuario.getNickname());
-		if(resultado == null){ // si no existe el usuario, puedo crearlo
-		//
-		// Modificar el html para quitar lo de la segunda contraseña y cambiar lo de la imagen por  un textbox
-		//
-		System.out.println("El getparameter " +  request.getParameter("nick") + "fin nombre");
-		System.out.println("voy a meter a este usuario " + newUsuario.getNickname());
-		newUsuario.setNombre(request.getParameter("nombre"));
-		newUsuario.setTipo(request.getParameter("optradio"));
-		newUsuario.setApellido1(request.getParameter("apellido1"));
-		newUsuario.setApellido2(request.getParameter("apellido2"));
-		newUsuario.setEmail(request.getParameter("email"));
-		newUsuario.setPass(String.valueOf(request.getParameter("pass").hashCode()));
-		//String.valueOf(request.getParameter("Password").hashCode());
-		//newUsuario.setFecha_Nac(request.getParameter("date")); es un string y espera un date
-		newUsuario.setDireccion(request.getParameter("direccion"));
-		newUsuario.setDescripcion(request.getParameter("descripcion"));
-		newUsuario.setIntereses(request.getParameter("intereses"));
-		newUsuario.setTelefono(request.getParameter("tlf"));
-		newUsuario.setImagen(request.getParameter("exampleInputFile"));
-		try {
-			em.persist(newUsuario);
-			
-		} catch (Exception e) {
-			System.out.println("Descripcion: " + e.getMessage());
-		}
-		
-		}	else{ 		System.out.println("Existe el usuario pues NO lo creo");
-					request.setAttribute("error","reg");
-						ruta = "formulario_registro.jsp";
-				}
-		
-
-		
-		em.getTransaction().commit();
+		Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
 		em.close();
-	*/
+		
+		if(resultado == null){ // si no existe el usuario, puedo crearlo
+
+			nAux.setNombre(request.getParameter("nombre"));
+			nAux.setTipo(request.getParameter("optradio"));
+			nAux.setApellido1(request.getParameter("apellido1"));
+			nAux.setApellido2(request.getParameter("apellido2"));
+			nAux.setEmail(request.getParameter("email"));
+			nAux.setPass(String.valueOf(request.getParameter("pass").hashCode()));
+			nAux.setFecha_nac(request.getParameter("date"));
+			nAux.setDireccion(request.getParameter("direccion"));
+			nAux.setDescripcion(request.getParameter("descripcion"));
+			nAux.setIntereses(request.getParameter("intereses"));
+		//	nAux.setTelefono(request.getParameter("tlf"));
+			nAux.setImagen(request.getParameter("exampleInputFile"));
+			
+			try {
+				em = factory.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(nAux);
+				em.getTransaction().commit();
+				em.close();
+			} catch (Exception e) {
+				System.out.println("Descripcion: " + e.getMessage());
+			}
+		
+		}else{ 		
+			request.setAttribute("error","reg");
+			ruta = "formulario_registro.jsp";
+		}
 		return ruta;
 	}
 

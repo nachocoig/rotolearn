@@ -17,8 +17,8 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="Nickname")
-	private String nickname;
+	@Column(name="ID")
+	private int id;
 
 	@Column(name="Apellido1")
 	private String apellido1;
@@ -44,6 +44,9 @@ public class Usuario implements Serializable {
 	@Column(name="Intereses")
 	private String intereses;
 
+	@Column(name="Nickname")
+	private String nickname;
+
 	@Column(name="Nombre")
 	private String nombre;
 
@@ -51,7 +54,7 @@ public class Usuario implements Serializable {
 	private String pass;
 
 	@Column(name="Telefono")
-	private String telefono;
+	private int telefono;
 
 	@Column(name="Tipo")
 	private String tipo;
@@ -67,12 +70,12 @@ public class Usuario implements Serializable {
 	public Usuario() {
 	}
 
-	public String getNickname() {
-		return this.nickname;
+	public int getId() {
+		return this.id;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getApellido1() {
@@ -139,6 +142,14 @@ public class Usuario implements Serializable {
 		this.intereses = intereses;
 	}
 
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -155,11 +166,11 @@ public class Usuario implements Serializable {
 		this.pass = pass;
 	}
 
-	public String getTelefono() {
+	public int getTelefono() {
 		return this.telefono;
 	}
 
-	public void setTelefono(String telefono) {
+	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
 

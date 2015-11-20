@@ -44,7 +44,7 @@ public class ControladorServlet extends HttpServlet {
 
 		System.out.println("Servlet received the request");
 
-		// Complete. If no instance is retrieved redirects to error
+		// Complete. If n0 instance is retrieved redirects to error
 		if (rh == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 

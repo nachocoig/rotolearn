@@ -22,9 +22,6 @@ public class Admin implements Serializable {
 	@Column(name="Pass")
 	private String pass;
 
-	@Column(name="Prioridad")
-	private int prioridad;
-
 	public Admin() {
 	}
 
@@ -42,14 +39,6 @@ public class Admin implements Serializable {
 
 	public void setPass(String pass) {
 		this.pass = pass;
-	}
-
-	public int getPrioridad() {
-		return this.prioridad;
-	}
-
-	public void setPrioridad(int prioridad) {
-		this.prioridad = prioridad;
 	}
 
 }

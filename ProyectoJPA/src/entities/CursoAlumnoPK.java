@@ -12,25 +12,25 @@ public class CursoAlumnoPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="Titulo", insertable=false, updatable=false)
-	private String titulo;
+	@Column(insertable=false, updatable=false)
+	private int ID_u;
 
-	@Column(name="Nickname", insertable=false, updatable=false)
-	private String nickname;
+	@Column(insertable=false, updatable=false)
+	private int ID_c;
 
 	public CursoAlumnoPK() {
 	}
-	public String getTitulo() {
-		return this.titulo;
+	public int getID_u() {
+		return this.ID_u;
 	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setID_u(int ID_u) {
+		this.ID_u = ID_u;
 	}
-	public String getNickname() {
-		return this.nickname;
+	public int getID_c() {
+		return this.ID_c;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setID_c(int ID_c) {
+		this.ID_c = ID_c;
 	}
 
 	public boolean equals(Object other) {
@@ -42,15 +42,15 @@ public class CursoAlumnoPK implements Serializable {
 		}
 		CursoAlumnoPK castOther = (CursoAlumnoPK)other;
 		return 
-			this.titulo.equals(castOther.titulo)
-			&& this.nickname.equals(castOther.nickname);
+			(this.ID_u == castOther.ID_u)
+			&& (this.ID_c == castOther.ID_c);
 	}
 
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + this.titulo.hashCode();
-		hash = hash * prime + this.nickname.hashCode();
+		hash = hash * prime + this.ID_u;
+		hash = hash * prime + this.ID_c;
 		
 		return hash;
 	}
