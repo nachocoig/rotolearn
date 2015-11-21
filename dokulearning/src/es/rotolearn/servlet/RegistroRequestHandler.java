@@ -106,11 +106,18 @@ public class RegistroRequestHandler implements RequestHandler {
 		
 		// 3 Get one EntityTransaction
 		em.getTransaction().begin();
-		Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
-		em.close();
-		
-		if(resultado == null){ // si no existe el usuario, puedo crearlo
-
+		//Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
+		try{
+		Usuario resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, request.getParameter("nick")).getSingleResult();
+		request.setAttribute("error","reg");
+		ruta = "formulario_registro.jsp";
+		}catch (javax.persistence.NoResultException e){
+			String intereses="";
+			for(int i=1;i<11;i++){
+				if(request.getParameter("intereses"+i)!=null){
+					intereses = intereses+request.getParameter("intereses"+i)+"/";
+				}
+			}
 			nAux.setNombre(request.getParameter("nombre"));
 			nAux.setTipo(request.getParameter("optradio"));
 			nAux.setApellido1(request.getParameter("apellido1"));
@@ -120,24 +127,26 @@ public class RegistroRequestHandler implements RequestHandler {
 			nAux.setFecha_nac(request.getParameter("date"));
 			nAux.setDireccion(request.getParameter("direccion"));
 			nAux.setDescripcion(request.getParameter("descripcion"));
-			nAux.setIntereses(request.getParameter("intereses"));
-		//	nAux.setTelefono(request.getParameter("tlf"));
+			nAux.setIntereses(intereses);
+			nAux.setTelefono(Integer.parseInt(request.getParameter("tlf")));
 			nAux.setImagen(request.getParameter("exampleInputFile"));
 			
 			try {
-				em = factory.createEntityManager();
-				em.getTransaction().begin();
+				//em = factory.createEntityManager();
+				//em.getTransaction().begin();
 				em.persist(nAux);
 				em.getTransaction().commit();
+				//em.close();
+		    	} catch (Exception e2) {
 				em.close();
-			} catch (Exception e) {
-				System.out.println("Descripcion: " + e.getMessage());
+				System.out.println("Descripcion: " + e2.getMessage());
+				request.setAttribute("error","reg");
+				ruta = "formulario_registro.jsp";
 			}
-		
-		}else{ 		
-			request.setAttribute("error","reg");
-			ruta = "formulario_registro.jsp";
+			
 		}
+		
+		em.close();
 		return ruta;
 	}
 
