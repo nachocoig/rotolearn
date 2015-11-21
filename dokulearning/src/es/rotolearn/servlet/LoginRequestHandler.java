@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import entities.Usuario;
 import es.rotolearn.javaBean.RegistroBean;
 
 public class LoginRequestHandler implements RequestHandler {
@@ -36,8 +37,8 @@ public class LoginRequestHandler implements RequestHandler {
 		
 		
 		//Creamos el usuario a buscar en la BBDD
-				
-				/*Insercion a BBDD con DataSource*/
+		/*		
+				//Insercion a BBDD con DataSource
 				System.out.println("Vamos a probar a hacer la insercion por DATASOURCE");
 				InitialContext miInitialContext;
 				DataSource miDS;
@@ -118,7 +119,7 @@ public class LoginRequestHandler implements RequestHandler {
 					}
 				}
 				
-		
+		*/
 			
 		
 		
@@ -126,10 +127,10 @@ public class LoginRequestHandler implements RequestHandler {
 		
 		
 		
-		/*
-			HAGO LA CONSULTA A LA BBDD
+	
+		//HAGO LA CONSULTA A LA BBDD
 			// 1 Create the factory of Entity Manager
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("dokulearning");//ESTO ES CLAVE
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
 
 			// 2 Create the Entity Manager
 			EntityManager em = factory.createEntityManager();
@@ -141,25 +142,15 @@ public class LoginRequestHandler implements RequestHandler {
 			Usuario aux = new Usuario();
 			aux.setNickname(nick);
 			aux.setPass(pass);
-			
+			Usuario resultado;
 			//PARA BUSCAR EL USUARIO QUE HEMOS RECIBIDO POR PARAMETROS, si devuelve null no existe si devuelve algo es que existe
 			tx.begin();//Comenzamos la transaccion
-			Usuario resultado = em.find(aux.getClass(), aux.getNickname());
-			
-			// 5 Close the manager
-			
-			
-			if(resultado == null){
-				request.setAttribute("error", "true");
-				ruta = "login.jsp";
-			}else{
+
+			try{
+				resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, nick).getSingleResult();
 				System.out.println("Comparo users " + resultado.getNickname() + " " + nick);
-				System.out.println("Comparo pass " + resultado.getPass() + " " + pass);
-				if(resultado.getNickname().equals(nick)){
-					
-					System.out.println("Paso comparaciond e nicks ");
-					
-					if(resultado.getPass().equals(pass)){
+				System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
+				if(resultado.getPass().equals(pass)){
 						RegistroBean regbean = new RegistroBean();
 						regbean.setNickName(resultado.getNickname());
 						regbean.setApellido1(resultado.getApellido1());
@@ -167,9 +158,9 @@ public class LoginRequestHandler implements RequestHandler {
 						regbean.setTipo(resultado.getTipo());
 						regbean.setEmail(resultado.getEmail());
 						regbean.setDescripcion(resultado.getDescripcion());
-						regbean.setIntereses("Esto hay que cambiarlo");//por si no te has dado cuenta, esrto hay que cambiarlo.
-						regbean.setTelefono(resultado.getTelefono());
-						regbean.setNacimiento("05/07/1994");//esto hay que cambiarlo cuando la BBDD tenga varchar en fecha
+						regbean.setIntereses(resultado.getIntereses());//por si no te has dado cuenta, esrto hay que cambiarlo.
+						regbean.setTelefono(Integer.toString(resultado.getTelefono()));
+						regbean.setNacimiento(resultado.getFecha_nac());
 					    regbean.setDireccion(resultado.getDireccion());
 					    regbean.setNombre(resultado.getNombre());	
 						//System.out.println("Pass correcta, puede entrar");
@@ -185,19 +176,20 @@ public class LoginRequestHandler implements RequestHandler {
 				System.out.println("Pass incorrecta, no puede entrar");
 						request.setAttribute("error", "pass");
 						ruta = "login.jsp";
-					}
+					 }
 					
-				}else{
-					System.out.println("Login incorrecto usuario no valido");
-					request.setAttribute("error", "user");
-					ruta = "login.jsp";
-				}
 				
 				em.close();
 				System.out.println("C L O S E ");
+			}catch(javax.persistence.NoResultException e){//no existe el usuario
+				request.setAttribute("error", "true");
+				ruta = "login.jsp";
+				
 			}
+			// 5 Close the manager
+
 		
-	*/
+	
 		
 	
 return ruta;
