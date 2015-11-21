@@ -117,7 +117,7 @@ public class RegistroRequestHandler implements RequestHandler {
 				if(request.getParameter("intereses"+i)!=null){
 					intereses = intereses+request.getParameter("intereses"+i)+"/";
 				}
-			}
+			}//uu
 			nAux.setNombre(request.getParameter("nombre"));
 			nAux.setTipo(request.getParameter("optradio"));
 			nAux.setApellido1(request.getParameter("apellido1"));
