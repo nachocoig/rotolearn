@@ -1,7 +1,7 @@
 package es.rotolearn.javaBean;
 
 public class RegistroBean{
-
+	
 	private String tipo;
 	private String nickName;
 	private String nombre;
@@ -16,11 +16,12 @@ public class RegistroBean{
 	
 	public RegistroBean(){}
 	
-	public RegistroBean(String tipo, String nickName, String nombre,
+	public RegistroBean( String tipo, String nickName, String nombre,
 			String apellido1, String apellido2, String email, 
 			String nacimiento, String direccion, String descripcion,
 			String intereses, String telefono) {
 		super();
+		
 		this.tipo = tipo;
 		this.nickName = nickName;
 		this.nombre = nombre;
@@ -33,7 +34,7 @@ public class RegistroBean{
 		this.intereses = intereses;
 		this.telefono = telefono;
 	}
-	
+
 	public String getNickName(){
 		return nickName;
 	}

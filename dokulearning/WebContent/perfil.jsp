@@ -1,5 +1,5 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
-<%@ page import="es.rotolearn.tablas.Curso_Alumno" %>
+<%@ page import="entities.Curso" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -198,8 +198,8 @@
                               </tr>
                             </thead>
                         <%
-                        ArrayList<Curso_Alumno> dest = (ArrayList<Curso_Alumno>) request.getAttribute("deseos");
-                        if(dest.size()==0){
+                        
+                        if(request.getAttribute("nodeseos").equals("si")){
                         	%>
                         	<tbody>
                                <tr>
@@ -208,6 +208,7 @@
                             </tbody>
                         	<% 
                         }else{
+                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("deseos");
                 		for(int i=0; i<dest.size();i++){
                 			String h = dest.get(i).getTitulo();
                 		%>
