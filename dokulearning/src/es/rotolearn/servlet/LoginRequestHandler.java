@@ -182,6 +182,7 @@ public class LoginRequestHandler implements RequestHandler {
 				em.close();
 				System.out.println("C L O S E ");
 			}catch(javax.persistence.NoResultException e){//no existe el usuario
+				em.close();
 				request.setAttribute("error", "true");
 				ruta = "login.jsp";
 				

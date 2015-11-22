@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import entities.Admin;
+import entities.Usuario;
 import es.rotolearn.javabean.Registrobean;
 
 public class LoginRequestHandler implements RequestHandler {
@@ -34,8 +36,58 @@ public class LoginRequestHandler implements RequestHandler {
 		System.out.println("Nick introducido: "+nick);
 		System.out.println("Pass introducida: "+pass);
 		
+		
+		//HAGO LA CONSULTA A LA BBDD
+		// 1 Create the factory of Entity Manager
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
+
+		// 2 Create the Entity Manager
+		EntityManager em = factory.createEntityManager();
+
+		// 3 Get one EntityTransaction
+		EntityTransaction tx = em.getTransaction();
+
+		//Creamos el usuario a buscar en la BBDD
+		Admin resultado;
+		//PARA BUSCAR EL USUARIO QUE HEMOS RECIBIDO POR PARAMETROS, si devuelve null no existe si devuelve algo es que existe
+		tx.begin();//Comenzamos la transaccion
+
+		try{
+			resultado = (Admin) em.createQuery("SELECT i FROM Admin i WHERE i.nickname = ?1").setParameter(1, nick).getSingleResult();
+			System.out.println("Comparo users " + resultado.getNickname() + " " + nick);
+			System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
+			if(resultado.getPass().equals(pass)){
+					Registrobean regbean = new Registrobean();
+					regbean.setNickName(resultado.getNickname());
+					regbean.setPass("FakePass");
+					//System.out.println("Pass correcta, puede entrar");
+					System.out.println("Paso comparaciond de pass ");
+					session = ((HttpServletRequest) request).getSession();
+					session.setAttribute("logueado", "true");
+					session.setAttribute("usuario",nick);
+					session.setAttribute("perfil",regbean);						
+					System.out.println("Hago los set atributes ");
+					
+				}else{
+			System.out.println("Pass incorrecta, no puede entrar");
+					request.setAttribute("error", "pass");
+					ruta = "admin_login.jsp";
+				 }
 				
-				/*Insercion a BBDD con DataSource*/
+			
+			
+			System.out.println("C L O S E ");
+		}catch(javax.persistence.NoResultException e){//no existe el usuario
+			request.setAttribute("error", "true");
+			ruta = "admin_login.jsp";
+			
+		}
+		em.close();
+		
+		
+		
+				
+				/*Insercion a BBDD con DataSource
 				System.out.println("Vamos a probar a hacer la insercion por DATASOURCE");
 				InitialContext miInitialContext;
 				DataSource miDS;
@@ -102,7 +154,7 @@ public class LoginRequestHandler implements RequestHandler {
 						request.setAttribute("error", "true");
 						ruta = "admin_login.jsp";
 					}
-				}
+				}*/
 
 		
 	

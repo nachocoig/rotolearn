@@ -26,6 +26,9 @@ import es.rotolearn.javabean.Registrobean;
 
 public class RegistroAdminRequestHandler implements RequestHandler {
 	@Override
+	/****************************************************************************************
+	*******************************DEBE BORRARSE PERO DE MOMENTO LO DEJAMOS******************
+	*****************************************************************************************/
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String 	ruta = "admin_reg.jsp";
 		System.out.println("Creamos el usuario");

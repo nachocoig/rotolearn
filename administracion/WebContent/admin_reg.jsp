@@ -205,24 +205,6 @@
 				</div>		     
 				</form>
 	    	</div>
-	    	<div class="row">
-	    		<div class="col-lg-5 col-md-offset-1">
-	   				<form role="form" method="POST" action="reg_admin.form">
-	   					<h2>Registro de un usuario Administrador</h2>
-						<div class="form-group">
-							<label  for="nick"><span class="red">*</span>Nickname</label>
-							<input type="text" class="form-control" name="nick" id="nick" placeholder="Introduce tu nick" required>
-						</div>
-							<div class="form-group">					
-							<label for="pass"><span class="red">*</span>Contrase&ntilde;a</label>
-							<input type="password" class="form-control" name="pass" placeholder="Introduce tu contrase&ntilde;a" required>
-						</div>
-						<div class="form-group">        
-							<button type="submit" class="btn btn-success">A&ntilde;adir Usuario</button>
-						</div>
-	   				</form>
-				</div>
-	    	</div>
 		</div>
 		<!--FIN CUERPO-->
 	
