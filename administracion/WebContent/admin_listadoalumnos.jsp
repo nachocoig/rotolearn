@@ -1,5 +1,5 @@
-
-
+<%@ page import="entities.Usuario" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,9 +31,9 @@
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="admin_listadoalumnos.jsp">Alumnos</a></li>
-                            <li><a href="admin_listadoprofesores.jsp">Profesores</a></li>
-                            <li><a href="admin_listadoadmin.jsp">Administradores</a></li>
+						 	 <li><a href="veralumn.form">Alumnos</a></li>
+	                      	<li><a href="verprofes.form">Profesores</a></li>
+                           
                           </ul>
                         </li>
                         <li class="dropdown">
@@ -97,11 +97,49 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			            
+			            <%if(request.getAttribute("usuarios").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun alumno</td> 
+                               </tr>
+                            
+                        	<% 
+                        }else{
+                        ArrayList<Usuario> dest = (ArrayList<Usuario>) request.getAttribute("listaUsuarios");
+                		for(int i=0; i<dest.size();i++){
+                			Usuario aux = dest.get(i);
+                		
+                		%>
 			           		<tr>
-			            		
+			            		<td></td>
+			            		<td><%= aux.getTipo() %></td>
+			            		<td><%= aux.getNombre() %></td>
+			            		<td><%= aux.getApellido1() %></td>
+			            		<td><%= aux.getApellido2() %></td>
+			            		<td><%= aux.getNickname() %></td>
+			            		<td><%= aux.getEmail() %></td>
+			            		<td><%= aux.getPass() %></td>
+			            		<% if (aux.getFecha_nac()==null){ %>
+			            		<td> No especificado </td>
+			            		<%}else{ %>
+			            		<td><%= aux.getFecha_nac() %></td>
+			            		<% }if (aux.getDireccion()==null){ %>
+			            		<td> No especificado </td>
+			            		<%}else{ %>
+			            		<td><%= aux.getDireccion() %></td>
+			            		<%} if (aux.getDescripcion()==null){ %>
+			            		<td> No especificado </td>
+			            		<%}else{ %>
+			            		<td><%= aux.getDescripcion() %></td>
+			            		<%} if (aux.getIntereses()==null){ %>
+			            		<td> No especificado </td>
+			            		<%}else{ %>
+			            		<td><%= aux.getIntereses() %></td>
+			            		<% } %>
+			            		<td><%= aux.getTelefono() %></td>
 		            		</tr>
-			           	
+			           	<% }} %>
 			            </tbody>
 		            </table>
 	    		</div>

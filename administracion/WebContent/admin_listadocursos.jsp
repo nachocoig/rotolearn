@@ -29,9 +29,8 @@
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Usuarios
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="admin_listadoalumnos.jsp">Alumnos</a></li>
-                            <li><a href="admin_listadoprofesores.jsp">Profesores</a></li>
-                            <li><a href="admin_listadoadmin.jsp">Administradores</a></li>
+                            <li><a href="veralumn.form">Alumnos</a></li>
+	                        <li><a href="verprofes.form">Profesores</a></li>
                           </ul>
                         </li>
                         <li class="dropdown">
