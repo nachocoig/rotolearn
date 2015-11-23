@@ -51,12 +51,12 @@ public class Curso implements Serializable {
 	private String validado;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="Profesor")
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to CursoAlumno
-	@OneToMany(mappedBy="curso")
+	@OneToMany(mappedBy="curso",cascade=CascadeType.ALL)
 	private List<CursoAlumno> cursoAlumnos;
 
 	public Curso() {

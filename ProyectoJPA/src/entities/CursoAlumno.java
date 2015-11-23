@@ -21,12 +21,12 @@ public class CursoAlumno implements Serializable {
 	private String estado;
 
 	//bi-directional many-to-one association to Curso
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ID_c")
 	private Curso curso;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="ID_u")
 	private Usuario usuario;
 

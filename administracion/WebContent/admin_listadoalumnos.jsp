@@ -75,6 +75,20 @@
     <!--CUERPO-->
     <div id="cuerpo" class="container-fluid">
     	<div class="row">
+    	<%if(request.getAttribute("borrado")!=null){
+    	if(request.getAttribute("borrado").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Usuario eliminado con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar!
+				</div>
+			<% }} %>
     		<div class="col-sm-12">
     			<h2 class="titulo">Listado de Alumnos</h2>
 	        	<div class="table-responsive">          
@@ -109,10 +123,10 @@
                         ArrayList<Usuario> dest = (ArrayList<Usuario>) request.getAttribute("listaUsuarios");
                 		for(int i=0; i<dest.size();i++){
                 			Usuario aux = dest.get(i);
-                		
+                			int ID = aux.getId();
                 		%>
 			           		<tr>
-			            		<td></td>
+			            		<td><a class="glyphicon glyphicon-remove" href="borraralumn.form?ID=<%=ID %>"></a></td>
 			            		<td><%= aux.getTipo() %></td>
 			            		<td><%= aux.getNombre() %></td>
 			            		<td><%= aux.getApellido1() %></td>
