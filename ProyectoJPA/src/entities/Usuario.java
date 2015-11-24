@@ -38,8 +38,9 @@ public class Usuario implements Serializable {
 	@Column(name="Fecha_nac")
 	private String fecha_nac;
 
+	@Lob
 	@Column(name="Imagen")
-	private String imagen;
+	private byte[] imagen;
 
 	@Column(name="Intereses")
 	private String intereses;
@@ -60,11 +61,11 @@ public class Usuario implements Serializable {
 	private String tipo;
 
 	//bi-directional many-to-one association to Curso
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="usuario")
 	private List<Curso> cursos;
 
 	//bi-directional many-to-one association to CursoAlumno
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="usuario", cascade={CascadeType.ALL})
 	private List<CursoAlumno> cursoAlumnos;
 
 	public Usuario() {
@@ -126,11 +127,11 @@ public class Usuario implements Serializable {
 		this.fecha_nac = fecha_nac;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return this.imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 

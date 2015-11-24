@@ -129,7 +129,7 @@ public class RegistroRequestHandler implements RequestHandler {
 			nAux.setDescripcion(request.getParameter("descripcion"));
 			nAux.setIntereses(intereses);
 			nAux.setTelefono(Integer.parseInt(request.getParameter("tlf")));
-			nAux.setImagen(request.getParameter("exampleInputFile"));
+			//nAux.setImagen(request.getParameter("exampleInputFile"));
 			
 			try {
 				//em = factory.createEntityManager();

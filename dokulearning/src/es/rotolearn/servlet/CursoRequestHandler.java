@@ -43,7 +43,7 @@ public class CursoRequestHandler implements RequestHandler {
 		aux.setDificultad(request.getParameter("dificultad"));
 		aux.setDestacado("NO");
 		aux.setValidado("NO"); 
-		aux.setImagen(request.getParameter("imagen"));
+		//aux.setImagen(request.getParameter("imagen"));
 		aux.setCategoria(request.getParameter("categoria"));
 		aux.setEmail_paypal(request.getParameter("paypal"));
 		

@@ -38,8 +38,9 @@ public class Curso implements Serializable {
 	@Column(name="Horas")
 	private int horas;
 
+	@Lob
 	@Column(name="Imagen")
-	private String imagen;
+	private byte[] imagen;
 
 	@Column(name="Precio")
 	private int precio;
@@ -51,12 +52,12 @@ public class Curso implements Serializable {
 	private String validado;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="Profesor")
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to CursoAlumno
-	@OneToMany(mappedBy="curso",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="curso")
 	private List<CursoAlumno> cursoAlumnos;
 
 	public Curso() {
@@ -118,11 +119,11 @@ public class Curso implements Serializable {
 		this.horas = horas;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return this.imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 
