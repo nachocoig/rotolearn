@@ -119,8 +119,13 @@
                 <ul class="portfolio-items">
                 	<%
                 		ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("destacados");
-                		String h;
-                		for(int i=0; i<dest.size();i++){
+                		if(dest.isEmpty()){
+                	%>
+                		<h2>No existen cursos recomendados</h2>
+                	<%
+                		}else{
+	                		String h;
+	                		for(int i=0; i<dest.size();i++){
                 	%>
                     <li class="portfolio-item col-md-2">
                         <div class="itemCatalogo">
@@ -136,19 +141,19 @@
                         </div>           
                     </li>
                     <%
-                    	}
+                    		}
+                		}
                     %>
                 </ul>
             </div>
         </div>
-        <%
-        	if(session.getAttribute("usuario")!=null){
-        %>
+        
 	    <div class="row" id="recomendados">
             <div class="col-md-12">
-           		<form action="catalogo.form" method="post">
-            		<h1><span class="glyphicon glyphicon-stats"></span>Cursos recomendados</h1>
-                </form>
+            	<h1><span class="glyphicon glyphicon-stats"></span>Cursos recomendados</h1>
+               	<%
+        			if(session.getAttribute("usuario")!=null){
+        		%>
                 <ul class="portfolio-items">
                 	<%
                 		ArrayList<Curso> rec = (ArrayList<Curso>) request.getAttribute("recomendados");
@@ -172,11 +177,17 @@
                     	}
                     %>
                 </ul>
+                <%
+        			}else{
+        				
+        		%>
+        			<h2 class="noLogueado">Necesitas hacer login para que te recomendemos cursos</h2>
+        		<%
+        			}
+        		%>
             </div>
         </div>
-        <%
-        	}
-        %>
+        
         <a id="todos" href="busquedaAvanzada.form" class="btn btn-default btn-block"><span class="glyphicon glyphicon-search"></span>B&uacutesqueda avanzada </a>  
     </div>
     <!--PIE DE PAGINA-->
