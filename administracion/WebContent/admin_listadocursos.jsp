@@ -74,6 +74,43 @@
     <!--CUERPO-->
     <div id="cuerpo" class="container row col-sm-12">
         <h2 class="titulo">Listado de Cursos</h2>
+        <!--  MENSAJES DE OK/ERROR ELIMINACION CURSO -->
+        <%if(request.getAttribute("borrado")!=null){
+    	if(request.getAttribute("borrado").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso eliminado con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar!
+				</div>
+			<% }} %>
+			<!--  MENSAJES DE OK/ERROR EDICION CURSO -->
+			 <%if(request.getAttribute("act")!=null){
+    	if(request.getAttribute("act").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso destacado con exito!</strong> 
+				</div>
+			<% }else if (request.getAttribute("act").equals("ya")){ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Ese curso ya esta destacado!
+				</div>
+				<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido destacar!
+				</div>
+			<% }} %>
         <div class="table-responsive">          
             <table class="table table-condensed table-hover">
             <thead>
@@ -107,11 +144,11 @@
                         ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
                 		for(int i=0; i<dest.size();i++){
                 			Curso aux = dest.get(i);
-                		
+                			int ID = aux.getId();
                 		%>
 			           		<tr>
-			           			<td><input class="btn btn-default btn-xs" type="submit" value="Destacar"></td>
-			            		<td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+			           			<td><a class="glyphicon glyphicon-star" href="añadirdestacado.form?ID=<%=ID %>"></a></td>
+			            		<td><a class="glyphicon glyphicon-remove" href="borrarcurso.form?ID=<%=ID %>"></a></td>
 			            		<td><%= aux.getId() %></td>
 			            		<td><%= aux.getValidado() %></td>
 			            		<td><%= aux.getDestacado() %></td>

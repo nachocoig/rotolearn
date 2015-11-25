@@ -74,6 +74,21 @@
     
     <!--CUERPO-->
     <div id="cuerpo" class="container row col-sm-12">
+    	<!--  MENSAJES DE OK/ERROR EDICION CURSO -->
+			 <%if(request.getAttribute("act")!=null){
+    	if(request.getAttribute("act").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso quitado de destacados con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar el destacado!
+				</div>
+			<% }} %>
         <h2 class="titulo">Cursos destacados</h2>
         <div class="table-responsive">          
             <table class="table table-condensed table-hover">
@@ -104,11 +119,11 @@
                         ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
                 		for(int i=0; i<dest.size();i++){
                 			Curso aux = dest.get(i);
-                		
+                			int ID = aux.getId();
                 		%>
 			           		<tr>
 			           		
-			            		<td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+			            		<td><a class="glyphicon glyphicon-remove" href="quitardestacado.form?ID=<%=ID %>"></a></td>
 			            		<td><%= aux.getId() %></td>			            	
 			            		<td><%= aux.getTitulo() %></td>
 			            		<td><%= aux.getUsuario().getNickname() %></td>
