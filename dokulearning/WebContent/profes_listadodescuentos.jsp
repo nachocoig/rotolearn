@@ -104,18 +104,13 @@
     						</select>
     					</div>
     					<div class="form-group">
-    						<label for="sel1">Tipo de descuento: </label>
-    						<select class="form-control" id="sel1" required>
-    							<option>Porcentaje</option>
-    							<option>Descuento fijo</option>
-    						</select>
-    					</div>
-        			</div>
-        			<div class="col-md-4 ">
-        				<div class="form-group">
     						<label for="cupon">Cup&oacute;n: </label>
     						<input type="text" class="form-control" name="cupon" placeholder="Introduce el cup&oacute;n" required>
     					</div>
+        			</div>
+        			<div class="col-md-4 ">
+						<br>
+						<br>
     					<div class="form-group">
     						<label for="descuento">Descuento: </label>
     						<input type="number" class="form-control" name="descuento" min="0" max="100" placeholder="Introduce el descuento" required>

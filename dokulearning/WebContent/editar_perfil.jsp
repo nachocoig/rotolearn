@@ -73,10 +73,8 @@
 	    <div class="container-fluid">
 	    	<div class="row" id="cuerpo">
 	    	
-				<form role="form" action="perfil.form" method="POST">
+				<form role="form" action="editarPerfil.form" method="POST">
 				<div class="col-md-4 col-md-offset-4" >
-					
-
 					<div class="form-group">						
 						<label  for="nombre"><span class="red">*</span>Nombre</label>
 						<input type="text" class="form-control" name="nombre" id="nombre" value="<%=perfil.getNombre()%>" required>

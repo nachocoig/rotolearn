@@ -152,6 +152,7 @@ public class LoginRequestHandler implements RequestHandler {
 				System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
 				if(resultado.getPass().equals(pass)){
 						RegistroBean regbean = new RegistroBean();
+						regbean.setId(resultado.getId());
 						regbean.setNickName(resultado.getNickname());
 						regbean.setApellido1(resultado.getApellido1());
 						regbean.setApellido2(resultado.getApellido2());
@@ -159,7 +160,7 @@ public class LoginRequestHandler implements RequestHandler {
 						regbean.setEmail(resultado.getEmail());
 						regbean.setDescripcion(resultado.getDescripcion());
 						regbean.setIntereses(resultado.getIntereses());//por si no te has dado cuenta, esrto hay que cambiarlo.
-						regbean.setTelefono(Integer.toString(resultado.getTelefono()));
+						regbean.setTelefono(resultado.getTelefono());
 						regbean.setNacimiento(resultado.getFecha_nac());
 					    regbean.setDireccion(resultado.getDireccion());
 					    regbean.setNombre(resultado.getNombre());	
