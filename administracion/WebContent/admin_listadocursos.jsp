@@ -1,3 +1,5 @@
+<%@ page import="entities.Curso" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,8 +40,8 @@
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="admin_altacursos.jsp">Alta</a></li>
-                                <li><a href="admin_listadocursos.jsp">Listado</a></li>
-                                <li><a href="admin_destacadocursos.jsp">Destacados</a></li> 
+                                <li><a href="listadocursos.form">Listado</a></li>
+	                                <li><a href="listadodestacados.form">Destacados</a></li>
                             </ul>
                         </li>
                         <li><a href="admin_listadomateriales.jsp">Materiales cursos</a></li>
@@ -92,66 +94,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                	<td></td>
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                    <td>C300</td>
-                    <td>true</td>
-                    <td>true</td>
-                    <td>Curso de SQL</td>
-                    <td>Viruela</td>
-                    <td>Imposible</td>
-                    <td>60</td>
-                    <td>200</td>
-                    <td>Programacion</td>
-                    <td>Curso de SQL avanzado</td>
-                    <td>sqlinyection.jpg</td>
-                </tr>
-                <tr>
-                	<td></td>	
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                    <td>C52</td>
-                    <td>true</td>
-                    <td>true</td>
-                    <td>Curso de Google</td>
-                    <td>Steve</td>
-                    <td>Basico</td>
-                    <td>100</td>
-                    <td>700</td>
-                    <td>Tutorial</td>
-                    <td>Curso de como utilizar Google y sus apps</td>
-                    <td>google.jpg</td>
-                </tr>
-                <tr>
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Destacar"></td>
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                    <td>C1</td>
-                    <td>false</td>
-                    <td>false</td>
-                    <td>Curso de JAVA</td>
-                    <td>Pepito</td>
-                    <td>Imposible</td>
-                    <td>288</td>
-                    <td>300</td>
-                    <td>Programacion</td>
-                    <td>Curso de Java avanzado</td>
-                    <td>java.jpg</td>
-                </tr>
-                <tr>
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Destacar"></td>
-                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                    <td>C2</td>
-                    <td>false</td>
-                    <td>false</td>
-                    <td>JAVA for noobs</td>
-                    <td>Ataulfo</td>
-                    <td>Basico</td>
-                    <td>20</td>
-                    <td>25</td>
-                    <td>Programacion</td>
-                    <td>Curso de Java para noobs que no lo han tocado en su vida</td>
-                    <td>java1.jpg</td>
-                </tr>
+             <tbody>
+			            <%if(request.getAttribute("curso").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun curso</td> 
+                               </tr>
+                            
+                        	<% 
+                        }else{
+                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
+                		for(int i=0; i<dest.size();i++){
+                			Curso aux = dest.get(i);
+                		
+                		%>
+			           		<tr>
+			           			<td><input class="btn btn-default btn-xs" type="submit" value="Destacar"></td>
+			            		<td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+			            		<td><%= aux.getId() %></td>
+			            		<td><%= aux.getValidado() %></td>
+			            		<td><%= aux.getDestacado() %></td>
+			            		<td><%= aux.getTitulo() %></td>
+			            		<td><%= aux.getUsuario().getNickname() %></td>
+			            		<td><%= aux.getDificultad() %></td>
+			            		<td><%= aux.getHoras() %></td>
+			            		<td><%= aux.getPrecio() %></td>			            		
+			            		<td><%= aux.getCategoria() %></td>			            		
+			            		<td><%= aux.getDescripcion() %></td>
+			            		<td>Imagen.jpg</td>
+		            		</tr>
+			           	<% }} %>
+            
             </tbody>
             </table>
         </div>

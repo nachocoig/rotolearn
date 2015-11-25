@@ -41,8 +41,8 @@
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="admin_altacursos.jsp">Alta</a></li>
-                                <li><a href="admin_listadocursos.jsp">Listado</a></li>
-                                <li><a href="admin_destacadocursos.jsp">Destacados</a></li> 
+                                 <li><a href="listadocursos.form">Listado</a></li>
+	                                <li><a href="listadodestacados.form">Destacados</a></li>
                             </ul>
                         </li>
                         <li><a href="admin_listadomateriales.jsp">Materiales cursos</a></li>
