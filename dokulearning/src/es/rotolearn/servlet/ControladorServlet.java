@@ -16,7 +16,7 @@ public class ControladorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	// Hash table of RequestHandler instances, keyed by request URL
-	private Map handlerHash = new HashMap();
+	private Map<String, RequestHandler> handlerHash = new HashMap<String, RequestHandler>();
 	
 	// Initialize mappings: not implemented here
 	public void init() throws ServletException {
@@ -32,6 +32,7 @@ public class ControladorServlet extends HttpServlet {
 		handlerHash.put("/perfil.form", new es.rotolearn.servlet.PerfilRequestHandler());
         handlerHash.put("/añadirDeseo.form", new es.rotolearn.servlet.AddDeseoRequestHandler());
         handlerHash.put("/busquedaAvanzada.form", new es.rotolearn.servlet.busquedaAvanzadaRequestHandler());
+        handlerHash.put("/editarPerfil.form", new es.rotolearn.servlet.EditPerfilRequestHandler());
 
 	}
 	

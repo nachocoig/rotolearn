@@ -2,6 +2,7 @@ package es.rotolearn.javaBean;
 
 public class RegistroBean{
 	
+	private int id;
 	private String tipo;
 	private String nickName;
 	private String nombre;
@@ -12,16 +13,16 @@ public class RegistroBean{
 	private String direccion;
 	private String descripcion;
 	private String intereses;
-	private String telefono;
+	private int telefono;
 	
 	public RegistroBean(){}
 	
-	public RegistroBean( String tipo, String nickName, String nombre,
+	public RegistroBean( int id, String tipo, String nickName, String nombre,
 			String apellido1, String apellido2, String email, 
 			String nacimiento, String direccion, String descripcion,
-			String intereses, String telefono) {
+			String intereses, int telefono) {
 		super();
-		
+		this.id = id;
 		this.tipo = tipo;
 		this.nickName = nickName;
 		this.nombre = nombre;
@@ -35,6 +36,14 @@ public class RegistroBean{
 		this.telefono = telefono;
 	}
 
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int aux){
+		id = aux;
+	}
+	
 	public String getNickName(){
 		return nickName;
 	}
@@ -108,11 +117,11 @@ public class RegistroBean{
 		intereses = aux;
 	}
 	 
-	public String getTelefono(){
+	public int getTelefono(){
 		return telefono;
 	}
 	 
-	public void setTelefono(String aux){
+	public void setTelefono(int aux){
 		telefono = aux;
 	}
 	  
