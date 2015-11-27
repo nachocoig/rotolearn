@@ -100,7 +100,7 @@
 		            	<div class="limpiador"></div>
 		            </div>
 		            <div id="bMedio">
-						<img id="imgPerfil" src="./images/maxresdefault.jpg" class="img-rounded"/>
+						<img id="imgPerfil" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-rounded"/>
 						<div class="limpiador"></div>
 					</div>
 		            <div id="bInferior">

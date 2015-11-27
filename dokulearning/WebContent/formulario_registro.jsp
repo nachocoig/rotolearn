@@ -83,7 +83,7 @@
 					}
 				%>
 	    	
-				<form role="form" action="reg.form" method="POST">
+				<form role="form" action="reg.form" method="POST" enctype="multipart/form-data" >
 				<div class="col-md-5 col-md-offset-1" >
 					<h2>Registrate ahora y comienza a formarte</h2>
 					<div class="form-group">
@@ -182,8 +182,8 @@
 					</div>
 					<div class="form-group">
 						<label  for="foto">Imagen de perfil</label>
-						<input type="text" class="form-control" name="exampleInputFile" id="exampleInputFile" placeholder="Introduce la url en la que se encuentra la imagen" >
-						<p class="help-block">El formato debe ser jpg</p>
+            			<input type="file" name="file" id="file" />
+  						<p class="help-block">El formato debe ser jpg</p>
 					</div>
 					<div class="form-group">        
 						<button type="submit" class="btn btn-success">Registrate</button>

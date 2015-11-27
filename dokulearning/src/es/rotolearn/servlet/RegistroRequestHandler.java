@@ -1,134 +1,114 @@
 
 package es.rotolearn.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.Statement;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import entities.Usuario;
-import es.rotolearn.javaBean.RegistroBean;
+import es.rotolearn.controlImagenes.*;
 
+@MultipartConfig(location="/tmp")
 public class RegistroRequestHandler implements RequestHandler {
 
+	public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile foto, String nick) throws ServletException, IOException {
+		
+		ServletContext context = request.getServletContext();
+	    final String path = context.getRealPath("/images/im_usuarios");
+	    byte ficheroTotal[] = null;
+	    
+	    if(foto == null)
+	    	System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
+
+	    //final String fileName = foto.getFileName();
+
+	    OutputStream out = null;
+	    InputStream filecontent = null;
+	    File file = null;
+        FileInputStream fis = null;
+        
+	    try {
+	        
+	    	out = new FileOutputStream(new File(path + File.separator + nick + "_perfil.jpg"));
+	        out.write(foto.getData());
+
+			file = new File(path + File.separator + nick + "_perfil.jpg");
+	        fis = new FileInputStream(file);
+			
+	        
+	        ficheroTotal = new byte[(int)file.length()];
+			fis.read(ficheroTotal);
+			
+	    } catch (Exception e) {
+	        System.out.println("Error al crear la imagen en el servidor. Motivo: ");
+	        e.printStackTrace();
+	    } finally {
+	        if (out != null) 
+	            out.close();
+	        if (filecontent != null) 
+	            filecontent.close();	
+			if(fis != null)
+				fis.close();
+	    }
+	    return ficheroTotal;
+	}
+	
+	
+	
+	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "login.jsp";
-
-		/*Insercion a BBDD con DataSource
-		System.out.println("Vamos a probar a hacer la insercion por DATASOURCE");
-		InitialContext miInitialContext;
-		DataSource miDS;
-		try{
-			miInitialContext = new InitialContext();
-
-			miDS = (DataSource) miInitialContext.lookup("RotolearnJNDI");
-
-			Connection conexion = miDS.getConnection();
-
-			Statement myStatement = conexion.createStatement();
 		
-			String intereses="";
-			for(int i=1;i<11;i++){
-				if(request.getParameter("intereses"+i)!=null){
-					intereses = intereses+request.getParameter("intereses"+i)+"/";
-				}
-			}
-			
-			myStatement.executeUpdate("INSERT INTO USUARIO VALUES ('"+request.getParameter("optradio")+"','"+nick+"','"+
-			request.getParameter("nombre")+"','"+request.getParameter("apellido1")+"','"+request.getParameter("apellido2")+
-			"','"+String.valueOf(request.getParameter("pass").hashCode())+"','"+request.getParameter("date")+"','"+request.getParameter("exampleInputFile")
-			+"','"+request.getParameter("email")+"','"+request.getParameter("tlf")+"', '"+
-			request.getParameter("direccion")+"', '"+request.getParameter("descripcion")+"', '"+intereses+"')");
-			
-			
-			myStatement.close();
-			conexion.close();
-			
-
-	
-			
-		}catch (NamingException e) {
-			// TODO Bloque catch generado automaticamente
-			e.printStackTrace();
-			request.setAttribute("error","reg");
-			ruta = "formulario_registro.jsp";
-
-		} catch (SQLWarning sqlWarning) {
-			while (sqlWarning != null) {
-				System.out.println("Error: " + sqlWarning.getErrorCode());
-				System.out.println("Descripcion: " + sqlWarning.getMessage());
-				System.out.println("SQLstate: " + sqlWarning.getSQLState());
-				sqlWarning = sqlWarning.getNextWarning();
-				request.setAttribute("error","reg");
-				ruta = "formulario_registro.jsp";
-			}
-		} catch (SQLException sqlException) {
-			while (sqlException != null) {
-				System.out.println("Error: " + sqlException.getErrorCode());
-				System.out.println("Descripcion: " + sqlException.getMessage());
-				System.out.println("SQLstate: " + sqlException.getSQLState());
-				sqlException = sqlException.getNextException();
-				request.setAttribute("error","reg");
-				ruta = "formulario_registro.jsp";
-			}
-		}
-
-	*/	
-		
-		/* ESTO NO FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA*/
-		
-	//////////////////JPA///////////////////////////////////
-		
-		// 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
-
-		// 2 Create the Entity Manager
 		EntityManager em = factory.createEntityManager();
-		
-		//Creamos el usuario a buscar en la BBDD
 		Usuario nAux = new Usuario();
 		nAux.setNickname(request.getParameter("nick"));
-		
-		// 3 Get one EntityTransaction
 		em.getTransaction().begin();
-		//Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
+		
 		try{
-		Usuario resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, request.getParameter("nick")).getSingleResult();
-		request.setAttribute("error","reg");
-		ruta = "formulario_registro.jsp";
+			Usuario resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, request.getParameter("nick")).getSingleResult();
+			request.setAttribute("error","reg");
+			ruta = "formulario_registro.jsp";
 		}catch (javax.persistence.NoResultException e){
 			String intereses="";
+			MultipartRequest mr = new MultipartRequest(request);
+
 			for(int i=1;i<11;i++){
 				if(request.getParameter("intereses"+i)!=null){
-					intereses = intereses+request.getParameter("intereses"+i)+"/";
+					intereses = intereses+mr.getParameterValues("intereses"+i)[0]+"/";
 				}
-			}//uu
-			nAux.setNombre(request.getParameter("nombre"));
-			nAux.setTipo(request.getParameter("optradio"));
-			nAux.setApellido1(request.getParameter("apellido1"));
-			nAux.setApellido2(request.getParameter("apellido2"));
-			nAux.setEmail(request.getParameter("email"));
-			nAux.setPass(String.valueOf(request.getParameter("pass").hashCode()));
-			nAux.setFecha_nac(request.getParameter("date"));
-			nAux.setDireccion(request.getParameter("direccion"));
-			nAux.setDescripcion(request.getParameter("descripcion"));
+			}
+			nAux.setNickname(mr.getParameterValues("nick")[0]);
+			nAux.setNombre(mr.getParameterValues("nombre")[0]);
+			nAux.setTipo(mr.getParameterValues("optradio")[0]);
+			nAux.setApellido1(mr.getParameterValues("apellido1")[0]);
+			nAux.setApellido2(mr.getParameterValues("apellido2")[0]);
+			nAux.setEmail(mr.getParameterValues("email")[0]);
+			nAux.setPass(String.valueOf(mr.getParameterValues("pass")[0].hashCode()));
+			nAux.setFecha_nac(mr.getParameterValues("date")[0]);
+			nAux.setDireccion(mr.getParameterValues("direccion")[0]);
+			nAux.setDescripcion(mr.getParameterValues("descripcion")[0]);
 			nAux.setIntereses(intereses);
-			nAux.setTelefono(Integer.parseInt(request.getParameter("tlf")));
+			nAux.setTelefono(Integer.parseInt(mr.getParameterValues("tlf")[0]));
+		    
+			UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");
+
+			nAux.setImagen(obtenerFicheroBytes(request, foto, mr.getParameterValues("nick")[0] ));
 			//nAux.setImagen(request.getParameter("exampleInputFile"));
 			
 			try {

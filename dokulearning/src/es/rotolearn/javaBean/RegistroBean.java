@@ -14,13 +14,14 @@ public class RegistroBean{
 	private String descripcion;
 	private String intereses;
 	private int telefono;
+	private String imagenURL;
 	
 	public RegistroBean(){}
 	
 	public RegistroBean( int id, String tipo, String nickName, String nombre,
 			String apellido1, String apellido2, String email, 
 			String nacimiento, String direccion, String descripcion,
-			String intereses, int telefono) {
+			String intereses, int telefono, String imagenURL) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
@@ -34,6 +35,7 @@ public class RegistroBean{
 		this.descripcion = descripcion;
 		this.intereses = intereses;
 		this.telefono = telefono;
+		this.imagenURL = imagenURL;
 	}
 
 	public int getId(){
@@ -131,5 +133,13 @@ public class RegistroBean{
 	      
 	public void setTipo(String aux){
 	    tipo = aux;
+	}
+	
+	public String getImagenURL(){
+		return imagenURL;
+	}
+	
+	public void setImagenURL(String aux){
+		imagenURL = aux;
 	}
 }
