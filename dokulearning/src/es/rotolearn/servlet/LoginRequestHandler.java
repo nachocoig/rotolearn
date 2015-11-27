@@ -88,7 +88,8 @@ public class LoginRequestHandler implements RequestHandler {
 					regbean.setNacimiento(resultado.getFecha_nac());
 				    regbean.setDireccion(resultado.getDireccion());
 				    regbean.setNombre(resultado.getNombre());
-				    regbean.setImagenURL(cargarImagen(resultado.getImagen(), request, resultado.getNickname()));
+				    
+				    cargarImagen(resultado.getImagen(), request, resultado.getNickname());
 				    
 					session = ((HttpServletRequest) request).getSession();
 					session.setAttribute("logueado", "true");
@@ -104,7 +105,6 @@ public class LoginRequestHandler implements RequestHandler {
 				
 			
 			em.close();
-			System.out.println("C L O S E ");
 		}catch(javax.persistence.NoResultException e){//no existe el usuario
 			em.close();
 			request.setAttribute("error", "true");
