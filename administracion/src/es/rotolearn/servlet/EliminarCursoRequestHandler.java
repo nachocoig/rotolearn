@@ -14,7 +14,7 @@ import entities.*;
 public class EliminarCursoRequestHandler implements RequestHandler {
 
 public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 	String ruta = "listadocursos.form";
+	String ruta = request.getServletPath();
  	
     System.out.println("Procedemos a borrar el curso");
     int ID = Integer.parseInt(request.getParameter("ID"));
@@ -33,6 +33,12 @@ public String handleRequest(HttpServletRequest request, HttpServletResponse resp
 					em.remove(borrar);
 					em.getTransaction().commit();
 					request.setAttribute("borrado", "ok");
+					if(ruta.equals("/denegarcurso.form")){
+						request.setAttribute("act", "okd");
+						ruta = "listadovalidados.form";}
+					else{
+						ruta="listadocursos.form";
+					}
 					//em.close();
 			    	} catch (Exception e2) {
 					System.out.println("Descripcion: " + e2.getMessage());

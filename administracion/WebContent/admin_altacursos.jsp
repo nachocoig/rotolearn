@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="es.rotolearn.tablas.Curso" %>
+<%@ page import="entities.Curso" %>
 <html lang="es">
 <head>
   <title>Alta de cursos</title>
@@ -40,7 +40,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cursos
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="admin_altacursos.jsp">Alta</a></li>
+                                 <li><a href="listadovalidados.form">Alta</a></li>
                                  <li><a href="listadocursos.form">Listado</a></li>
 	                                <li><a href="listadodestacados.form">Destacados</a></li>
                             </ul>
@@ -74,6 +74,28 @@
     
     <!--CUERPO-->
     <div id="cuerpo" class="container row col-sm-12">
+    <!--  MENSAJES DE OK/ERROR EDICION CURSO -->
+			 <%if(request.getAttribute("act")!=null){
+    	if(request.getAttribute("act").equals("okv")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso validado con exito!</strong> 
+				</div>
+				<% }else if (request.getAttribute("act").equals("okd")){ 
+			 
+			       %>
+			<div class="alert alert-success">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso denegado con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido actualizar el estado!
+				</div>
+			<% }} %>
         <h2 class="titulo">Alta de Cursos</h2>
         <div class="table-responsive">          
             <table class="table table-condensed table-hover">
@@ -81,6 +103,7 @@
                 <tr>
                     <th>Aceptar</th>
                     <th>Rechazar</th>
+                    <th>ID </th>
                     <th>T&iacute;tulo</th>
                     <th>Profesor</th>
                     <th>Dificultad</th>
@@ -91,33 +114,40 @@
                     <th>Imagen</th>
                 </tr>
             </thead>
-            <tbody>
-               	<%
-               		ArrayList<Curso> val = (ArrayList<Curso>) request.getAttribute("validados");
-               		String h;
-               		for(int i=0; i<val.size();i++){
-               	%>
-            
-                <tr>
-                	<td>
-                		<% h=val.get(i).getTitulo();%>
-                    		<a href="validar.form?validar=<%=h%>" class="btn btn-default btn-xs" type="submit" >Aceptar</a>
-                    </td>
-                    <td>
-                    		<a href="denegar.form?denegar=<%=h%>" class="btn btn-default btn-xs" type="submit" >Denegar</a>
-                    </td> 
-                    <td><%=val.get(i).getTitulo() %></td>
-                    <td><%=val.get(i).getUsuario() %></td>
-                    <td><%=val.get(i).getDificultad() %></td>
-                    <td><%=val.get(i).getHoras() %></td>
-                    <td><%=val.get(i).getPrecio() %></td>
-                    <td><%=val.get(i).getCategoria() %></td>
-                    <td><%=val.get(i).getDescripcion() %></td>
-                    <td><%=val.get(i).getImagen() %></td>
-                </tr>
-                <%
-               		}
-                %>
+             <tbody>
+                  <%if(request.getAttribute("curso").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun curso</td> 
+                               </tr>
+                            
+                        	<% 
+                        }else{
+                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
+                		for(int i=0; i<dest.size();i++){
+                			Curso aux = dest.get(i);
+                			int ID = aux.getId();
+                		%>
+			           		<tr>
+			           			<td>
+			            		<a href="validarcurso.form?ID=<%=ID%>" class="btn btn-default btn-xs" type="submit" >Aceptar</a>
+                    			</td>
+                   				<td>
+                    			<a href="denegarcurso.form?ID=<%=ID%>" class="btn btn-default btn-xs" type="submit" >Denegar</a>
+                   				</td> 
+			            		<td><%= aux.getId() %></td>			            	
+			            		<td><%= aux.getTitulo() %></td>
+			            		<td><%= aux.getUsuario().getNickname() %></td>
+			            		<td><%= aux.getDificultad() %></td>
+			            		<td><%= aux.getHoras() %></td>
+			            		<td><%= aux.getPrecio() %></td>			            		
+			            		<td><%= aux.getCategoria() %></td>			            		
+			            		<td><%= aux.getDescripcion() %></td>
+			            		<td>Imagen.jpg</td>
+		            		</tr>
+			           	<% }} %>
+			           
             </tbody>
             </table>
         </div>

@@ -39,7 +39,12 @@ public class ActualizarCursoRequestHandler implements RequestHandler {
 			}
 			ruta="listadocursos.form";
 					}
-			else{
+			else if(ruta.equals("/validarcurso.form")){
+				editar.setValidado("SI");
+				request.setAttribute("act", "okv");
+				ruta="listadovalidados.form";
+				
+			}else{
 				editar.setDestacado("NO");
 				request.setAttribute("act", "ok");
 				ruta="listadodestacados.form";

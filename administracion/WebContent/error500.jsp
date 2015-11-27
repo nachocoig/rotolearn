@@ -39,7 +39,7 @@
 	                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cursos
 	                            <span class="caret"></span></a>
 	                            <ul class="dropdown-menu">
-	                                <li><a href="admin_altacursos.jsp">Alta</a></li>
+	                                <li><a href="listadovalidados.form">Alta</a></li>
 	                                 <li><a href="listadocursos.form">Listado</a></li>
 	                                <li><a href="listadodestacados.form">Destacados</a></li>
 	                            </ul>

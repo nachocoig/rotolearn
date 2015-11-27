@@ -39,6 +39,9 @@ public class ListarCursosRequestHandler implements RequestHandler {
 		if(ruta.equals("/listadocursos.form")){
 			ruta="admin_listadocursos.jsp";
 		aux=em.createQuery("SELECT i FROM Curso i WHERE i.validado= 'SI'").getResultList();}
+		else if(ruta.equals("/listadovalidados.form")){
+			ruta="admin_altacursos.jsp";
+		aux=em.createQuery("SELECT i FROM Curso i WHERE i.validado= 'NO'").getResultList();}
 		else {
 			aux=em.createQuery("SELECT i FROM Curso i WHERE i.destacado= 'SI'").getResultList();
 			ruta="admin_destacadocursos.jsp";}

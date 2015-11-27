@@ -26,7 +26,7 @@ public class ControladorServlet extends HttpServlet {
 		handlerHash.put("/reg_admin.form", new es.rotolearn.servlet.RegistroAdminRequestHandler());
 		handlerHash.put("/logout.form", new es.rotolearn.servlet.LogoutRequestHandler());
 		handlerHash.put("/admin_altacursos.form", new es.rotolearn.servlet.AltaCursosRequestHandler());
-		handlerHash.put("/validar.form", new es.rotolearn.servlet.ValidarRequestHandler());
+		//handlerHash.put("/validar.form", new es.rotolearn.servlet.ValidarRequestHandler());
 		handlerHash.put("/denegar.form", new es.rotolearn.servlet.DenegarRequestHandler());
 		handlerHash.put("/verprofes.form", new es.rotolearn.servlet.MostrarUsuariosRequestHandler());
 		handlerHash.put("/veralumn.form", new es.rotolearn.servlet.MostrarUsuariosRequestHandler());
@@ -34,7 +34,10 @@ public class ControladorServlet extends HttpServlet {
 		handlerHash.put("/borraralumn.form", new es.rotolearn.servlet.QuitarUsuarioRequestHandler());
 		handlerHash.put("/listadocursos.form", new es.rotolearn.servlet.ListarCursosRequestHandler());
 		handlerHash.put("/listadodestacados.form", new es.rotolearn.servlet.ListarCursosRequestHandler());
+		handlerHash.put("/listadovalidados.form", new es.rotolearn.servlet.ListarCursosRequestHandler());
 		handlerHash.put("/borrarcurso.form", new es.rotolearn.servlet.EliminarCursoRequestHandler());
+		handlerHash.put("/validarcurso.form", new es.rotolearn.servlet.ActualizarCursoRequestHandler());
+		handlerHash.put("/denegarcurso.form", new es.rotolearn.servlet.EliminarCursoRequestHandler());
 		handlerHash.put("/añadirdestacado.form", new es.rotolearn.servlet.ActualizarCursoRequestHandler());
 		handlerHash.put("/quitardestacado.form", new es.rotolearn.servlet.ActualizarCursoRequestHandler());
 	}
