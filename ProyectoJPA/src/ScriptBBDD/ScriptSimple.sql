@@ -104,6 +104,50 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`DESCUENTO`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`DESCUENTO` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`DESCUENTO` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Tipo` VARCHAR(5) NOT NULL,
+  `ID_c` INT NOT NULL,
+  `Cupon` VARCHAR(23) NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_DESCUENTO_1_idx` (`ID_c` ASC),
+  UNIQUE INDEX `ID_c_UNIQUE` (`ID_c` ASC),
+  CONSTRAINT `fk_DESCUENTO_1`
+    FOREIGN KEY (`ID_c`)
+    REFERENCES `rotolearnbd`.`CURSO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`PROMOCION`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`PROMOCION` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`PROMOCION` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `ID_c` INT NOT NULL,
+  `Descuento` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_PROMOCION_1_idx` (`ID_c` ASC),
+  CONSTRAINT `fk_PROMOCION_1`
+    FOREIGN KEY (`ID_c`)
+    REFERENCES `rotolearnbd`.`CURSO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

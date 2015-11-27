@@ -60,6 +60,14 @@ public class Curso implements Serializable {
 	@OneToMany(mappedBy="curso")
 	private List<CursoAlumno> cursoAlumnos;
 
+	//bi-directional many-to-one association to Descuento
+	@OneToMany(mappedBy="curso")
+	private List<Descuento> descuentos;
+
+	//bi-directional many-to-one association to Promocion
+	@OneToMany(mappedBy="curso")
+	private List<Promocion> promocions;
+
 	public Curso() {
 	}
 
@@ -179,6 +187,50 @@ public class Curso implements Serializable {
 		cursoAlumno.setCurso(null);
 
 		return cursoAlumno;
+	}
+
+	public List<Descuento> getDescuentos() {
+		return this.descuentos;
+	}
+
+	public void setDescuentos(List<Descuento> descuentos) {
+		this.descuentos = descuentos;
+	}
+
+	public Descuento addDescuento(Descuento descuento) {
+		getDescuentos().add(descuento);
+		descuento.setCurso(this);
+
+		return descuento;
+	}
+
+	public Descuento removeDescuento(Descuento descuento) {
+		getDescuentos().remove(descuento);
+		descuento.setCurso(null);
+
+		return descuento;
+	}
+
+	public List<Promocion> getPromocions() {
+		return this.promocions;
+	}
+
+	public void setPromocions(List<Promocion> promocions) {
+		this.promocions = promocions;
+	}
+
+	public Promocion addPromocion(Promocion promocion) {
+		getPromocions().add(promocion);
+		promocion.setCurso(this);
+
+		return promocion;
+	}
+
+	public Promocion removePromocion(Promocion promocion) {
+		getPromocions().remove(promocion);
+		promocion.setCurso(null);
+
+		return promocion;
 	}
 
 }

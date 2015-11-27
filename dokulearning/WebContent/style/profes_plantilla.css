@@ -10,6 +10,9 @@ body{
 .rojo{/*para los glyphicons rojos*/
     color:#CC271C;
 }
+h3{
+	color:white;
+}
 
 .formleccion{
   background-color:white;

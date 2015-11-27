@@ -77,45 +77,50 @@
 				%>
 						<div class="alert alert-success" style="margin-bottom:0px">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						    <strong>Cupon creado.</strong> Tu cupon se ha creado correctamente.
+						    <strong>Cupon creado.</strong> Tu vale descuento se ha creado correctamente.
 						</div>
 				<%
 					}else{
 				%>
 						<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						    <strong>Error al crear cupon.</strong> Tu cupon no se ha podido crear.
+						    <strong>Error al crear vale descuento.</strong> Tu vale no se ha podido crear.
 						</div>
 				<%
 					}
 				%>
         
+    		
     		<div class="row ">
-    		    <form role="form" method="post" action="cupon.form">
-        			<div class="col-md-4 col-md-offset-2">
-        			    <h2>Crear cup&oacute;n de descuento</h2>
+    		    <form role="form" method="post" action="vale.form">
+        			<div class="col-md-3 col-md-offset-3">
+        			    <h2>Crear vale de descuento</h2>
+						<input type=hidden name=tipo value="VALE">
         			    <div class="form-group">
-    						<label for="sel1">Curso: </label>
+    						<label for="sel1" name="cursoVale">Curso al que aplicar el vale: </label>
     						<select class="form-control"  id="sel1" required>
-    							<option>Curso 1</option>
-    							<option>Curso 2</option>
-    							<option>Curso 3</option>
-    							<option>Curso 4</option>
+    							<option value="curso1">Curso 1</option>
+    							<option value="curso2">Curso 2</option>
+    							<option value="curso3">Curso 3</option>
+    							<option value="curso4">Curso 4</option>
     						</select>
     					</div>
     					<div class="form-group">
-    						<label for="cupon">Cup&oacute;n: </label>
-    						<input type="text" class="form-control" name="cupon" placeholder="Introduce el cup&oacute;n" required>
+    						<label for="descuento">Cantidad a descontar: </label>
+    						<input type="number" class="form-control" name="descuento" min="0" max="70" placeholder="Introduce el descuento en porcentaje" required>
     					</div>
         			</div>
-        			<div class="col-md-4 ">
-						<br>
-						<br>
+        			<div class="col-md-3 ">
+                        <h3>Condiciones de validez del vale</h3>
     					<div class="form-group">
-    						<label for="descuento">Descuento: </label>
-    						<input type="number" class="form-control" name="descuento" min="0" max="100" placeholder="Introduce el descuento" required>
+    						<label for="minCursos">Numero minimo de cursos matriculados por el alumno: </label>
+    						<input type="number" class="form-control" name="minCursos" min="0" max="10" required>
     					</div>
-    					<button type="submit" class="btn btn-success">Crear cup&oacute;n</button>
+                        <div class="form-group">
+                            <label for="descuento">Fecha de validez del vale: </label>
+                            <input type="text" class="form-control" name="validez" placeholder="DD/MM/AAAA">
+                        </div>
+    					<button type="submit" class="btn btn-success">Crear vale descuento</button>
         			</div>
         		</form>
     		</div>
