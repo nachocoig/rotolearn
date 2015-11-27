@@ -180,10 +180,17 @@
 						<label for="tlf"><span class="red">*</span>Tel&eacute;fono</label>
 						<input type="number" class="form-control" name="tlf" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group cargaImagen">
 						<label  for="foto">Imagen de perfil</label>
-            			<input type="file" name="file" id="file" />
+            			<input type="file" name="file" id="file" accept="image/*" onchange="loadFile(event)"/>
   						<p class="help-block">El formato debe ser jpg</p>
+  						<img id="output"/>
+  						<script>
+						  var loadFile = function(event) {
+						    var output = document.getElementById('output');
+						    output.src = URL.createObjectURL(event.target.files[0]);
+						  };
+						</script>
 					</div>
 					<div class="form-group">        
 						<button type="submit" class="btn btn-success">Registrate</button>
@@ -193,6 +200,8 @@
 			</div>
 		</div>
 		<!--FIN CUERPO-->
+	
+	
 	
 	    <!--PIE DE PAGINA-->
 	    <footer>

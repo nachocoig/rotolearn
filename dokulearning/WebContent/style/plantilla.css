@@ -139,3 +139,7 @@ h2{
     margin-top:-4px;
     margin-left:4px;
 }
+.cargaImagen img{
+	height:300px;
+	width: 250px;	
+}
