@@ -129,7 +129,7 @@
                 	%>
                     <li class="portfolio-item col-md-2">
                         <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item3.jpg" alt="">
+                            <img src="images/im_cursos/<%=dest.get(i).getId()%>_curso.jpg" alt="">
                             <h5><%=dest.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=dest.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
                             <div class="overlay">
@@ -162,7 +162,7 @@
                 	%>
                     <li class="portfolio-item col-md-2">
                         <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item3.jpg" alt="">
+                            <img src="images/im_cursos/<%=rec.get(i).getId()%>_curso.jpg" alt="">
                             <h5><%=rec.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=rec.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
                             <div class="overlay">

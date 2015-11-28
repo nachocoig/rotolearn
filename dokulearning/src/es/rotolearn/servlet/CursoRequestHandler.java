@@ -1,6 +1,11 @@
 package es.rotolearn.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -12,41 +17,97 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import entities.*;
+import es.rotolearn.controlImagenes.MultipartRequest;
+import es.rotolearn.controlImagenes.UploadedFile;
 import es.rotolearn.javaBean.RegistroBean;
 
+@MultipartConfig(location="/tmp")
 public class CursoRequestHandler implements RequestHandler {
 
+	public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile foto, int id_creador) throws ServletException, IOException {
+		
+		ServletContext context = request.getServletContext();
+	    final String path = context.getRealPath("/images/im_cursos");
+	    byte ficheroTotal[] = null;
+	    
+	    if(foto == null)
+	    	System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
+
+	    //final String fileName = foto.getFileName();
+
+	    OutputStream out = null;
+	    InputStream filecontent = null;
+	    File file = null;
+        FileInputStream fis = null;
+        
+	    try {
+	        
+	    	out = new FileOutputStream(new File(path + File.separator + id_creador + "_tmp.jpg"));
+	        out.write(foto.getData());
+
+			file = new File(path + File.separator + id_creador + "_tmp.jpg");
+	        fis = new FileInputStream(file);
+			
+	        
+	        ficheroTotal = new byte[(int)file.length()];
+			fis.read(ficheroTotal);
+			
+			file.delete();
+	    } catch (Exception e) {
+	        System.out.println("Error al crear la imagen en el servidor. Motivo: ");
+	        e.printStackTrace();
+	    } finally {
+	        if (out != null) 
+	            out.close();
+	        if (filecontent != null) 
+	            filecontent.close();	
+			if(fis != null)
+				fis.close();
+	    }
+	    return ficheroTotal;
+	}
+	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String ruta = "profes_crearcurso.jsp";
+
 		HttpSession session;
 		session = ((HttpServletRequest) request).getSession();
 		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
 		
-		String ruta = "profes_crearcurso.jsp";
 		Usuario uAux = new Usuario();
 		Curso aux = new Curso();
-		uAux.setId(1);
+		uAux.setId(user.getId());
 		
 		aux.setUsuario(uAux);
-		aux.setTitulo(request.getParameter("titulo"));
-		aux.setPrecio(Integer.parseInt(request.getParameter("precio")));
-		aux.setHoras(Integer.parseInt(request.getParameter("horas")));
-		aux.setDescripcion(request.getParameter("descripcion"));
-		aux.setDificultad(request.getParameter("dificultad"));
+
+		MultipartRequest mr = new MultipartRequest(request);
+
+		
+		aux.setTitulo(mr.getParameterValues("titulo")[0]);
+		aux.setPrecio(Integer.parseInt(mr.getParameterValues("precio")[0]));
+		aux.setHoras(Integer.parseInt(mr.getParameterValues("horas")[0]));
+		aux.setDescripcion(mr.getParameterValues("descripcion")[0]);
+		aux.setDificultad(mr.getParameterValues("dificultad")[0]);
 		aux.setDestacado("NO");
 		aux.setValidado("NO"); 
-		//aux.setImagen(request.getParameter("imagen"));
-		aux.setCategoria(request.getParameter("categoria"));
-		aux.setEmail_paypal(request.getParameter("paypal"));
+		aux.setCategoria(mr.getParameterValues("categoria")[0]);
+		aux.setEmail_paypal(mr.getParameterValues("paypal")[0]);
 		
+		UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");
+		
+		aux.setImagen(obtenerFicheroBytes(request, foto, user.getId()));
+
+		//aux.setImagen(request.getParameter("imagen"));
 		
 		// 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");

@@ -70,7 +70,7 @@
 	    <!--CUERPO-->
 	    <div class="container-fluid">
         	<div class="row" id="cuerpo">
-				<form role="form" method="post" action="curso.form">
+				<form role="form" method="post" action="curso.form" enctype="multipart/form-data" >
 		        <div class="col-md-4 col-md-offset-2">
 		        	<%
 						if(request.getAttribute("curso") != null)
@@ -136,10 +136,15 @@
 					</div>
 						     
 					<div class="form-group">
-						<label  for="foto">Imagen del curso</label>
-						<input type="text" class="form-control" name="imagen" placeholder="Introduce la url de la imagen del curso" required>
-						</dive>
-						<p class="help-block">El formato debe ser jpg</p>
+						<input type="file" name="file" id="file" accept="image/*" onchange="loadFile(event)"/>
+  						<p class="help-block">El formato debe ser jpg</p>
+  						<img id="output"/>
+  						<script>
+						  var loadFile = function(event) {
+						    var output = document.getElementById('output');
+						    output.src = URL.createObjectURL(event.target.files[0]);
+						  };
+						</script>
 					</div>
 					<h2>Informaci&oacute;n de cobro</h2>
 					<div class="form-group" id="desplegable">					

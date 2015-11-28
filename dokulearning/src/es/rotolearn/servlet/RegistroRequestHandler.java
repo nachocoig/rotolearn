@@ -73,7 +73,6 @@ public class RegistroRequestHandler implements RequestHandler {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "login.jsp";
-		
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
 		EntityManager em = factory.createEntityManager();
 		Usuario nAux = new Usuario();

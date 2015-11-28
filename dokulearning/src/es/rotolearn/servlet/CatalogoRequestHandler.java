@@ -1,5 +1,7 @@
 package es.rotolearn.servlet;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,6 +16,7 @@ import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +28,27 @@ import es.rotolearn.javaBean.RegistroBean;
 
 public class CatalogoRequestHandler implements RequestHandler {
 
+	public int cargarImagen(byte []img, HttpServletRequest request, int idCurso) throws IOException{
+		ServletContext context = request.getServletContext();
+	    final String path = context.getRealPath("/images/im_cursos");
+	    String rutaCompleta = path + File.separator + idCurso + "_curso.jpg";
+		File fichero = new File(rutaCompleta);
+		if(!fichero.exists()){
+			fichero.delete();
+		    try{
+			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
+			    fos.write(img);
+			    fos.close();
+			    return 0;
+		    }catch (Exception e){
+		    	System.out.println("Error al cargar la imagen de usuario");
+		    	e.printStackTrace();
+		    }
+		}else
+			fichero.delete();
+		return -1;
+	}
+	
 	@Override
 	public String handleRequest(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		String ruta="catalogo.jsp";
@@ -53,8 +77,10 @@ public class CatalogoRequestHandler implements RequestHandler {
 			System.out.println("Voy a recojer los curso destacados que tenemos");
 			destacados = em.createQuery("SELECT i FROM Curso i WHERE i.destacado='SI'").setMaxResults(10).getResultList();	
 			if(!destacados.isEmpty()){
-				
 				for(int i=0; i<destacados.size();i++){
+					System.out.println("ENTRA A DESTACADOS");
+					cargarImagen(destacados.get(i).getImagen(), request, destacados.get(i).getId());
+					System.out.println("SALE DE DESTACADOS");
 					des.add(destacados.get(i));
 				}
 			}
@@ -84,6 +110,9 @@ public class CatalogoRequestHandler implements RequestHandler {
 				recomendados = em.createQuery("SELECT i FROM Curso i WHERE "+query).setMaxResults(10).getResultList();	
 				if(!recomendados.isEmpty()){
 					for(int i=0; i<recomendados.size();i++){
+						System.out.println("ENTRA A RECOMENDADOS");
+						cargarImagen(recomendados.get(i).getImagen(), request, recomendados.get(i).getId());
+						System.out.println("SALE DE RECOMENDADOS");
 						rec.add(recomendados.get(i));
 					}
 				}
