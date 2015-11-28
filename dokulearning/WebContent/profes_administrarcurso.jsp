@@ -1,3 +1,4 @@
+<%@ page import="entities.Curso" %>
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
@@ -79,9 +80,13 @@
         
         <!--CUERPO-->
         <div id="cuerpo" class="container-fluid">
+        <%
+        Curso aux = (Curso) request.getAttribute("curso");
+    	int ID = aux.getId();
+    	%>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2>Titulo de curso</h2>
+                    <h2><%=aux.getTitulo() %></h2>
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#info">Informaci&oacute;n</a></li>
                         <li><a data-toggle="tab" href="#material">Material</a></li>
@@ -92,7 +97,15 @@
                     <div class="tab-content">
                         <div id="info" class="tab-pane fade in active">
                             <h3>Descripci&oacute;n</h3>
-                            <p>Poner textbox para actualizar las descripciones de los cursos</p>
+                            <p><%=aux.getDescripcion() %></p>
+                            <h3>Añade nueva descripci&oacute;n:</h3>
+                           <div class="form-group">	
+					    <label for="moreinfo"><span class="red">*</span>Descripci&oacute;n</label>
+						<textarea name="descripcion" class="form-control" rows="4" placeholder="Describe en que consiste el curso" required></textarea>
+						</div>
+						<div class="form-group">
+					    <button type="submit" class="btn btn-success">Actualizar</button>
+					</div>	
                         </div>
                         <div id="alumn" class="tab-pane fade">
                             <div class="row">
@@ -115,27 +128,6 @@
                                                 <td>Porcentaje</td>
                                                 <td>roto25</td>
                                                 <td>25</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>J2E</td>
-                                                <td>Porcentaje</td>
-                                                <td>roto30</td>
-                                                <td>30</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Javascript</td>
-                                                <td>Descuento fijo</td>
-                                                <td>roto250</td>
-                                                <td>250</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Labrador minecraft</td>
-                                                <td>Descuento fijo</td>
-                                                <td>roto250</td>
-                                                <td>250</td>
                                                 <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
                                             </tr>
                                         </tbody>

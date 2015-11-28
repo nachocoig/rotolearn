@@ -1,3 +1,5 @@
+<%@ page import="entities.Curso" %>
+<%@ page import="java.util.ArrayList" %>
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
@@ -85,46 +87,38 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <%if(request.getAttribute("curso").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun curso</td> 
+                               </tr>
+                            
+                        	<% 
+                        }else{
+                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
+                		for(int i=0; i<dest.size();i++){
+                			Curso aux = dest.get(i);
+                			int ID = aux.getId();
+                		%>
                             <tr>
-                                <td><a href="profes_administrarcurso.jsp" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
-                                <td>Aceptado</td>
-                                <td>Curso de Java 1</td>
-                                <td>Imposible</td>
-                                <td>288h</td>
-                                <td>3000<span class="glyphicon glyphicon-eur"></span></td>
-                                <td>Curso de Java</td>
-                                <td>infarto.jpg</td>
+                                <td><a href="administrarCurso.form?ID=<%= ID %>" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
+                                <td><%if(aux.getValidado().equals("SI")){ %>
+                                	Validado
+                                	<%} else{ %>
+                                	No Validado <%} %></td>
+                                <td><%=aux.getTitulo() %></td>
+                                <td><%=aux.getDificultad() %></td>
+                                <td><%=aux.getHoras() %></td>
+                                <td><%=aux.getPrecio() %><span class="glyphicon glyphicon-eur"></span></td>
+                                <td><%=aux.getDescripcion() %></td>
+                                <td>
+ <!-- /////////////////////////////////METER IMAGEN NAAAAAAAAAAAAAAAACHO///////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+ 								Imagen.jpg</td>
                             </tr>
-                            <tr>
-                                <td><a href="profes_administrarcurso.jsp" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
-                                <td>Pendiente</td>
-                                <td>Curso de Java 2</td>
-                                <td>Imposible</td>
-                                <td>288h</td>
-                                <td>3000<span class="glyphicon glyphicon-eur"></span></td>
-                                <td>Curso de Java</td>
-                                <td>infarto.jpg</td>
-                            </tr>
-                            <tr>
-                                <td><a href="profes_administrarcurso.jsp" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
-                                <td>Aceptado</td>
-                                <td>Curso de Java 3</td>
-                                <td>Imposible</td>
-                                <td>288h</td>
-                                <td>3000<span class="glyphicon glyphicon-eur"></span></td>
-                                <td>Curso de Java</td>
-                                <td>infarto.jpg</td>
-                            </tr>
-                            <tr>
-                                <td><a href="profes_administrarcurso.jsp" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
-                                <td>Pendiente</td>
-                                <td>Curso de Java 4</td>
-                                <td>Imposible</td>
-                                <td>288h</td>
-                                <td>3000<span class="glyphicon glyphicon-eur"></span></td>
-                                <td>Curso de Java</td>
-                                <td>infarto.jpg</td>
-                            </tr>
+                            <% }} %>
                         </tbody>
                     </table>
                 </div>

@@ -10,23 +10,28 @@ import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import es.rotolearn.tablas.Curso;
+import entities.Curso;
 
 public class ShowCursoRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ruta = "info_curso.jsp";
+		
+		/*
+		String ruta = request.getServletPath();
 		
 		String titulo = request.getParameter("titulo");
 		
-		/*OBTENEMOS DE LA BBDD TODOS LOS DATOS DEL CURSO*/
-		/*Consulta a la BBDD con DataSource*/
+		/*OBTENEMOS DE LA BBDD TODOS LOS DATOS DEL CURSO
+		/*Consulta a la BBDD con DataSource
 		System.out.println("Vamos a obtener los datos del curso por DATASOURCE");
 		
 		InitialContext miInitialContext;
@@ -86,8 +91,34 @@ public class ShowCursoRequestHandler implements RequestHandler {
 				sqlException = sqlException.getNextException();
 			}
 		}
+		*/
 		
-		request.setAttribute("curso", verCurso);
+	String ruta = request.getServletPath();
+	 	
+	    System.out.println("Procedemos a ver el curso");
+	    int ID = Integer.parseInt(request.getParameter("ID"));
+	 // 1 Create the factory of Entity Manager
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
+
+		// 2 Create the Entity Manager
+		EntityManager em = factory.createEntityManager();
+		
+		
+		// 3 Get one EntityTransaction
+		em.getTransaction().begin();
+		try{
+			Curso verCurso = em.find(Curso.class, ID);
+			request.setAttribute("curso", verCurso);}
+		catch(javax.persistence.NoResultException e){ 
+			System.out.println("Descripcion: " + e.getMessage());  
+		}	
+		if(ruta.equals("/showCurso.form")){
+			ruta = "info_curso.jsp";
+		}
+		else{
+			ruta = "profes_administrarcurso.jsp";
+		}
+		em.close();
 		
 		return ruta;
 	}

@@ -1,5 +1,5 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
-<%@ page import="es.rotolearn.tablas.Curso" %>
+<%@ page import="entities.Curso" %>
 <!DOCTYPE html>
 <html lang="es">
 	<head>
