@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `rotolearnbd`.`USUARIO` (
   `Apellido2` VARCHAR(35) NOT NULL,
   `Pass` VARCHAR(25) NOT NULL,
   `Fecha_nac` VARCHAR(10) NULL,
-  `Imagen` BLOB NULL,
+  `Imagen` LONGBLOB NULL,
   `Email` VARCHAR(70) NOT NULL,
   `Telefono` INT NOT NULL,
   `Direccion` VARCHAR(70) NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `rotolearnbd`.`CURSO` (
   `Validado` VARCHAR(2) NOT NULL,
   `Destacado` VARCHAR(2) NOT NULL,
   `Categoria` VARCHAR(45) NOT NULL,
-  `Imagen` BLOB NULL,
+  `Imagen` LONGBLOB NULL,
   PRIMARY KEY (`ID`),
   INDEX `fk_CURSO_1_idx` (`Profesor` ASC),
   CONSTRAINT `fk_CURSO_1`
