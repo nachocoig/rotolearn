@@ -35,7 +35,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 		/*Consulta a la BBDD con JPA*/
 		
 		// 1 Create the factory of Entity Manager
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 
 		// 2 Create the Entity Manager
 		EntityManager em = factory.createEntityManager();
@@ -61,13 +61,15 @@ public class CatalogoRequestHandler implements RequestHandler {
 		}catch(Exception e){
 			System.out.println("Pilla excepcion nuse porque");
 		}
-		if(session.getAttribute("usuario")!=null){
+		
+		if(session.getAttribute("usuario") != null){
 			//Vamos a ver los intereses del usuario
 			System.out.println("Voy a recojer los intereses del usuario logueado");
 			//Usuario logueado = em.find(Usuario.class, user.getId());
 			
+			System.out.println("Casca 1");
 			Usuario logueado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, user.getNickName()).getSingleResult();
-			
+			System.out.println("Casca 2");
 			if(logueado.getIntereses()!=null){
 				String [] resultado = logueado.getIntereses().split("/");
 				String query = "";
@@ -91,7 +93,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 		request.setAttribute("destacados", des);
 		request.setAttribute("recomendados", rec);
 		
-		
+		em.close();
 		
 		/*FALTAN LOS CLOSE*/
 		

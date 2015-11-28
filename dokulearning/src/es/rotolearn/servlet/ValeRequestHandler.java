@@ -62,25 +62,21 @@ public class ValeRequestHandler implements RequestHandler {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try{
-			em.persist(valeProfe);
-			// 4 Commmit the transaction
-			tx.commit();
-			request.setAttribute("cupon", "si");
-		}catch(Exception e){
+			Descuento existe = (Descuento) em.createQuery("SELECT i FROM Descuento i WHERE i.curso= ?1").setParameter(1, aux).getSingleResult();
 			request.setAttribute("cupon", "no");
-			e.printStackTrace();
+		}catch(Exception e){
+			try{
+				em.persist(valeProfe);
+				// 4 Commmit the transaction
+				tx.commit();
+				request.setAttribute("cupon", "si");
+			}catch(Exception e1){
+				request.setAttribute("cupon", "no");
+				e1.printStackTrace();
+			}
 		}
-
 		// 5 Close the manager
 		em.close();
-		
-		
-		/*request.getParameter("curso");
-		request.getParameter("tipodescuento");
-	    request.getParameter("cupon");
-	    request.getParameter("descuento");
-	    
-	    request.setAttribute("cupon", "si");*/
 	    
 		return ruta;
 	}

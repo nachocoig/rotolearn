@@ -99,6 +99,33 @@
 				<%
 					}
 				%>
+				
+				<%
+					if(request.getAttribute("eliminado") != null)
+					if(request.getAttribute("eliminado").equals("si")){
+				%>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+		                		<div class="alert alert-success" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Vale descuento eliminado.</strong> Tu vale descuento se ha eliminado correctamente.
+								</div>
+		                	</div>
+		                </div>
+				<%
+					}else{
+				%>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+								<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Error al eliminar vale descuento.</strong> Tu vale no se ha podido eliminar.
+								</div>
+							</div>
+		                </div>
+				<%
+					}
+				%>
         
     		<div class="row ">
     		
@@ -178,19 +205,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            
                     		<%
                     			for(int i=0;i<listaDescuentos.size();i++){
+                    				int ID = listaDescuentos.get(i).getId();
                     		%>
-                                <td><%=listaDescuentos.get(i).getId() %></td>
+                    		<tr>
+                                <td><%=ID %></td>
                                 <td><%=listaDescuentos.get(i).getCurso().getTitulo() %></td>
                                 <td><%=listaDescuentos.get(i).getCupon() %></td>
                                 <td><%=listaDescuentos.get(i).getValidez() %></td>
-                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                <td><a href="eliminarVale.form?ID=<%=ID %>" class="btn btn-default btn-xs">Eliminar</a></td>
+                            </tr>
                             <%
                     			}
                             %>
-                            </tr>
+                            
                         </tbody>
                         </table>
                     </div>
