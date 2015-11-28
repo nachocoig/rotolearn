@@ -69,47 +69,54 @@
 	    <!--FIN CABECERA-->
 	    
 	    <!--CUERPO-->
-	    <div id="cuerpo" class="container row col-sm-12">
-	        <h2 class="titulo">Listado de Cupones de descuento</h2>
-	        <div class="table-responsive">          
-	            <table class="table table-condensed table-hover">
-	            <thead>
-	                <tr>
-	                    <th>Eliminar</th>
-	                    <th>Curso</th>
-	                    <th>Profesor</th>
-	                    <th>Descuento fijo (%)</th>
-	                    <th>Tipo cupon</th>
-	                    <th>Cupon</th>
-	                    <th>Descuento</th>
-	                    <th>Fecha de validez</th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr>
-	                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-	                    <td>Java 1</td>
-	                    <td>Tomasito</td>
-	                    <td>10</td>
-	                    <td>Porcentaje</td>
-	                    <td>ROTO2</td>
-	                    <td>50</td>
-	                    <td>30/12/2288</td>
-	                </tr>
-	                <tr>
-	                    <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-	                    <td>Java 1</td>
-	                    <td>Tomasito</td>
-	                    <td>10</td>
-	                    <td>Fijo</td>
-	                    <td>ROTO288</td>
-	                    <td>100</td>
-	                    <td>30/12/2288</td>
-	                </tr>
-	            </tbody>
-	            </table>
-	        </div>
-	    </div>
+	    <div id="formCupon" class="container-fluid">
+    		<div class="row ">
+    		    <form role="form" action="crearDescuento.form" method="post">
+        			<div class="col-md-6 col-md-offset-3">
+        			    <h2>Crear descuento</h2>
+        			    <div class="form-group">
+    						<label for="sel1">Curso al que aplicar el descuento: </label>
+    						<select class="form-control" name="cursoDesc" id="sel1" required>
+    							<option value="curso1">Curso 1</option>
+    							<option value="curso2">Curso 2</option>
+    							<option value="curso3">Curso 3</option>
+    							<option value="curso4">Curso 4</option>
+    						</select>
+    					</div>
+    					<div class="form-group">
+    						<label name="descuento">Cantidad a descontar: </label>
+    						<input type="number" class="form-control" name="descuento" min="0" max="30" placeholder="Introduce el descuento en porcentaje" required>
+    					</div>
+    					<button type="submit" class="btn btn-success">Crear descuento</button>
+        			</div>
+				</form>
+    		</div>
+    	</div>
+    	<div id="cuerpo" class="container-fluid">
+    		 <div class="row">
+                <div class="col-md-12">
+			        <h2 class="titulo">Listado de Cupones de descuento</h2>
+			        <div class="table-responsive">          
+			            <table class="table table-condensed table-hover">
+			            <thead>
+			                <tr>
+			                    <th>Eliminar descuento</th>
+			                    <th>Curso</th>
+			                    <th>Descuento</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr>
+			                    <td><a class="btn btn-default btn-xs" href="" >Eliminar</a></td>
+			                    <td>Java 1</td>
+			                    <td>10</td>
+			                </tr>
+			            </tbody>
+			            </table>
+			        </div>
+			    </div>
+			</div>
+		</div>
 		<!--FIN CUERPO-->
 	
 	</body>
