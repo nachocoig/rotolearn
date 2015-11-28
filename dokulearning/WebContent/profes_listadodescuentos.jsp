@@ -1,5 +1,7 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
-
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.Curso" %>
+<%@ page import="entities.Descuento" %>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -64,45 +66,65 @@
                     </div>
                 </nav>
             </div>
-            <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="profes_listadodescuentos.jsp">Ver tus descuentos</a></div>
+            <div class="formCupon" id="miga"><a href="profes_panel.jsp">Panel de control</a><span> > </span><a href="profes_listadodescuentos.jsp">Ver tus descuentos</a></div>
         </header>
         <!--FIN CABECERA-->
         
         <!--CUERPO-->
     	<div id="formCupon" class="container-fluid">
-                
+    	
                 <%
 					if(request.getAttribute("cupon") != null)
 					if(request.getAttribute("cupon").equals("si")){
 				%>
-						<div class="alert alert-success" style="margin-bottom:0px">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						    <strong>Cupon creado.</strong> Tu vale descuento se ha creado correctamente.
-						</div>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+		                		<div class="alert alert-success" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Vale descuento creado.</strong> Tu vale descuento se ha creado correctamente.
+								</div>
+		                	</div>
+		                </div>
 				<%
 					}else{
 				%>
-						<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						    <strong>Error al crear vale descuento.</strong> Tu vale no se ha podido crear.
-						</div>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+								<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Error al crear vale descuento.</strong> Tu vale no se ha podido crear.
+								</div>
+							</div>
+		                </div>
 				<%
 					}
 				%>
         
-    		
     		<div class="row ">
+    		
+    			<%
+    				if(request.getAttribute("listaCursos") != null){
+    					ArrayList<Curso> listaCursos = (ArrayList<Curso>) request.getAttribute("listaCursos");
+    					if(listaCursos.isEmpty()){	
+    			%>
+    			<h3 style="margin-left:10px">Debes de crear un curso y que sea validado para poder crear descuentos</h3>	
+    			<%		
+    					}else{
+    			%>
     		    <form role="form" method="post" action="vale.form">
         			<div class="col-md-3 col-md-offset-3">
         			    <h2>Crear vale de descuento</h2>
 						<input type=hidden name=tipo value="VALE">
         			    <div class="form-group">
-    						<label for="sel1" name="cursoVale">Curso al que aplicar el vale: </label>
-    						<select class="form-control"  id="sel1" required>
-    							<option value="curso1">Curso 1</option>
-    							<option value="curso2">Curso 2</option>
-    							<option value="curso3">Curso 3</option>
-    							<option value="curso4">Curso 4</option>
+    						<label for="sel1">Curso al que aplicar el vale: </label>
+    						<select class="form-control"  id="sel1" name="cursoVale"required>
+    						<%
+    							for(int i=0;i<listaCursos.size();i++){
+    						%>
+    							<option value="<%=listaCursos.get(i).getId() %>"><%=listaCursos.get(i).getTitulo() %></option>
+    						<%
+    							}
+    						%>
     						</select>
     					</div>
     					<div class="form-group">
@@ -123,56 +145,59 @@
     					<button type="submit" class="btn btn-success">Crear vale descuento</button>
         			</div>
         		</form>
+        		<%
+    					}
+    				}
+        		%>
     		</div>
     	</div>
     	
     	<div id="cuerpo" class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                
+	                <%
+	    				if(request.getAttribute("listaDescuentos") != null){
+	    					ArrayList<Descuento> listaDescuentos = (ArrayList<Descuento>) request.getAttribute("listaDescuentos");
+	    					if(listaDescuentos.isEmpty()){	
+	    			%>
+	    			<h3>Debes de crear un curso y que sea validado para poder crear descuentos</h3>	
+	    			<%		
+	    					}else{
+	    			%>
                     <div class="table-responsive">
                         <h2 class="titulo">Listado de Descuentos</h2>          
                         <table class="table table-condensed table-hover">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Curso</th>
-                                <th>Tipo descuento</th>
                                 <th>Codigo</th>
-                                <th>Descuento</th>
+                                <th>Validez</th>
                                 <th>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Jaba</td>
-                                <td>Porcentaje</td>
-                                <td>roto25</td>
-                                <td>25</td>
+                    		<%
+                    			for(int i=0;i<listaDescuentos.size();i++){
+                    		%>
+                                <td><%=listaDescuentos.get(i).getId() %></td>
+                                <td><%=listaDescuentos.get(i).getCurso().getTitulo() %></td>
+                                <td><%=listaDescuentos.get(i).getCupon() %></td>
+                                <td><%=listaDescuentos.get(i).getValidez() %></td>
                                 <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                            </tr>
-                            <tr>
-                                <td>J2E</td>
-                                <td>Porcentaje</td>
-                                <td>roto30</td>
-                                <td>30</td>
-                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                            </tr>
-                            <tr>
-                                <td>Javascript</td>
-                                <td>Descuento fijo</td>
-                                <td>roto250</td>
-                                <td>250</td>
-                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                            </tr>
-                            <tr>
-                                <td>Labrador minecraft</td>
-                                <td>Descuento fijo</td>
-                                <td>roto250</td>
-                                <td>250</td>
-                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                            <%
+                    			}
+                            %>
                             </tr>
                         </tbody>
                         </table>
                     </div>
+                    <%
+	    					}
+	    				}
+                    %>
                 </div>
             </div>
         </div>

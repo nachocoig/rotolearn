@@ -10,7 +10,8 @@ body{
 .rojo{/*para los glyphicons rojos*/
     color:#CC271C;
 }
-h3{
+#formCupon h3{
+	margin-top:5px;
 	color:white;
 }
 
@@ -25,11 +26,25 @@ h3{
 .material{
   margin-left:5px;
 }
-
+.aviso{
+	padding-bottom:8px;
+}
 #formCupon{
 	background-color:#0c5192;
 	padding-bottom:20px;
 	padding-top:20px;
+}
+
+.formCupon a:hover{
+	color:white;
+}
+
+.formCupon a{
+	color:white;
+}
+.formCupon{
+	background-color:#0c5192;
+	color:white;
 }
 
 #formCupon h2{
@@ -58,6 +73,7 @@ h3{
 .row{
 	padding-right:0px;
 	margin-right:0px;
+	margin-left:0px;
 }
 
 .navbar-nav li a {/*Para cambiar el tamaño de la navbar*/
@@ -185,6 +201,6 @@ header{
 	background-color:white;
 }
 #miga{
-	margin-left:50px;
-	margin-top:10px;
+	padding-left:50px;
+	padding-top:10px;
 }

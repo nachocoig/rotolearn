@@ -13,19 +13,24 @@ import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.*;
+import es.rotolearn.javaBean.RegistroBean;
 
 public class ValeRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ruta = "profes_listadodescuentos.jsp";
+		String ruta = "profe_descuentos.form";
+		
+		HttpSession session = ((HttpServletRequest) request).getSession();
+		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
 		
 		//Pillamos los datos del vale
 		String curso = request.getParameter("cursoVale");
 		int descuento = Integer.parseInt(request.getParameter("descuento"));
-		int minCursos = Integer.parseInt(request.getParameter("minCursos"));
+		int minCursos = Integer.parseInt(request.getParameter("minCursos"));//HAY QUE AGREGARLO A LA TABLA DE DESCUENTOS
 		String validez = request.getParameter("validez");
 		String tipo = request.getParameter("tipo");
 		
@@ -35,6 +40,7 @@ public class ValeRequestHandler implements RequestHandler {
 		
 		String vale = tipo+dia.format(date)+hora.format(date)+String.format("%02d", descuento);;
 		System.out.println("El vale de descuento es: "+vale);
+		System.out.println("El curso es el id: "+curso);
 		
 		//Creamos el Descuento a guardar
 		Descuento valeProfe = new Descuento();
@@ -43,6 +49,8 @@ public class ValeRequestHandler implements RequestHandler {
 		Curso aux = new Curso();
 		aux.setId(Integer.parseInt(curso));
 		valeProfe.setCurso(aux);
+		valeProfe.setValidez(validez);
+		valeProfe.setProfesor(user.getNickName());
 		
 		// 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");

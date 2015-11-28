@@ -29,7 +29,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="index.jsp">Inicio</a></li>
                             <!--<li><a href="perfil.form">Mi Perfil</a></li>-->
-                            <li><a href="catalogo.jsp">Cat&aacute;logo de cursos</a></li>
+                            <li><a href="catalogo.form">Cat&aacute;logo de cursos</a></li>
                             <!--<li><a class="activa" href="profes_panel.jsp">Panel de control</a></li>-->
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -68,10 +68,10 @@
         <!--CUERPO-->
         <div id="cuerpo" class="container-fluid">
             <div class="col-md-10 col-md-offset-1">
-                <h1><span id="user"><%=perfil.getNombre()%></span> , bienvenido al panel de administraci&oacute;n.</h1>
+                <h1><%=perfil.getNombre()%>, bienvenido al panel de administraci&oacute;n.</h1>
                 <a href="profes_crearcurso.jsp" class="opcionPanel btn btn-danger"><br><span class="simbolos glyphicon glyphicon-plus"></span><br>A&ntilde;adir curso</a>
                 <a href="profes_listadocursos.jsp" class="opcionPanel btn btn-primary"><br><span class="simbolos glyphicon glyphicon glyphicon-th-list"></span><br>Ver tus cursos</a>
-                <a href="profes_listadodescuentos.jsp" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon glyphicon-tags"></span><br>Ver tus descuentos</a>
+                <a href="profe_descuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon glyphicon-tags"></span><br>Ver tus descuentos</a>
                 <a href="profes_administrarcurso.jsp#profesores" class="opcionPanel btn btn-warning"><br><span class="simbolos glyphicon glyphicon glyphicon-user"></span><br>Invitar al claustro</a>
             </div>
         </div>

@@ -22,8 +22,14 @@ public class Descuento implements Serializable {
 	@Column(name="Cupon")
 	private String cupon;
 
+	@Column(name="Profesor")
+	private String profesor;
+
 	@Column(name="Tipo")
 	private String tipo;
+
+	@Column(name="Validez")
+	private String validez;
 
 	//bi-directional many-to-one association to Curso
 	@ManyToOne
@@ -49,12 +55,28 @@ public class Descuento implements Serializable {
 		this.cupon = cupon;
 	}
 
+	public String getProfesor() {
+		return this.profesor;
+	}
+
+	public void setProfesor(String profesor) {
+		this.profesor = profesor;
+	}
+
 	public String getTipo() {
 		return this.tipo;
 	}
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getValidez() {
+		return this.validez;
+	}
+
+	public void setValidez(String validez) {
+		this.validez = validez;
 	}
 
 	public Curso getCurso() {
