@@ -74,7 +74,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <h1><span id="user"><%= session.getAttribute("usuario") %></span> bienvenido al panel de control.</h1>
                 <a href="admin_reg.jsp" class="opcionPanel btn btn-danger"><br><span class="simbolos glyphicon glyphicon-plus"></span><br>A&ntilde;adir usuario</a>
-                <a href="admin_listadocursos.jsp" class="opcionPanel btn btn-primary"><br><span class="simbolos glyphicon glyphicon-th-list"></span><br>Listado de cursos</a>
+                <a href="listadocursos.form" class="opcionPanel btn btn-primary"><br><span class="simbolos glyphicon glyphicon-th-list"></span><br>Listado de cursos</a>
                 <a href="mostrarDescuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon-tags"></span><br>Listado de descuentos</a>
             </div>
         </div>

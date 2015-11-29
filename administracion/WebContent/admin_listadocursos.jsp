@@ -132,7 +132,7 @@
             </thead>
             <tbody>
              <tbody>
-			            <%if(request.getAttribute("curso").equals("no")){
+			            <%if(request.getAttribute("curso").equals("no") || request.getAttribute("curso") == null){
                         	%>
                         	
                                <tr>

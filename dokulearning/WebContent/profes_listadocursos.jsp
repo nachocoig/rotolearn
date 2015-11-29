@@ -92,7 +92,8 @@
                         <thead>
                             <tr>
                                 <th>Administrar</th>
-                                <th>Estado</th>
+                                <th>Validado</th>
+                                <th>Destacado</th>
                                 <th>T&iacute;tulo</th>
                                 <th>Dificultad</th>
                                 <th>Horas</th>
@@ -118,10 +119,8 @@
                 		%>
                             <tr>
                                 <td><a href="administrarCurso.form?ID=<%= ID %>" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
-                                <td><%if(aux.getValidado().equals("SI")){ %>
-                                	Validado
-                                	<%} else{ %>
-                                	No Validado <%} %></td>
+                              	<td><%=aux.getValidado() %></td>
+                              	<td><%=aux.getDestacado() %></td>
                                 <td><%=aux.getTitulo() %></td>
                                 <td><%=aux.getDificultad() %></td>
                                 <td><%=aux.getHoras() %></td>

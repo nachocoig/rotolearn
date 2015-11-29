@@ -116,7 +116,7 @@ public class ShowCursoRequestHandler implements RequestHandler {
 			ruta = "info_curso.jsp";
 		}
 		else{
-			ruta = "profes_administrarcurso.jsp";
+			ruta = "mostrarInscritos.form";
 		}
 		em.close();
 		

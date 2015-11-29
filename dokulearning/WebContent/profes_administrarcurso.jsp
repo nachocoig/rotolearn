@@ -1,4 +1,5 @@
-<%@ page import="entities.Curso" %>
+<%@ page import="entities.*" %>
+<%@ page import="java.util.ArrayList" %>
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
@@ -101,6 +102,21 @@
 				<% }}
 			 
 			       %>
+			       <!-- MENSAJES DE BORRADO USUARIO -->
+			       <%if(request.getAttribute("borrado")!=null){
+    	if(request.getAttribute("borrado").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Usuario eliminado del curso con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar!
+				</div>
+			<% }} %>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <h2><%=aux.getTitulo() %></h2>
@@ -135,6 +151,8 @@
                                         <table class="table table-condensed table-hover">
                                         <thead>
                                             <tr>
+                                            	<th>ID </th>
+                                            	<th>Nickname</th>
                                                 <th>Nombre</th>
                                                 <th>Primer apellido</th>
                                                 <th>Segundo apellido</th>
@@ -143,13 +161,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                         <%if(request.getAttribute("usuario").equals("no")){
+                        					%>
+                        	
+                               				<tr>
+                                 				<td>No hay ningun alumno inscrito</td> 
+                               				</tr>
+                            
+				                        	<% 
+				                        }else{
+				                        ArrayList<Usuario> inscritos = (ArrayList<Usuario>) request.getAttribute("listaInscritos");
+				                		for(int i=0; i<inscritos.size();i++){
+				                			Usuario aux2 = inscritos.get(i);
+				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
+				                		%>
                                             <tr>
-                                                <td>Jaba</td>
-                                                <td>Porcentaje</td>
-                                                <td>roto25</td>
-                                                <td>25</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                                <td><%=aux2.getId() %></td>
+                                                <td><%=aux2.getNickname() %></td>
+                                                <td><%=aux2.getNombre() %></td>
+                                                <td><%=aux2.getApellido1() %></td>
+                                                <td><%=aux2.getApellido2() %></td>
+                                                <td><%=aux2.getEmail() %></td>
+                                                <td><a href="eliminarInscrito.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
                                             </tr>
+                                        <% }} %>    
                                         </tbody>
                                         </table>
                                     </div>
