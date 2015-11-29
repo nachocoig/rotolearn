@@ -155,7 +155,7 @@
     						</select>
     					</div>
     					<div class="form-group">
-    						<label for="descuento">Cantidad a descontar: </label>
+    						<label for="descuento">Porcentaje a descontar: </label>
     						<input type="number" class="form-control" name="descuento" min="0" max="70" placeholder="Introduce el descuento en porcentaje" required>
     					</div>
         			</div>

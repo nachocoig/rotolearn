@@ -16,7 +16,7 @@ public class DescuentoRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ruta = "admin_listadocupones.jsp";
+		String ruta = "mostrarDescuentos.form";
 		
 		String aux = request.getParameter("cursoDesc");
 		String desc = request.getParameter("descuento");

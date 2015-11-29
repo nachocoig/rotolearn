@@ -31,6 +31,10 @@ h2{
   background-color:white;
 }
 
+.aviso{
+	padding-top:8px;
+}
+
 .container-fluid{
   padding:0px;
 }
