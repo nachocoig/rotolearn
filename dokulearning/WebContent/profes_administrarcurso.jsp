@@ -74,16 +74,33 @@
                     </div>
                 </nav>
             </div>
-           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="profes_listadocursos.jsp">Ver tus cursos</a> > <a href="profes_administrarcurso.jsp">Administrar curso</a></div>
+            <%
+        Curso aux = (Curso) request.getAttribute("curso");
+    	int ID = aux.getId();
+    	%>
+           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="verCursosProfe.form">Ver tus cursos</a> > <a href="administrarCurso.form?ID=<%= ID %>">Administrar curso</a></div>
         </header>
         <!--FIN CABECERA-->
         
         <!--CUERPO-->
         <div id="cuerpo" class="container-fluid">
-        <%
-        Curso aux = (Curso) request.getAttribute("curso");
-    	int ID = aux.getId();
-    	%>
+        <!--  MENSAJES DE OK/ERROR EDICION CURSO -->
+			 <%if(request.getAttribute("act")!=null){
+    	if(request.getAttribute("act").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Descripci&oacute;n editada con exito!</strong> 
+				</div>
+			<% }else { 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡No se ha podido actualizar el curso!
+				</div>
+				<% }}
+			 
+			       %>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <h2><%=aux.getTitulo() %></h2>
@@ -99,13 +116,16 @@
                             <h3>Descripci&oacute;n</h3>
                             <p><%=aux.getDescripcion() %></p>
                             <h3>Añade nueva descripci&oacute;n:</h3>
+                            <form role="form" method="post" action="editarCurso.form?ID=<%= ID %>" enctype="multipart/form-data" >
                            <div class="form-group">	
 					    <label for="moreinfo"><span class="red">*</span>Descripci&oacute;n</label>
 						<textarea name="descripcion" class="form-control" rows="4" placeholder="Describe en que consiste el curso" required></textarea>
 						</div>
 						<div class="form-group">
+						
 					    <button type="submit" class="btn btn-success">Actualizar</button>
 					</div>	
+					</form>
                         </div>
                         <div id="alumn" class="tab-pane fade">
                             <div class="row">
@@ -323,7 +343,7 @@
                             <h3>¿Est&aacute;s seguro de que deseas borrar el curso?</h3>
                             <p>Si borras el curso eliminaras todo el rastro del curso de las bases de datos, como pueden ser los alumnos matriculados, logros, cupones de descuento,
                                 este cambio no podra ser deshecho, por lo que una vez que confirme su eliminaci&oacute;n no hay vuelta a atras. ¿Esta seguro de que desea borrar el curso?</p>
-                            <button type="button" class="btn btn-danger" name="delete">Eliminar curso</button>
+                            <a class="glyphicon glyphicon-remove" href="eliminarCurso.form?ID=<%=ID %>"><span> Eliminar </span></a>
                         </div>
                     </div>
                 </div>

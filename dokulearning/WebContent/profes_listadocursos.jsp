@@ -64,12 +64,27 @@
                     </div>
                 </nav>
             </div>
-           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="profes_listadocursos.jsp">Ver tus cursos</a></div>
+           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="verCursosProfe.form">Ver tus cursos</a></div>
         </header>
         <!--FIN CABECERA-->
         
         <!--CUERPO-->
         <div id="cuerpo" class="container-fluid">
+        <!--  MENSAJES DE OK/ERROR ELIMINACION CURSO -->
+        <%if(request.getAttribute("borrado")!=null){
+    	if(request.getAttribute("borrado").equals("ok")){ %>
+				<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Curso eliminado con exito!</strong> 
+				</div>
+			<% }else{ 
+			 
+			       %>
+			<div class="alert alert-danger">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar!
+				</div>
+			<% }} %>
             <div class="row col-sm-12">
                 <h2 class="titulo">Listado de Cursos</h2>
                 <div class="table-responsive">          
