@@ -1,3 +1,4 @@
+<jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="en-us">
 
@@ -40,7 +41,7 @@
 			
 			<%}else{ %>
 			<div id="conectado" class="pull-right">
-				<a href="perfil.form"><img id="imgConectado" src="./images/perfil/anonimo.jpeg" class="img-circle" alt="Cinque Terre" width="40" height="40"></a>
+				<a href="perfil.form"><img id="imgConectado" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg"  class="img-circle" alt="Cinque Terre" width="40" height="40"></a>
 				<p id="nombreConectado"><a href="perfil.form"><%=session.getAttribute("usuario")%></a></p> 
 			</div>
 			<%}%>

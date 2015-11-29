@@ -42,7 +42,7 @@
 			        <ul class="nav navbar-nav navbar-right">
                        <li><a href="perfil.form"><%=session.getAttribute("usuario")%></a></li>
                        <li class="dropdown">
-                           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img id="imgConectado" src="./images/perfil/anonimo.jpeg" class="img-circle" alt="Cinque Terre" width="40" height="40">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="perfil.form"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>  
