@@ -149,6 +149,32 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`PROFESOR_ASOCIADO`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`PROFESOR_ASOCIADO` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`PROFESOR_ASOCIADO` (
+  `ID_c` INT NOT NULL,
+  `ID_p` INT NOT NULL,
+  `Validado` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`ID_c`, `ID_p`),
+  INDEX `fk_PROFESOR_ASOCIADO_2_idx` (`ID_p` ASC),
+  CONSTRAINT `fk_PROFESOR_ASOCIADO_1`
+    FOREIGN KEY (`ID_c`)
+    REFERENCES `rotolearnbd`.`CURSO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_PROFESOR_ASOCIADO_2`
+    FOREIGN KEY (`ID_p`)
+    REFERENCES `rotolearnbd`.`USUARIO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

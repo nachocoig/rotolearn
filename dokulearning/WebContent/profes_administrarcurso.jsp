@@ -92,6 +92,16 @@
 	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 					<strong>¡Descripci&oacute;n editada con exito!</strong> 
 				</div>
+			<% } else if(request.getAttribute("act").equals("oke")){ %>	
+			<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Asociaci&oacute;n eliminada con exito!</strong> 
+				</div>
+			<% } else if(request.getAttribute("act").equals("oka")){ %>	
+			<div class="alert alert-success">
+	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<strong>¡Profesor asociado con exito!</strong> 
+				</div>	
 			<% }else { 
 			 
 			       %>
@@ -354,19 +364,117 @@
                                                 <th>Primer apellido</th>
                                                 <th>Segundo apellido</th>
                                                 <th>Email</th>
-                                                <th>Nickname</th>
-                                                <th>Eliminar</th>
+                                                <th>Nickname</th>                                                
+                                                <th>Eliminar </th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           <%if(request.getAttribute("asociados").equals("no")){
+                        					%>
+                        	
+                               				<tr>
+                                 				<td>No hay ningun profesor asociado</td> 
+                               				</tr>
+                            
+				                        	<% 
+				                        }else{
+				                        ArrayList<Usuario> asociados = (ArrayList<Usuario>) request.getAttribute("listaAsociados");
+				          
+				                        for(int i=0; i<asociados.size();i++){
+				                			Usuario aux2 = asociados.get(i);
+				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
+				                		%>
                                             <tr>
-                                                <td><%=perfil.getNombre()%></td>
-                                                <td><%=perfil.getApellido1()%></td>
-                                                <td><%=perfil.getApellido2()%></td>
-                                                <td><%=perfil.getEmail()%></td>
-                                                <td><%=perfil.getNickName()%></td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                                <td><%=aux2.getNombre() %></td>
+                                                <td><%=aux2.getApellido1() %></td>
+                                                <td><%=aux2.getApellido2() %></td>
+                                                <td><%=aux2.getEmail() %></td>
+                                                <td><%=aux2.getNickname() %></td>
+                                                <td>
+                                                <td><a href="eliminarAsociados.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
                                             </tr>
+                                        <% }} %>    
+                                        </tbody>
+                                        </table>
+                                        <h2 id="profesores" class="titulo">Listado de Peticiones</h2>         
+                                        Aqui se mostraran los profesores que aun no han aceptado tu peticion 
+                                        <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Primer apellido</th>
+                                                <th>Segundo apellido</th>
+                                                <th>Email</th>
+                                                <th>Nickname</th>                                               
+                                                <th>Cancelar peticion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <%if(request.getAttribute("peticiones").equals("no")){
+                        					%>
+                        	
+                               				<tr>
+                                 				<td>No hay ninguna peticion pendiente</td> 
+                               				</tr>
+                            
+				                        	<% 
+				                        }else{
+				                        ArrayList<Usuario> peticiones = (ArrayList<Usuario>) request.getAttribute("listaPeticiones");
+				          
+				                        for(int i=0; i<peticiones.size();i++){
+				                			Usuario aux2 = peticiones.get(i);
+				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
+				                		%>
+                                            <tr>
+                                                <td><%=aux2.getNombre() %></td>
+                                                <td><%=aux2.getApellido1() %></td>
+                                                <td><%=aux2.getApellido2() %></td>
+                                                <td><%=aux2.getEmail() %></td>
+                                                <td><%=aux2.getNickname() %></td>
+                                                <td>
+                                                <td><a href="eliminarAsociados.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Cancelar"></td>
+                                            </tr>
+                                        <% }} %>    
+                                        </tbody>
+                                        </table>
+                                        <h2 id="profesores" class="titulo">Listado de Profesores</h2>
+										 Selecciona los profesores que quieras asociar a tu curso.         
+                                        <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Primer apellido</th>
+                                                <th>Segundo apellido</th>
+                                                <th>Email</th>
+                                                <th>Nickname</th>
+                                                <th>Asociar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                            </tr><%if(request.getAttribute("profes").equals("no")){
+                        					%>
+                        	
+                               				<tr>
+                                 				<td>No hay ningun profesor en nuestro sistema al que asociar</td> 
+                               				</tr>
+                            
+				                        	<% 
+				                        }else{
+				                        ArrayList<Usuario> profes = (ArrayList<Usuario>) request.getAttribute("listaProfes");
+				                		for(int i=0; i<profes.size();i++){
+				                			Usuario aux2 = profes.get(i);
+				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
+				                		%>
+                                            <tr>                                                                                            
+                                                <td><%=aux2.getNombre() %></td>
+                                                <td><%=aux2.getApellido1() %></td>
+                                                <td><%=aux2.getApellido2() %></td>
+                                                <td><%=aux2.getEmail() %></td>
+                                                <td><%=aux2.getNickname() %></td>
+                                                <td><a href="asociarProfe.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Asociar"></td>
+                                            </tr>
+                                        <% }} %>    
                                         </tbody>
                                         </table>
                                     </div>

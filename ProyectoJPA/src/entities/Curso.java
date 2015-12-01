@@ -64,6 +64,10 @@ public class Curso implements Serializable {
 	@OneToMany(mappedBy="curso")
 	private List<Descuento> descuentos;
 
+	//bi-directional many-to-one association to ProfesorAsociado
+	@OneToMany(mappedBy="curso")
+	private List<ProfesorAsociado> profesorAsociados;
+
 	//bi-directional many-to-one association to Promocion
 	@OneToMany(mappedBy="curso")
 	private List<Promocion> promocions;
@@ -209,6 +213,28 @@ public class Curso implements Serializable {
 		descuento.setCurso(null);
 
 		return descuento;
+	}
+
+	public List<ProfesorAsociado> getProfesorAsociados() {
+		return this.profesorAsociados;
+	}
+
+	public void setProfesorAsociados(List<ProfesorAsociado> profesorAsociados) {
+		this.profesorAsociados = profesorAsociados;
+	}
+
+	public ProfesorAsociado addProfesorAsociado(ProfesorAsociado profesorAsociado) {
+		getProfesorAsociados().add(profesorAsociado);
+		profesorAsociado.setCurso(this);
+
+		return profesorAsociado;
+	}
+
+	public ProfesorAsociado removeProfesorAsociado(ProfesorAsociado profesorAsociado) {
+		getProfesorAsociados().remove(profesorAsociado);
+		profesorAsociado.setCurso(null);
+
+		return profesorAsociado;
 	}
 
 	public List<Promocion> getPromocions() {

@@ -19,7 +19,7 @@ import es.rotolearn.javaBean.RegistroBean;
 public class ListarUsuariosRequestHandler implements RequestHandler {
 
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ruta = "profes_administrarcurso.jsp";
+		String ruta = "listarAsociados.form";
 HttpSession miSession = request.getSession(false);
 
 //1 Create the factory of Entity Manager
@@ -52,7 +52,7 @@ ArrayList <Usuario> listaInscritos = new ArrayList <Usuario> ();
 					System.out.println(aux.getId().getID_c());
 					try{
 						System.out.println("HAGO LA TERCERA QUERY para curso " + aux.getId().getID_c());
-						Usuario aux2 = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.id = ?1").setParameter(1, aux.getId().getID_c()).getSingleResult();
+						Usuario aux2 = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.id = ?1").setParameter(1, aux.getId().getID_u()).getSingleResult();
 						//Curso aux2 = (Curso) em.createQuery("SELECT i FROM Curso WHERE i.id = ?1").setParameter(1, aux.getId().getID_c()).getSingleResult();
 						System.out.println("Usuario añadido:" + aux2.getNickname());
 						listaInscritos.add(aux2);

@@ -8,6 +8,8 @@
 		<class>entities.Descuento</class>
 		<class>entities.Promocion</class>
 		<class>entities.Usuario</class>
+		<class>entities.ProfesorAsociado</class>
+		<class>entities.ProfesorAsociadoPK</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rotolearnbd"/>
