@@ -32,20 +32,25 @@ public class CatalogoRequestHandler implements RequestHandler {
 		ServletContext context = request.getServletContext();
 	    final String path = context.getRealPath("/images/im_cursos");
 	    String rutaCompleta = path + File.separator + idCurso + "_curso.jpg";
-		File fichero = new File(rutaCompleta);
-		if(!fichero.exists()){
-			fichero.delete();
+		//File fichero = new File(rutaCompleta);
+		//if(!fichero.exists()){
+			//fichero.delete();
 		    try{
 			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
 			    fos.write(img);
 			    fos.close();
+			    System.out.println("Pues se supone que la imagen deberia estar cargada...");
 			    return 0;
 		    }catch (Exception e){
 		    	System.out.println("Error al cargar la imagen de usuario");
 		    	e.printStackTrace();
 		    }
-		}else
-			fichero.delete();
+		//}else{
+		//	fichero.delete();
+		//	System.out.println("Ya existe? WTF?");
+		//	System.out.println("Se supone que existe '"+idCurso+"_curso.jpg' en "+rutaCompleta);
+		//}
+		System.out.println("termino de cargar la imagen, por donde no debo");
 		return -1;
 	}
 	
@@ -71,7 +76,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 		
 		// 3 Get one EntityTransaction
 		em.getTransaction().begin();
-		
+		System.out.println("Vuelvo a entrar");
 		try{
 			//Recojo los 10 primeros cursos destacados ES NORMAL QUE NO SAQUE NADA PORQUE LOS CURSOS LOS DESTACA EL ADMIN Y POR DEFECTO AL CREARLOS SON NO
 			System.out.println("Voy a recojer los curso destacados que tenemos");
@@ -125,7 +130,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 		em.close();
 		
 		/*FALTAN LOS CLOSE*/
-		
+		System.out.println("vuelvo a salir");
 		return ruta;
 	}
 

@@ -1,6 +1,6 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="es.rotolearn.tablas.Curso" %>
+<%@ page import="entities.Curso" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,7 +69,7 @@
                 	<ul class="nav navbar-nav">
                     	<li><a href="index.jsp">Inicio</a></li>
                         <!--<li><a href="perfil.jsp">Mi perfil</a></li>-->
-                        <li><a class="activa" href="catalogo.jsp">Cat&aacute;logo de cursos</a></li>
+                        <li><a class="activa" href="catalogo.form">Cat&aacute;logo de cursos</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
@@ -156,25 +156,25 @@
                 <ul class="portfolio-items">
                     <%
                     	System.out.println("MIraMAchoHastaAqui");
-                		ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("buscados");
+                		ArrayList<Curso> cur = (ArrayList<Curso>) request.getAttribute("buscados");
                     	System.out.println("MIraMAchoHastaAqui2");
                 		String h;
                     	System.out.println("MIraMAchoHastaAqui3");
-                    	if(dest.size() == 0){%>
+                    	if(cur.size() == 0){%>
                     	<li class="noResultados col-md-12">
                     		<h1>No se han encontrado resultados</h1>
                     	</li>
                     <% }else{
-                		for(int i=0; i<dest.size();i++){
+                		for(int i=0; i<cur.size();i++){
                 	%>
 	                    <li class="portfolio-item col-md-2">
 	                        <div class="itemCatalogo">
-	                            <img src="images/portfolio/thumb/item3.jpg" alt="">
-	                            <h5><%=dest.get(i).getTitulo() %></h5>
-	                            <h1 class="precios"><span class="precio"><%=dest.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
+                            	<img src="images/im_cursos/<%=cur.get(i).getId()%>_curso.jpg" alt="">
+	                            <h5><%=cur.get(i).getTitulo() %></h5>
+	                            <h1 class="precios"><span class="precio"><%=cur.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
 	                            <div class="overlay">
 	                                <a class="preview glyphicon glyphicon-heart" href="#" rel="prettyPhoto"><br><span>Deseado</span></a>
-	                                <% h=dest.get(i).getTitulo();%>
+	                                <% h=cur.get(i).getTitulo();%>
 	                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?titulo=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
 	                            </div>           
 	                        </div>           
