@@ -55,7 +55,14 @@ public class EditarCursoRequestHandler implements RequestHandler {
 				 if(origen.equals("/eliminarAsociados.form")){
 					 ProfesorAsociado editar = em.find(ProfesorAsociado.class,pk);
 					 em.remove(editar);
-					 request.setAttribute("act", "oke");}
+					 request.setAttribute("act", "oke");
+					 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);}
+				 else if(origen.equals("/validarPeticion.form")){
+					 ProfesorAsociado editar = em.find(ProfesorAsociado.class, pk);
+					 editar.setValidado("SI");
+					 ruta="perfil.form";
+					 request.setAttribute("act", "okv");
+				 }
 				 else{
 					 
 					 ProfesorAsociado editar = new ProfesorAsociado();
@@ -63,11 +70,14 @@ public class EditarCursoRequestHandler implements RequestHandler {
 						 editar.setCurso(em.find(Curso.class,  Integer.parseInt(dat[1])));
 						 editar.setUsuario(em.find(Usuario.class, Integer.parseInt(dat[0])));
 						 editar.setValidado("NO");
+						 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);
 						 em.persist(editar);
+							 
+						 
 						 request.setAttribute("act", "oka");
 					 
 				 }
-				 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);
+				 
 			}
 			
 			

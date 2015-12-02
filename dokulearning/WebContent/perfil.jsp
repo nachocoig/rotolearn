@@ -73,7 +73,7 @@
 
         <!--CUERPO-->
         <div id="cuerpo" class="container-fluid">
-        
+        <!----------------------------------------MODIFICAR PERFIL---------------------------------------->
                 <%
 					if(request.getAttribute("modificado") != null)
 					if(request.getAttribute("modificado").equals("si")){
@@ -88,6 +88,44 @@
 						<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 						    <strong>Error al guardar</strong> Tus datos no han podido ser modificados.
+						</div>
+				<%
+					}
+				%>
+				<!----------------------------------------ACEPTAR ---------------------------------------->
+                <%
+					if(request.getAttribute("act") != null)
+					if(request.getAttribute("act").equals("okv")){
+				%>
+						<div class="alert alert-success" style="margin-bottom:0px">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						    <strong>Petici&oacute;n aceptada.</strong> Ahora estas en ese curso.
+						</div>
+				<%
+					}else{
+				%>
+						<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						    <strong>Error al aceptar</strong> Tus datos no han podido ser modificados.
+						</div>
+				<%
+					}
+				%>
+				<!----------------------------------------DENEGAR ---------------------------------------->
+                <%
+					if(request.getAttribute("borrado") != null)
+					if(request.getAttribute("borrado").equals("ok")){
+				%>
+						<div class="alert alert-success" style="margin-bottom:0px">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						    <strong>Petici&oacute;n denegada.</strong> 
+						</div>
+				<%
+					}else{
+				%>
+						<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						    <strong>Error al denegar</strong> Tus datos no han podido ser modificados.
 						</div>
 				<%
 					}
@@ -136,49 +174,137 @@
                             <p><%=perfil.getIntereses()%></p>
                         </div>
                         <div id="cursos" class="tab-pane fade">  
-                        <% 
-                        if(perfil.getTipo().equals("alumn")){
-                        	
-                			 %>                      
-                            <h3>Cursos Matriculados</h3>  
-                            <% } else{
-                            	
-                			 %>    
-                			 <h3>Cursos Impartidos</h3> 
-                			 <% } 
-                			 %>    
-                               <table class="table">
+                        
+                        
+                          <div class="table-responsive">
+                        <%
+                        if(perfil.getTipo().equals("alumn")){ 
+                        %>
+                        <h3>Cursos Matriculados</h3> 
+                            <table class="table table-condensed table-hover">
                                 <thead>
                                   <tr>
                                     <th>#</th>
                                     <th>Curso</th>
                                     <th>Descripci&oacute;n</th>
-                                    <th>Iniciado</th>
                                     <th>Profesor</th>
                                     <th>Horas</th>
                                   </tr>
                                 </thead>
                                 <tbody>
+                                  <%if(request.getAttribute("cursos").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun curso</td> 
+                               </tr>
+                            
+                        	<% 
+                                  }else{
+                        			ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos"); 
+                        			for(int i=0; i<dest.size();i++){
+            						Curso aux = dest.get(i);
+            					
+                			 %>                      
+                            
+                               		<tr>
+	                              	<td><%=aux.getId() %></td>
+	                                <td><%=aux.getTitulo() %></td>
+	                                <td><%=aux.getDescripcion() %></td>
+	                                <td><%=aux.getUsuario().getNickname() %></td>
+	                                <td><%=aux.getHoras() %></td>
+	                                </tr>                         
+                                 
+                            <% 
+                            		}
+                        		}%>
+                        	</tbody>
+                            </table> 
+                        	<%
+                            }
+                            else{ %>
+                             <h3>Invitaciones a cursos</h3>
+	                          <table class="table table-condensed table-hover">
+                                <thead>
                                   <tr>
-                                    <td>1</td>
-                                    <td>Programaci&oacute;n orientada a objetos</td>
-                                    <td>Descripcion sobre la programaci&oacute;n orientada a objetos</td>
-                                    <td>07/07/2015</td>
-                      				<% 
-                        if(perfil.getTipo().equals("alumn")){                        	
-                			 %>
-                                    <td>Roberto Arismendi Rodriguez</td>
-                                    <% 
-                        }else{                        	
-                			 %>
-                			 <td> <%=perfil.getNombre()%> <%=perfil.getApellido1()%> <%= perfil.getApellido2()%></td>
-                			 <% 
-                        }             	
-                			 %>
-                                    <td>288</td>
+                                    <th>#</th>
+                                    <th>Curso</th>
+                                    <th>Descripci&oacute;n</th>
+                                    <th>Profesor</th>
+                                    <th>Horas</th>
+                                    <th>Aceptar</th>
+                                    <th>Denegar</th>
                                   </tr>
-                                </tbody>
-                            </table>
+                                </thead>
+                                <tbody>
+							<%if(request.getAttribute("peticiones").equals("no")){
+                                	%>
+                                       <tr>
+                                         <td>No tienes ninguna petici&oacute;n</td> 
+                                       </tr>
+                                	<% }else{
+                            	ArrayList<Curso> pet = (ArrayList<Curso>) request.getAttribute("listaPeticiones");
+                            	for(int i=0; i<pet.size();i++){                            		                          	
+                					Curso aux = pet.get(i);
+                					String datos = Integer.toString(perfil.getId()) + '-' + Integer.toString(aux.getId());
+                			 %>    
+                			
+                                  <tr>
+                               	
+	                              	<td><%=aux.getId() %></td>
+	                                <td><%=aux.getTitulo() %></td>
+	                                <td><%=aux.getDescripcion() %></td>
+	                                <td><%=aux.getUsuario().getNickname() %></td>
+	                                <td><%=aux.getHoras() %></td>
+	                                <td><a href="validarPeticion.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Aceptar" ></a></td>
+	                                <td><a href="denegarCurso.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Denegar" ></a></td>
+	                                </tr>    
+	                         <%}} %>                     
+                            </tbody>
+                            </table> 
+                            <h3>Cursos impartidos</h3> 
+	                        <table class="table table-condensed table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Curso</th>
+                                    <th>Descripci&oacute;n</th>
+                                    <th>Profesor</th>
+                                    <th>Horas</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+	                                 <%if(request.getAttribute("cursos").equals("no")){
+                        	%>
+                        	
+                               <tr>
+                                 <td>No hay ningun curso</td> 
+                               </tr>
+                          
+                        	<% 
+                                  }else{
+                            	ArrayList<Curso> cursos = (ArrayList<Curso>) request.getAttribute("listaCursos");
+                            	for(int i=0; i<cursos.size();i++){                            		                          	
+                					Curso aux = cursos.get(i);
+                					
+                        			
+                			 %>  
+                                 
+                                  <tr>
+                               	
+	                              	<td><%=aux.getId() %></td>
+	                                <td><%=aux.getTitulo() %></td>
+	                                <td><%=aux.getDescripcion() %></td>
+	                                <td><%=aux.getUsuario().getNickname() %></td>
+	                                <td><%=aux.getHoras() %></td>
+	                                
+	                                </tr>                         
+                                 
+                            <%}}%>
+                            </tbody>
+                            </table> 
+                            <%} %> 
+                         </div>       		
                         </div>
                         <div id="logros" class="tab-pane fade">
                             <h3>Mis logros</h3>

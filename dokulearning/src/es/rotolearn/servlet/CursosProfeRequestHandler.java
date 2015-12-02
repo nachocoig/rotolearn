@@ -1,3 +1,6 @@
+//Lista los cursos de un profesor
+
+
 package es.rotolearn.servlet;
 
 import java.io.IOException;

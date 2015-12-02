@@ -35,6 +35,18 @@ public String handleRequest(HttpServletRequest request, HttpServletResponse resp
 			Curso borrar = em.find(Curso.class, ID);
 			em.remove(borrar);
 			ruta="verCursosProfe.form";}
+		else if (ruta.equals("/denegarCurso.form")){
+			 String datos = request.getParameter("datos");
+			 String dat[]=datos.split("-");
+			 ProfesorAsociadoPK pk = new ProfesorAsociadoPK();
+			 System.out.println("VOY A BORRAR A "+ dat[0] + " del curso " + dat[1]);
+			 pk.setID_p(Integer.parseInt(dat[0]));
+			 pk.setID_c(Integer.parseInt(dat[1]));
+			 ProfesorAsociado borrar = em.find(ProfesorAsociado.class,pk);
+			 em.remove(borrar);
+			 ruta="perfil.form";
+		}
+			
 		else{
 			 String datos = request.getParameter("datos");
 			 String dat[]=datos.split("-");
