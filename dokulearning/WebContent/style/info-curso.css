@@ -70,3 +70,17 @@ h2{
     font-family: 'Lato', sans-serif;
   
 }
+
+.nav-pills > li > a{
+    border-radius:0px;
+}
+
+.panel-default > .panel-heading{
+        background-color: #34a853;
+        color: white;
+        font-weight: bold;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+            background-color: #34a853;
+}

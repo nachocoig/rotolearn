@@ -44,7 +44,7 @@ implements RequestHandler {
         HttpSession miSession = request.getSession(false);
         RegistroBean user = (RegistroBean)miSession.getAttribute("perfil");
         System.out.println("Creamos el deseo");
-        String titulo = request.getParameter("titulo");
+        int id = Integer.parseInt(request.getParameter("id"));
         /*InitialContext miInitialContext;
     	ArrayList<Curso_Alumno> des = new ArrayList<Curso_Alumno>();
 		DataSource miDS;
@@ -95,18 +95,15 @@ implements RequestHandler {
 
 		// 2 Create the Entity Manager
 		EntityManager em = factory.createEntityManager();
-		
-		//Creamos el usuario a buscar en la BBDD
-		String tit = request.getParameter("titulo");
-		
+				
 		
 		// 3 Get one EntityTransaction
 		em.getTransaction().begin();
 		//Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
 		try{
-			System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR EL CURSO "+ tit);
-			Curso aux=(Curso) em.createQuery("SELECT i FROM Curso i WHERE i.titulo = ?1").setParameter(1, tit).getSingleResult();
-			System.out.println("HE SALIDO DE LA QUERY DE titulo= "+ titulo +" CON ID = " + aux.getId() );
+			System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR EL CURSO "+ id);
+			Curso aux = (Curso)em.find(Curso.class, id); //creo que al tener el ID ya, no haria falta hacer esta consulta.
+			System.out.println("HE SALIDO DE LA QUERY DE titulo= "+ id +" CON ID = " + aux.getId());
 				try{
 					System.out.println("HAGO LA SEGUNDA QUERY");
 					Usuario aux2 = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1 ").setParameter(1, user.getNickName() ).getSingleResult();	

@@ -74,7 +74,7 @@
     %>
     
 	<div id="cuerpo" class="container-fluid">
-		<div class="row" id="cabeza" style="background-image:url('<%=aux.getImagen() %>')">
+		<div class="row" id="cabeza" style="background-image:url('images/im_cursos/<%=aux.getId()%>_curso.jpg')">
 			<div class="col-md-3 col-md-offset-1" >
 			<% if(request.getAttribute("deseo")!=null) 
 				
@@ -123,19 +123,84 @@
 						<br>
 					</li>
 					<li class="list-group-item">
-						<button type="submit" class="btn btn-success breg">Inscribirse</button>
+						<a class="btn btn-success breg " href="#"><span>Inscr&iacute;bete</span></a>
 						<a class="btn btn-success breg glyphicon glyphicon-heart" href="añadirDeseo.form?titulo=<%=h %>" rel="prettyPhoto"><span>  Deseado</span></a>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="row" id="descrip">
-			<div class="col-md-10 col-md-offset-1" >
-				<h2>Descripci&oacute;n del curso</h2>
-				<p ><%=aux.getDescripcion() %></p>
-				<p class="collapse" id="viewdetails">Te convertir&aacute;s en el mejor gamer de la historia por solo 5 &euro;.</p>
-				<p><a class="btn" data-toggle="collapse" data-target="#viewdetails">Leer m&aacute;s &raquo;</a></p>
+				<div class="row" id="descrip">
+			<ul class="nav nav-pills nav-justified">
+			  <li class="active"><a data-toggle="tab" href="#descripcion">Descripci&oacute;n</a></li>
+			  <li><a data-toggle="tab" href="#1">Aqui lo que te salga del rabo</a></li>
+			  <li><a data-toggle="tab" href="#menu2">Temario</a></li>
+			</ul>
+			
+			<div class="tab-content opciones col-md-8 col-md-offset-2">
+			  <div id="descripcion" class="tab-pane fade in active">
+			    <h3>Descripci&oacute;n del curso</h3>
+			    <p><%=aux.getDescripcion() %></p>
+			  </div>
+			  
+			  <div id="menu2" class="tab-pane fade">
+			    <h3>Temario del curso</h3>
+			    
+			    <h4>Seccion 1: Titulo de la seccion</h4>
+			    
+			     <div class="panel-group" id="accordion">
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Leccion 1</a>
+				      </h4>
+				    </div>
+				    <div id="collapse1" class="panel-collapse collapse in">
+				      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+				      commodo consequat.</div>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Leccion 2</a>
+				      </h4>
+				    </div>
+				    <div id="collapse2" class="panel-collapse collapse">
+				      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+				      commodo consequat.</div>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Leccion 3</a>
+				      </h4>
+				    </div>
+				    <div id="collapse3" class="panel-collapse collapse">
+				      <div class="panel-body">
+				      	
+				      	Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+				      commodo consequat.
+				      
+				      </div>
+				    </div>
+				  </div>
+				</div> 
+
+			  </div>
+			  <div id="menu1" class="tab-pane fade">
+			    <h3>Menu 1</h3>
+			    <p>Some content in menu 1.</p>
+			  </div>
+			  
 			</div>
+
 		</div>
 	</div>
 	<!--FIN CUERPO-->

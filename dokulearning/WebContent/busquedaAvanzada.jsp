@@ -158,7 +158,7 @@
                     	System.out.println("MIraMAchoHastaAqui");
                 		ArrayList<Curso> cur = (ArrayList<Curso>) request.getAttribute("buscados");
                     	System.out.println("MIraMAchoHastaAqui2");
-                		String h;
+                		int h;
                     	System.out.println("MIraMAchoHastaAqui3");
                     	if(cur.size() == 0){%>
                     	<li class="noResultados col-md-12">
@@ -173,9 +173,9 @@
 	                            <h5><%=cur.get(i).getTitulo() %></h5>
 	                            <h1 class="precios"><span class="precio"><%=cur.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
 	                            <div class="overlay">
-	                                <a class="preview glyphicon glyphicon-heart" href="#" rel="prettyPhoto"><br><span>Deseado</span></a>
-	                                <% h=cur.get(i).getTitulo();%>
-	                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?titulo=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
+	                            <% h=cur.get(i).getId();%>
+	                                <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=h %>" rel="prettyPhoto"><br><span>Deseado</span></a>
+	                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?id=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
 	                            </div>           
 	                        </div>           
 	                    </li>

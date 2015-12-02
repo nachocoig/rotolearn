@@ -57,8 +57,6 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = ((HttpServletRequest) request).getSession();
-		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
 		
 		System.out.println("Entro al handler de busquedaAvanzada");
 		
@@ -67,7 +65,7 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 		String query = "";
 
 		String palabra = request.getParameter("palabra");
-		String ruta="busquedaAvanzada.jsp";
+		String ruta = "busquedaAvanzada.jsp";
 		String destacados = request.getParameter("destacados");
 		String recomendados = request.getParameter("recomendados");
 		

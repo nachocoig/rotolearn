@@ -124,7 +124,7 @@
                 		<h2>No existen cursos recomendados</h2>
                 	<%
                 		}else{
-	                		String h;
+	                		int h;
 	                		for(int i=0; i<dest.size();i++){
                 	%>
                     <li class="portfolio-item col-md-2">
@@ -133,10 +133,10 @@
                             <h5><%=dest.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=dest.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
                             <div class="overlay">
-                             <% h=dest.get(i).getTitulo();%>
-                                <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?titulo=<%=h %>" rel="prettyPhoto"><br><span>Deseado</span></a>
+                             <% h=dest.get(i).getId();%>
+                                <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=h %>" rel="prettyPhoto"><br><span>Deseado</span></a>
                                
-                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?titulo=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
+                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?id=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
                             </div>           
                         </div>           
                     </li>
