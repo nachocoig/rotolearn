@@ -135,7 +135,6 @@
                             <div class="overlay">
                              <% h=dest.get(i).getId();%>
                                 <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=h %>" rel="prettyPhoto"><br><span>Deseado</span></a>
-                               
                                 <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?id=<%=h %>" rel="prettyPhoto"><br><span>Ver</span></a>
                             </div>           
                         </div>           
@@ -157,7 +156,7 @@
                 <ul class="portfolio-items">
                 	<%
                 		ArrayList<Curso> rec = (ArrayList<Curso>) request.getAttribute("recomendados");
-                		String a;
+                		int a;
                 		for(int i=0; i<rec.size();i++){
                 	%>
                     <li class="portfolio-item col-md-2">
@@ -166,10 +165,9 @@
                             <h5><%=rec.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=rec.get(i).getPrecio() %>&euro;</span><span class="precioAntiguo">200$</span></h1>
                             <div class="overlay">
-                            <% a=rec.get(i).getTitulo();%>
-                                <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?titulo=<%=a %>" rel="prettyPhoto"><br><span>Deseado</span></a>
-                                
-                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?titulo=<%=a %>" rel="prettyPhoto"><br><span>Ver</span></a>
+                            <% a=rec.get(i).getId();%>
+                                <a class="preview glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=a %>" rel="prettyPhoto"><br><span>Deseado</span></a>
+                                <a class="preview glyphicon glyphicon-eye-open" href="showCurso.form?id=<%=a %>" rel="prettyPhoto"><br><span>Ver</span></a>
                             </div>           
                         </div>           
                     </li>

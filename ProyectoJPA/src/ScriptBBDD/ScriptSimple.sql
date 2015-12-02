@@ -175,6 +175,72 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`SECCION`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`SECCION` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`SECCION` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NULL,
+  `CURSO_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_SECCION_CURSO1_idx` (`CURSO_ID` ASC),
+  CONSTRAINT `fk_SECCION_CURSO1`
+    FOREIGN KEY (`CURSO_ID`)
+    REFERENCES `rotolearnbd`.`CURSO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`LECCION`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`LECCION` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`LECCION` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NULL,
+  `Descripcion` VARCHAR(300) NULL,
+  `SECCION_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_LECCION_SECCION1_idx` (`SECCION_ID` ASC),
+  CONSTRAINT `fk_LECCION_SECCION1`
+    FOREIGN KEY (`SECCION_ID`)
+    REFERENCES `rotolearnbd`.`SECCION` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`MATERIAL`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`MATERIAL` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`MATERIAL` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NULL,
+  `Tipo` VARCHAR(45) NULL,
+  `Contenido` LONGBLOB NULL,
+  `LECCION_ID` INT NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_MATERIAL_LECCION1_idx` (`LECCION_ID` ASC),
+  CONSTRAINT `fk_MATERIAL_LECCION1`
+    FOREIGN KEY (`LECCION_ID`)
+    REFERENCES `rotolearnbd`.`LECCION` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
