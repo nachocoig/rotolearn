@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app id="WebApp">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+             version="2.5" 
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"> 
  	<display-name>Rotolearn</display-name>
 	<context-param>
 		<param-name>autor</param-name>
@@ -9,7 +11,6 @@
 	
 	<servlet>
 		<servlet-name>ControladorServlet</servlet-name>
-		<display-name>ControladorServlet</display-name>
 		<servlet-class>es.rotolearn.servlet.ControladorServlet</servlet-class>
 	</servlet>
 	
@@ -37,5 +38,23 @@
 	    <error-code>500</error-code>
 	    <location>/error500.jsp</location>
 	</error-page>
+	<resource-ref>
+		<description />
+
+		<res-ref-name>jms/cf1.1Ref</res-ref-name>
+		<res-type>javax.jms.ConnectionFactory</res-type>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+		<mapped-name>jms/cf1.1</mapped-name>
+
+	</resource-ref>
+	<resource-ref>
+		<description />
+
+		<res-ref-name>jms/queue1.1Ref</res-ref-name>
+		<res-type>javax.jms.Queue</res-type>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+		<mapped-name>jms/queue1.1</mapped-name>
+
+	</resource-ref>
 	
 </web-app>
