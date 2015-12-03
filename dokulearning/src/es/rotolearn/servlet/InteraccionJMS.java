@@ -21,9 +21,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
-/**
- * @author Jes�s Hernando Corrochano
- */
 
 public class InteraccionJMS {
 	private javax.jms.ConnectionFactory factory = null;
@@ -36,7 +33,8 @@ public class InteraccionJMS {
 
 
 	public void escrituraJMS(String mensaje,  String selector) {
-		
+	    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
+        /* HAY QUE CONCATENAR AL MENSAJE EL NICK DEL USUARIO OBTENIDO DEL BEAN*/
 		try {
 
 			contextoInicial = new javax.naming.InitialContext();

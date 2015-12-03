@@ -13,18 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class ReadMessageQueueBrowserServlet
- */
 
 public class ReadMessageQueueBrowserServlet  {
 	private static final long serialVersionUID = 1L;
-       
-   
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
+	
 	public String leerbw()  {
 
 		StringBuffer _sB = new StringBuffer(32);
@@ -71,7 +64,7 @@ public class ReadMessageQueueBrowserServlet  {
 						javax.jms.TextMessage Tmensaje =
 							(javax.jms.TextMessage) message2;
 						System.out.println("  Message: " +Tmensaje.getText()+" </br>");
-						_sB.append(Tmensaje.getText()+" </br>"); //AÑADIR AQUI EL NOMBRE DE USUARIO
+						_sB.append(Tmensaje.getText()+" </br>"); 
 					}
 				}
 			}

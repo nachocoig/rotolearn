@@ -14,6 +14,7 @@ public class EscrituraChatRequestHandler implements RequestHandler {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		InteraccionJMS mq=new InteraccionJMS();
+/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
 
 		System.out.println("ESTOY EN EL SERVLET DE ESCRITURA");
 		System.out.println("Me escriben esto:"+request.getParameter("mensaje"));

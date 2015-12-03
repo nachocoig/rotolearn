@@ -16,8 +16,7 @@ public class LecturaChatRequestHandler implements RequestHandler{
 		String strAux="";
 		
 		System.out.println("ESTOY EN EL SERVLET DE Lectura");
-			//strAux=mq.lecturaJMS(3, "AAAAAAAA");
-		  	//strAux=mq.lecturaBrowser("AAAAAAAA");
+/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A leerbw POR PARAMETRO EL ID DEL CURSO*/
 			strAux=lect.leerbw();
 			System.out.println("LEO esto: "+strAux);
 			request.setAttribute("mensajes", strAux);
