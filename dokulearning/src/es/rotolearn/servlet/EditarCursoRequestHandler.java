@@ -41,7 +41,7 @@ public class EditarCursoRequestHandler implements RequestHandler {
 			Curso editar = em.find(Curso.class, ID);
 			System.out.println("Hemos encontrado el curso con titulo: " + editar.getTitulo() + " y le vamos a añadir" + mr.getParameterValues("descripcion")[0]);
 			editar.setDescripcion(mr.getParameterValues("descripcion")[0]);
-			ruta = "administrarCurso.form?ID="+ID;
+			ruta = "administrarCurso.form?id="+ID;
 			request.setAttribute("act", "ok");
 			}
 			else{
@@ -56,7 +56,7 @@ public class EditarCursoRequestHandler implements RequestHandler {
 					 ProfesorAsociado editar = em.find(ProfesorAsociado.class,pk);
 					 em.remove(editar);
 					 request.setAttribute("act", "oke");
-					 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);}
+					 ruta="administrarCurso.form?id="+Integer.parseInt(dat[1]);}
 				 else if(origen.equals("/validarPeticion.form")){
 					 ProfesorAsociado editar = em.find(ProfesorAsociado.class, pk);
 					 editar.setValidado("SI");
@@ -70,7 +70,7 @@ public class EditarCursoRequestHandler implements RequestHandler {
 						 editar.setCurso(em.find(Curso.class,  Integer.parseInt(dat[1])));
 						 editar.setUsuario(em.find(Usuario.class, Integer.parseInt(dat[0])));
 						 editar.setValidado("NO");
-						 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);
+						 ruta="administrarCurso.form?id="+Integer.parseInt(dat[1]);
 						 em.persist(editar);
 							 
 						 

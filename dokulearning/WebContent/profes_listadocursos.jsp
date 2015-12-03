@@ -118,7 +118,7 @@
                 			int ID = aux.getId();
                 		%>
                             <tr>
-                                <td><a href="administrarCurso.form?ID=<%= ID %>" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
+                                <td><a href="administrarCurso.form?id=<%= ID %>" ><input class="btn btn-default btn-xs" type="submit" value="Administrar" ></a></td>
                               	<td><%=aux.getValidado() %></td>
                               	<td><%=aux.getDestacado() %></td>
                                 <td><%=aux.getTitulo() %></td>

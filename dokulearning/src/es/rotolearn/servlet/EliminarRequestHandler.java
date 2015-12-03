@@ -56,7 +56,7 @@ public String handleRequest(HttpServletRequest request, HttpServletResponse resp
 			 pk.setID_c(Integer.parseInt(dat[1]));
 			 CursoAlumno borrar = em.find(CursoAlumno.class,pk);
 			 em.remove(borrar);
-			 ruta="administrarCurso.form?ID="+Integer.parseInt(dat[1]);
+			 ruta="administrarCurso.form?id="+Integer.parseInt(dat[1]);
 		}
 				try {
 					

@@ -70,7 +70,7 @@
     <!--CUERPO-->
     <%
     	Curso aux = (Curso) request.getAttribute("curso");
-    	String h = aux.getTitulo();
+    	int h = aux.getId();
     %>
     
 	<div id="cuerpo" class="container-fluid">
@@ -119,12 +119,12 @@
 					</li>
 					<li class="list-group-item">
 						<span class="glyphicon glyphicon-education" aria-hidden="true"></span>
-						<span class="info">Profesor/es:</span><%=aux.getUsuario() %>
+						<span class="info">Profesor/es:</span><%=aux.getUsuario().getNombre() + "" + aux.getUsuario().getApellido1() + "" + aux.getUsuario().getApellido2()  %>
 						<br>
 					</li>
 					<li class="list-group-item">
 						<a class="btn btn-success breg " href="#"><span>Inscr&iacute;bete</span></a>
-						<a class="btn btn-success breg glyphicon glyphicon-heart" href="añadirDeseo.form?titulo=<%=h %>" rel="prettyPhoto"><span>  Deseado</span></a>
+						<a class="btn btn-success breg glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=h %>" rel="prettyPhoto"><span>  Deseado</span></a>
 					</li>
 				</ul>
 			</div>
