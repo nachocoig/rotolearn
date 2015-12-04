@@ -64,7 +64,6 @@
                     </div>
                 </nav>
             </div>
-           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="verCursosProfe.form">Ver tus cursos</a></div>
         </header>
         <!--FIN CABECERA-->
         
@@ -112,8 +111,8 @@
                             
                         	<% 
                         }else{
-                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
-                		for(int i=0; i<dest.size();i++){
+	                        ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos");
+	                		for(int i=0; i<dest.size();i++){
                 			Curso aux = dest.get(i);
                 			int ID = aux.getId();
                 		%>

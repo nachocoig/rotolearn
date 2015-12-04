@@ -16,11 +16,10 @@ public class EditarCursoRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpServletResponse response) throws ServletException, IOException {
 		String origen = request.getServletPath();
 		String ruta = null;
-	 	
-	    
 	   
 	 // 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
@@ -33,19 +32,20 @@ public class EditarCursoRequestHandler implements RequestHandler {
 		em.getTransaction().begin();
 		try{
 			MultipartRequest mr = new MultipartRequest(request);
+			
 			if(origen.equals("/editarCurso.form")){
 				System.out.print("Entro y la ID es ");
 				System.out.println(request.getParameter("ID"));
-			 int ID = Integer.parseInt(request.getParameter("ID"));
-			System.out.println("Procedemos a actualizar el curso" + ID);
-			Curso editar = em.find(Curso.class, ID);
-			System.out.println("Hemos encontrado el curso con titulo: " + editar.getTitulo() + " y le vamos a añadir" + mr.getParameterValues("descripcion")[0]);
-			editar.setDescripcion(mr.getParameterValues("descripcion")[0]);
-			ruta = "administrarCurso.form?id="+ID;
-			request.setAttribute("act", "ok");
+				int ID = Integer.parseInt(request.getParameter("ID"));
+				System.out.println("Procedemos a actualizar el curso" + ID);
+				
+				Curso editar = em.find(Curso.class, ID);
+				editar.setDescripcion(mr.getParameterValues("descripcion")[0]);
+				ruta = "administrarCurso.form?id="+ID;
+				request.setAttribute("act", "ok");
 			}
 			else{
-				String datos = request.getParameter("datos");
+				 String datos = request.getParameter("datos");
 				 String dat[]=datos.split("-");
 				 ProfesorAsociadoPK pk = new ProfesorAsociadoPK();
 				 System.out.println("VOY A BORRAR A "+ dat[0] + " del curso " + dat[1]);
@@ -64,17 +64,16 @@ public class EditarCursoRequestHandler implements RequestHandler {
 					 request.setAttribute("act", "okv");
 				 }
 				 else{
-					 
 					 ProfesorAsociado editar = new ProfesorAsociado();
-						 editar.setId(pk);
-						 editar.setCurso(em.find(Curso.class,  Integer.parseInt(dat[1])));
-						 editar.setUsuario(em.find(Usuario.class, Integer.parseInt(dat[0])));
-						 editar.setValidado("NO");
-						 ruta="administrarCurso.form?id="+Integer.parseInt(dat[1]);
-						 em.persist(editar);
-							 
+					 editar.setId(pk);
+					 editar.setCurso(em.find(Curso.class,  Integer.parseInt(dat[1])));
+					 editar.setUsuario(em.find(Usuario.class, Integer.parseInt(dat[0])));
+					 editar.setValidado("NO");
+					 ruta="administrarCurso.form?id="+Integer.parseInt(dat[1]);
+					 em.persist(editar);
 						 
-						 request.setAttribute("act", "oka");
+					 
+					 request.setAttribute("act", "oka");
 					 
 				 }
 				 

@@ -1,6 +1,6 @@
+<jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <%@ page import="entities.*" %>
 <%@ page import="java.util.ArrayList" %>
-<jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -75,61 +75,79 @@
                     </div>
                 </nav>
             </div>
-            <%
-        Curso aux = (Curso) request.getAttribute("curso");
-    	int ID = aux.getId();
-    	%>
-           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="verCursosProfe.form">Ver tus cursos</a> > <a href="administrarCurso.form?ID=<%= ID %>">Administrar curso</a></div>
         </header>
         <!--FIN CABECERA-->
-        
+        <%
+            
+        	Curso aux = (Curso) request.getAttribute("curso");
+    		int ID = aux.getId();
+    	%>
         <!--CUERPO-->
-        <div id="cuerpo" class="container-fluid">
-        <!--  MENSAJES DE OK/ERROR EDICION CURSO -->
-			 <%if(request.getAttribute("act")!=null){
-    	if(request.getAttribute("act").equals("ok")){ %>
-				<div class="alert alert-success">
-	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Descripci&oacute;n editada con exito!</strong> 
-				</div>
-			<% } else if(request.getAttribute("act").equals("oke")){ %>	
-			<div class="alert alert-success">
-	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Asociaci&oacute;n eliminada con exito!</strong> 
-				</div>
-			<% } else if(request.getAttribute("act").equals("oka")){ %>	
-			<div class="alert alert-success">
-	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Profesor asociado con exito!</strong> 
-				</div>	
-			<% }else { 
-			 
-			       %>
-			<div class="alert alert-danger">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Cuidado!</strong> ¡No se ha podido actualizar el curso!
-				</div>
-				<% }}
-			 
-			       %>
-			       <!-- MENSAJES DE BORRADO USUARIO -->
-			       <%if(request.getAttribute("borrado")!=null){
-    	if(request.getAttribute("borrado").equals("ok")){ %>
-				<div class="alert alert-success">
-	                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Usuario eliminado del curso con exito!</strong> 
-				</div>
-			<% }else{ 
-			 
-			       %>
-			<div class="alert alert-danger">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>¡Cuidado!</strong> ¡Algo ha ocurrido y no se ha podido eliminar!
-				</div>
-			<% }} %>
+        <div id="cuerpo" class="container-fluid">    
+        
+           	
+                <%
+					if(request.getAttribute("aviso") != null){
+						String aux2 = (String) request.getAttribute("aviso");
+						String mensaje [] = aux2.split("/");
+						if(mensaje[0].equals("SI")){
+					%>
+							<div class="row aviso">
+			                	<div class="col-md-8 col-md-offset-2">
+			                		<div class="alert alert-success" style="margin-bottom:0px">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									    <strong>¡Perfecto!</strong> <%=mensaje[1] %>.
+									</div>
+			                	</div>
+			                </div>
+					<%
+						}else{
+					%>
+							<div class="row aviso">
+			                	<div class="col-md-8 col-md-offset-2">
+									<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									    <strong>¡Error!</strong> <%=mensaje[1] %>.
+									</div>
+								</div>
+			                </div>
+					<%
+						}
+					}
+				%>
+				
+				<%
+					if(request.getAttribute("eliminado") != null)
+					if(request.getAttribute("eliminado").equals("si")){
+				%>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+		                		<div class="alert alert-success" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Vale descuento eliminado.</strong> Tu vale descuento se ha eliminado correctamente.
+								</div>
+		                	</div>
+		                </div>
+				<%
+					}else{
+				%>
+						<div class="row aviso">
+		                	<div class="col-md-8 col-md-offset-2">
+								<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								    <strong>Error al eliminar vale descuento.</strong> Tu vale no se ha podido eliminar.
+								</div>
+							</div>
+		                </div>
+				<%
+					}
+				%>
+        
+        
+        
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2><%=aux.getTitulo() %></h2>
+                    <h2>Titulo de curso</h2>
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#info">Informaci&oacute;n</a></li>
                         <li><a data-toggle="tab" href="#material">Material</a></li>
@@ -142,16 +160,17 @@
                             <h3>Descripci&oacute;n</h3>
                             <p><%=aux.getDescripcion() %></p>
                             <h3>Añade nueva descripci&oacute;n:</h3>
-                            <form role="form" method="post" action="editarCurso.form?ID=<%= ID %>" enctype="multipart/form-data" >
-                           <div class="form-group">	
-					    <label for="moreinfo"><span class="red">*</span>Descripci&oacute;n</label>
-						<textarea name="descripcion" class="form-control" rows="4" placeholder="Describe en que consiste el curso" required></textarea>
-						</div>
-						<div class="form-group">
-						
-					    <button type="submit" class="btn btn-success">Actualizar</button>
-					</div>	
-					</form>
+                            <form role="form" method="post" action="administrarCursos.form" enctype="multipart/form-data" >
+                           		<div class="form-group">	
+                           			<input type="hidden" value="editarDescripcion" name="tipo"/>	
+                           			<input type="hidden" value="<%=ID%>" name="curso"/>
+					    			<label for="moreinfo"><span class="red">*</span>Descripci&oacute;n</label>
+									<textarea name="descripcion" class="form-control" rows="4" placeholder="Describe en que consiste el curso" required></textarea>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-success">Actualizar</button>
+								</div>	
+							</form>
                         </div>
                         <div id="alumn" class="tab-pane fade">
                             <div class="row">
@@ -161,8 +180,6 @@
                                         <table class="table table-condensed table-hover">
                                         <thead>
                                             <tr>
-                                            	<th>ID </th>
-                                            	<th>Nickname</th>
                                                 <th>Nombre</th>
                                                 <th>Primer apellido</th>
                                                 <th>Segundo apellido</th>
@@ -171,30 +188,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         <%if(request.getAttribute("usuario").equals("no")){
-                        					%>
-                        	
-                               				<tr>
-                                 				<td>No hay ningun alumno inscrito</td> 
-                               				</tr>
-                            
-				                        	<% 
-				                        }else{
-				                        ArrayList<Usuario> inscritos = (ArrayList<Usuario>) request.getAttribute("listaInscritos");
-				                		for(int i=0; i<inscritos.size();i++){
-				                			Usuario aux2 = inscritos.get(i);
-				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
-				                		%>
                                             <tr>
-                                                <td><%=aux2.getId() %></td>
-                                                <td><%=aux2.getNickname() %></td>
-                                                <td><%=aux2.getNombre() %></td>
-                                                <td><%=aux2.getApellido1() %></td>
-                                                <td><%=aux2.getApellido2() %></td>
-                                                <td><%=aux2.getEmail() %></td>
-                                                <td><a href="eliminarInscrito.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                                <td>Jaba</td>
+                                                <td>Porcentaje</td>
+                                                <td>roto25</td>
+                                                <td>25</td>
+                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
                                             </tr>
-                                        <% }} %>    
+                                            <tr>
+                                                <td>J2E</td>
+                                                <td>Porcentaje</td>
+                                                <td>roto30</td>
+                                                <td>30</td>
+                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Javascript</td>
+                                                <td>Descuento fijo</td>
+                                                <td>roto250</td>
+                                                <td>250</td>
+                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Labrador minecraft</td>
+                                                <td>Descuento fijo</td>
+                                                <td>roto250</td>
+                                                <td>250</td>
+                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
+                                            </tr>
                                         </tbody>
                                         </table>
                                     </div>
@@ -364,117 +385,19 @@
                                                 <th>Primer apellido</th>
                                                 <th>Segundo apellido</th>
                                                 <th>Email</th>
-                                                <th>Nickname</th>                                                
-                                                <th>Eliminar </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                           <%if(request.getAttribute("asociados").equals("no")){
-                        					%>
-                        	
-                               				<tr>
-                                 				<td>No hay ningun profesor asociado</td> 
-                               				</tr>
-                            
-				                        	<% 
-				                        }else{
-				                        ArrayList<Usuario> asociados = (ArrayList<Usuario>) request.getAttribute("listaAsociados");
-				          
-				                        for(int i=0; i<asociados.size();i++){
-				                			Usuario aux2 = asociados.get(i);
-				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
-				                		%>
-                                            <tr>
-                                                <td><%=aux2.getNombre() %></td>
-                                                <td><%=aux2.getApellido1() %></td>
-                                                <td><%=aux2.getApellido2() %></td>
-                                                <td><%=aux2.getEmail() %></td>
-                                                <td><%=aux2.getNickname() %></td>
-                                                <td>
-                                                <td><a href="eliminarAsociados.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                        <% }} %>    
-                                        </tbody>
-                                        </table>
-                                        <h2 id="profesores" class="titulo">Listado de Peticiones</h2>         
-                                        Aqui se mostraran los profesores que aun no han aceptado tu peticion 
-                                        <table class="table table-condensed table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Primer apellido</th>
-                                                <th>Segundo apellido</th>
-                                                <th>Email</th>
-                                                <th>Nickname</th>                                               
-                                                <th>Cancelar peticion</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                           <%if(request.getAttribute("peticiones").equals("no")){
-                        					%>
-                        	
-                               				<tr>
-                                 				<td>No hay ninguna peticion pendiente</td> 
-                               				</tr>
-                            
-				                        	<% 
-				                        }else{
-				                        ArrayList<Usuario> peticiones = (ArrayList<Usuario>) request.getAttribute("listaPeticiones");
-				          
-				                        for(int i=0; i<peticiones.size();i++){
-				                			Usuario aux2 = peticiones.get(i);
-				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
-				                		%>
-                                            <tr>
-                                                <td><%=aux2.getNombre() %></td>
-                                                <td><%=aux2.getApellido1() %></td>
-                                                <td><%=aux2.getApellido2() %></td>
-                                                <td><%=aux2.getEmail() %></td>
-                                                <td><%=aux2.getNickname() %></td>
-                                                <td>
-                                                <td><a href="eliminarAsociados.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Cancelar"></td>
-                                            </tr>
-                                        <% }} %>    
-                                        </tbody>
-                                        </table>
-                                        <h2 id="profesores" class="titulo">Listado de Profesores</h2>
-										 Selecciona los profesores que quieras asociar a tu curso.         
-                                        <table class="table table-condensed table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Primer apellido</th>
-                                                <th>Segundo apellido</th>
-                                                <th>Email</th>
                                                 <th>Nickname</th>
-                                                <th>Asociar</th>
+                                                <th>Eliminar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
-                                            </tr><%if(request.getAttribute("profes").equals("no")){
-                        					%>
-                        	
-                               				<tr>
-                                 				<td>No hay ningun profesor en nuestro sistema al que asociar</td> 
-                               				</tr>
-                            
-				                        	<% 
-				                        }else{
-				                        ArrayList<Usuario> profes = (ArrayList<Usuario>) request.getAttribute("listaProfes");
-				                		for(int i=0; i<profes.size();i++){
-				                			Usuario aux2 = profes.get(i);
-				                			String datos = Integer.toString(aux2.getId()) + '-' + Integer.toString(ID);
-				                		%>
-                                            <tr>                                                                                            
-                                                <td><%=aux2.getNombre() %></td>
-                                                <td><%=aux2.getApellido1() %></td>
-                                                <td><%=aux2.getApellido2() %></td>
-                                                <td><%=aux2.getEmail() %></td>
-                                                <td><%=aux2.getNickname() %></td>
-                                                <td><a href="asociarProfe.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Asociar"></td>
+                                            <tr>
+                                                <td><%=perfil.getNombre()%></td>
+                                                <td><%=perfil.getApellido1()%></td>
+                                                <td><%=perfil.getApellido2()%></td>
+                                                <td><%=perfil.getEmail()%></td>
+                                                <td><%=perfil.getNickName()%></td>
+                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
                                             </tr>
-                                        <% }} %>    
                                         </tbody>
                                         </table>
                                     </div>
@@ -486,7 +409,7 @@
                             <h3>¿Est&aacute;s seguro de que deseas borrar el curso?</h3>
                             <p>Si borras el curso eliminaras todo el rastro del curso de las bases de datos, como pueden ser los alumnos matriculados, logros, cupones de descuento,
                                 este cambio no podra ser deshecho, por lo que una vez que confirme su eliminaci&oacute;n no hay vuelta a atras. ¿Esta seguro de que desea borrar el curso?</p>
-                            <a class="glyphicon glyphicon-remove" href="eliminarCurso.form?ID=<%=ID %>"><span> Eliminar </span></a>
+                            <button type="button" class="btn btn-danger" name="delete">Eliminar curso</button>
                         </div>
                     </div>
                 </div>

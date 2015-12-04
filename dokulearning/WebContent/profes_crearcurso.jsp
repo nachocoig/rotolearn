@@ -62,7 +62,6 @@
 		            </div>
 		        </nav>
 	        </div>
-           <div id="miga"><a href="profes_panel.jsp">Panel de control</a> > <a href="profes_crearcurso.jsp">A&ntilde;adir curso</a></div>
 
 	    </header>
 	    <!--FIN CABECERA-->

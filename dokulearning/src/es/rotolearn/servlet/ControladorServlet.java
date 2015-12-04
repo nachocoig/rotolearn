@@ -36,16 +36,21 @@ public class ControladorServlet extends HttpServlet {
         handlerHash.put("/profe_descuentos.form", new es.rotolearn.servlet.ProfeDescuentosRequestHandler());
         handlerHash.put("/eliminarVale.form", new es.rotolearn.servlet.EliminarValeRequestHandler());
         handlerHash.put("/verCursosProfe.form", new es.rotolearn.servlet.CursosProfeRequestHandler());
-        handlerHash.put("/administrarCurso.form", new es.rotolearn.servlet.ShowCursoRequestHandler());
-        handlerHash.put("/eliminarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler());
-        handlerHash.put("/editarCurso.form", new es.rotolearn.servlet.EditarCursoRequestHandler());
-        handlerHash.put("/mostrarInscritos.form", new es.rotolearn.servlet.ListarUsuariosRequestHandler());
-        handlerHash.put("/eliminarInscrito.form", new es.rotolearn.servlet.EliminarRequestHandler());
-        handlerHash.put("/listarAsociados.form", new es.rotolearn.servlet.ListadoProfesoresRequestHandler());
-        handlerHash.put("/asociarProfe.form", new es.rotolearn.servlet.EditarCursoRequestHandler());
-        handlerHash.put("/eliminarAsociados.form", new es.rotolearn.servlet.EditarCursoRequestHandler());
-        handlerHash.put("/denegarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler());
-        handlerHash.put("/validarPeticion.form", new es.rotolearn.servlet.EditarCursoRequestHandler());
+        handlerHash.put("/administrarCursos.form", new es.rotolearn.servlet.AdministrarCursoRequestHandler());
+        /*
+         * Todos estos handlers hay que dejarlos en 1... Si hacemos esto para toda la web, acabamos con 10131341u34234231321thwfghasfuhg2342342343 x INF handlers
+         *  (NO HEMOS BORRADO NADA DE TU CODIGO, SOLO HAY QUE MOVER Y MODIFICAR T0DO AL ADRMINISTRARCURSOREQUESTHANDLER
+        handlerHash.put("/administrarCurso.form", new es.rotolearn.servlet.ShowCursoRequestHandler());  //1
+        handlerHash.put("/eliminarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler()); //2
+        handlerHash.put("/editarCurso.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //3
+        handlerHash.put("/mostrarInscritos.form", new es.rotolearn.servlet.ListarUsuariosRequestHandler()); //4
+        handlerHash.put("/eliminarInscrito.form", new es.rotolearn.servlet.EliminarRequestHandler()); //5
+        handlerHash.put("/listarAsociados.form", new es.rotolearn.servlet.ListadoProfesoresRequestHandler()); //6
+        handlerHash.put("/asociarProfe.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //7
+        handlerHash.put("/eliminarAsociados.form", new es.rotolearn.servlet.EditarCursoRequestHandler());//8
+        handlerHash.put("/denegarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler()); //9 
+        handlerHash.put("/validarPeticion.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //10 
+        */
         handlerHash.put("/leerChat.form", new es.rotolearn.servlet.LecturaChatRequestHandler());
         handlerHash.put("/escribirChat.form", new es.rotolearn.servlet.EscrituraChatRequestHandler());
 	}

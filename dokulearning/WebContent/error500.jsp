@@ -70,7 +70,7 @@
         <div id="cuerpo" class="container-fluid">
 			<div class="row">
 			    <div class="col-md-12">
-			    	<h1> <img src="http://s8.postimg.org/63bxmuh85/NUSENUSE_HD.gif" height="100px">Error 500 - Error interno del servidor.</h1>
+			    	<h1> <img src="http://i46.tinypic.com/21owps0.gif" height="100px">Error 500 - Error interno del servidor.</h1>
 			    </div>
 			</div>
         </div>

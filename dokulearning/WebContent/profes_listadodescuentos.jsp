@@ -66,7 +66,6 @@
                     </div>
                 </nav>
             </div>
-            <div class="formCupon" id="miga"><a href="profes_panel.jsp">Panel de control</a><span> > </span><a href="profes_listadodescuentos.jsp">Ver tus descuentos</a></div>
         </header>
         <!--FIN CABECERA-->
         
