@@ -64,13 +64,17 @@ public class Curso implements Serializable {
 	@OneToMany(mappedBy="curso")
 	private List<Descuento> descuentos;
 
+	//bi-directional many-to-one association to Promocion
+	@OneToMany(mappedBy="curso")
+	private List<Promocion> promocions;
+
 	//bi-directional many-to-one association to ProfesorAsociado
 	@OneToMany(mappedBy="curso")
 	private List<ProfesorAsociado> profesorAsociados;
 
-	//bi-directional many-to-one association to Promocion
+	//bi-directional many-to-one association to Seccion
 	@OneToMany(mappedBy="curso")
-	private List<Promocion> promocions;
+	private List<Seccion> seccions;
 
 	public Curso() {
 	}
@@ -215,6 +219,28 @@ public class Curso implements Serializable {
 		return descuento;
 	}
 
+	public List<Promocion> getPromocions() {
+		return this.promocions;
+	}
+
+	public void setPromocions(List<Promocion> promocions) {
+		this.promocions = promocions;
+	}
+
+	public Promocion addPromocion(Promocion promocion) {
+		getPromocions().add(promocion);
+		promocion.setCurso(this);
+
+		return promocion;
+	}
+
+	public Promocion removePromocion(Promocion promocion) {
+		getPromocions().remove(promocion);
+		promocion.setCurso(null);
+
+		return promocion;
+	}
+
 	public List<ProfesorAsociado> getProfesorAsociados() {
 		return this.profesorAsociados;
 	}
@@ -237,26 +263,26 @@ public class Curso implements Serializable {
 		return profesorAsociado;
 	}
 
-	public List<Promocion> getPromocions() {
-		return this.promocions;
+	public List<Seccion> getSeccions() {
+		return this.seccions;
 	}
 
-	public void setPromocions(List<Promocion> promocions) {
-		this.promocions = promocions;
+	public void setSeccions(List<Seccion> seccions) {
+		this.seccions = seccions;
 	}
 
-	public Promocion addPromocion(Promocion promocion) {
-		getPromocions().add(promocion);
-		promocion.setCurso(this);
+	public Seccion addSeccion(Seccion seccion) {
+		getSeccions().add(seccion);
+		seccion.setCurso(this);
 
-		return promocion;
+		return seccion;
 	}
 
-	public Promocion removePromocion(Promocion promocion) {
-		getPromocions().remove(promocion);
-		promocion.setCurso(null);
+	public Seccion removeSeccion(Seccion seccion) {
+		getSeccions().remove(seccion);
+		seccion.setCurso(null);
 
-		return promocion;
+		return seccion;
 	}
 
 }

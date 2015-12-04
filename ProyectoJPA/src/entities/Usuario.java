@@ -61,11 +61,11 @@ public class Usuario implements Serializable {
 	private String tipo;
 
 	//bi-directional many-to-one association to Curso
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="usuario", cascade={CascadeType.ALL})
 	private List<Curso> cursos;
 
 	//bi-directional many-to-one association to CursoAlumno
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="usuario", cascade={CascadeType.ALL})
 	private List<CursoAlumno> cursoAlumnos;
 
 	//bi-directional many-to-one association to ProfesorAsociado
