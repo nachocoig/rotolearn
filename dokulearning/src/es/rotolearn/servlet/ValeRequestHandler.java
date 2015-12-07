@@ -20,6 +20,13 @@ import es.rotolearn.javaBean.RegistroBean;
 
 public class ValeRequestHandler implements RequestHandler {
 
+	/*
+	 * Descripcion:
+	 * Este Handler se encarga de recoger las peticiones que se realicen en la vista profes_listadodescuentos.jsp
+	 * Y su funcion es crear vales de descuento si no existe un vale anterior para el curso y de eliminar los vales
+	 * creados. En caso de no tener cursos creados o validados no se podra crear ningun vale.
+	 */
+	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "profe_descuentos.form";

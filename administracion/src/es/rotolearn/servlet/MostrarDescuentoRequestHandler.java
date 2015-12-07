@@ -18,7 +18,8 @@ public class MostrarDescuentoRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-String ruta = "admin_listadocupones.jsp";
+
+		String ruta = "admin_listadocupones.jsp";
 		
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		
