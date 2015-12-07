@@ -72,57 +72,33 @@
         <!--CUERPO-->
     	<div id="formCupon" class="container-fluid">
     	
-                <%
-					if(request.getAttribute("cupon") != null)
-					if(request.getAttribute("cupon").equals("si")){
+    			<%
+					if(request.getAttribute("aviso") != null){
+						String aux2 = (String) request.getAttribute("aviso");
+						String mensaje [] = aux2.split("/");
+						if(mensaje[0].equals("SI")){
 				%>
-						<div class="row aviso">
-		                	<div class="col-md-8 col-md-offset-2">
-		                		<div class="alert alert-success" style="margin-bottom:0px">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								    <strong>Vale descuento creado.</strong> Tu vale descuento se ha creado correctamente.
+							<div class="row aviso">
+			                	<div class="col-md-8 col-md-offset-2">
+			                		<div class="alert alert-success" style="margin-bottom:0px">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									    <strong>¡Perfecto!</strong> <%=mensaje[1] %>.
+									</div>
+			                	</div>
+			                </div>
+				<%
+						}else{
+				%>
+							<div class="row aviso">
+			                	<div class="col-md-8 col-md-offset-2">
+									<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+									    <strong>¡Error!</strong> <%=mensaje[1] %>.
+									</div>
 								</div>
-		                	</div>
-		                </div>
+			                </div>
 				<%
-					}else{
-				%>
-						<div class="row aviso">
-		                	<div class="col-md-8 col-md-offset-2">
-								<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								    <strong>Error al crear vale descuento.</strong> Tu vale no se ha podido crear.
-								</div>
-							</div>
-		                </div>
-				<%
-					}
-				%>
-				
-				<%
-					if(request.getAttribute("eliminado") != null)
-					if(request.getAttribute("eliminado").equals("si")){
-				%>
-						<div class="row aviso">
-		                	<div class="col-md-8 col-md-offset-2">
-		                		<div class="alert alert-success" style="margin-bottom:0px">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								    <strong>Vale descuento eliminado.</strong> Tu vale descuento se ha eliminado correctamente.
-								</div>
-		                	</div>
-		                </div>
-				<%
-					}else{
-				%>
-						<div class="row aviso">
-		                	<div class="col-md-8 col-md-offset-2">
-								<div class="alert alert-danger" style="margin-top:10px" style="margin-bottom:0px">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								    <strong>Error al eliminar vale descuento.</strong> Tu vale no se ha podido eliminar.
-								</div>
-							</div>
-		                </div>
-				<%
+						}
 					}
 				%>
         
@@ -187,7 +163,7 @@
 	    					ArrayList<Descuento> listaDescuentos = (ArrayList<Descuento>) request.getAttribute("listaDescuentos");
 	    					if(listaDescuentos.isEmpty()){	
 	    			%>
-	    			<h3>Debes de crear un curso y que sea validado para poder crear descuentos</h3>	
+	    			<h3>Aun no tienes ningun vale de descuento creado, debes de crear un curso y que sea validado para poder crear descuentos</h3>	
 	    			<%		
 	    					}else{
 	    			%>
@@ -214,7 +190,12 @@
                                 <td><%=listaDescuentos.get(i).getCurso().getTitulo() %></td>
                                 <td><%=listaDescuentos.get(i).getCupon() %></td>
                                 <td><%=listaDescuentos.get(i).getValidez() %></td>
-                                <td><a href="eliminarVale.form?ID=<%=ID %>" class="btn btn-default btn-xs">Eliminar</a></td>
+                                <td>
+                                	<form role="form" method="post" action="vale.form">
+                                		<input type=hidden name=eliminar value="<%=ID %>">
+                                		<button type="submit" class="btn btn-default btn-xs">Eliminar</button>
+                                	</form>
+                                </td>
                             </tr>
                             <%
                     			}
