@@ -26,7 +26,11 @@
         </script>
     </head>
     <body>
-        
+ 	<%String etiqueta =(String) request.getAttribute("actual");
+ 	  if(etiqueta == null)
+ 		  etiqueta = "info";
+ 	%>
+ 
         <!--CABECERA-->
         <header>
             <div class="container-fluid">
@@ -149,14 +153,15 @@
                 <div class="col-md-10 col-md-offset-1">
                     <h2>Titulo de curso</h2>
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#info">Informaci&oacute;n</a></li>
-                        <li><a data-toggle="tab" href="#material">Material</a></li>
-                        <li><a data-toggle="tab" href="#profes">Profesores</a></li>
-                        <li><a data-toggle="tab" href="#alumn">Alumnos</a></li>
-                        <li><a data-toggle="tab" href="#delete"><span class="red">Eliminar curso</span></a></li>
+                        <li<%if(etiqueta.equals("info")){%> class="active"<%}%>><a data-toggle="tab" href="#info">Informaci&oacute;n</a></li>
+                        <li<%if(etiqueta.equals("material")){%> class="active"<%}%>><a data-toggle="tab" href="#material">Material</a></li>
+                        <li<%if(etiqueta.equals("profes")){%> class="active"<%}%>><a data-toggle="tab" href="#profes">Profesores</a></li>
+                        <li<%if(etiqueta.equals("alumn")){%> class="active"<%}%>><a data-toggle="tab" href="#alumn">Alumnos</a></li>
+                        <li<%if(etiqueta.equals("delete")){%> class="active"<%}%>><a data-toggle="tab" href="#delete"><span class="red">Eliminar curso</span></a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="info" class="tab-pane fade in active">
+                    
+                        <div id="info" class="tab-pane fade <%if(etiqueta.equals("info")){%>  in active<%}%>">
                             <h3>Descripci&oacute;n</h3>
                             <p><%=aux.getDescripcion() %></p>
                             <h3>Añade nueva descripci&oacute;n:</h3>
@@ -172,58 +177,55 @@
 								</div>	
 							</form>
                         </div>
-                        <div id="alumn" class="tab-pane fade">
+                        <div id="alumn" class="tab-pane fade <%if(etiqueta.equals("alumn")){%>  in active<%}%>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <h2 class="titulo">Listado de Alumnos matriculados</h2>          
-                                        <table class="table table-condensed table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Primer apellido</th>
-                                                <th>Segundo apellido</th>
-                                                <th>Email</th>
-                                                <th>Eliminar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Jaba</td>
-                                                <td>Porcentaje</td>
-                                                <td>roto25</td>
-                                                <td>25</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>J2E</td>
-                                                <td>Porcentaje</td>
-                                                <td>roto30</td>
-                                                <td>30</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Javascript</td>
-                                                <td>Descuento fijo</td>
-                                                <td>roto250</td>
-                                                <td>250</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Labrador minecraft</td>
-                                                <td>Descuento fijo</td>
-                                                <td>roto250</td>
-                                                <td>250</td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                        </tbody>
-                                        </table>
+                                        <h2 id="profesores" class="titulo">Listado de Profesores asociados</h2>          
+                                  		<% 
+                                        ArrayList<Usuario> alumnos = (ArrayList<Usuario>) request.getAttribute("alumnos");
+                                      	if(alumnos == null){
+                                   		%>
+                                   			<h4> No hay ning&uacute;n alumno matriculado en este curso</h4> 
+                                   		<%}else{%>         
+	                                        <table class="table table-condensed table-hover">
+	                                        <thead>
+	                                            <tr>
+	                                                <th>Nick</th>
+	                                                <th>Nombre</th>
+	                                                <th>Primer apellido</th>
+	                                                <th>Segundo apellido</th>
+	                                                <th>Email</th>
+	                                                <th>Eliminar</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        <%for(int i = 0; i < alumnos.size(); i++){%>
+	                                            <tr>
+	                                                <td><%=alumnos.get(i).getNickname() %></td>
+	                                                <td><%=alumnos.get(i).getNombre() %></td>
+	                                                <td><%=alumnos.get(i).getApellido1() %></td>
+	                                                <td><%=alumnos.get(i).getApellido2() %></td>
+	                                                <td><%=alumnos.get(i).getEmail() %></td>
+													<td>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+					                                		<input type="hidden" value="<%= alumnos.get(i).getId() %>" name="alumno"/>	
+					                                		<input type="hidden" value="eliminarAlumno" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Eliminar">
+					                                	</form>
+	                                                </td>
+	                                            </tr>
+	                                         <%}%>
+	                                        </tbody>
+	                                        </table>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div id="material" class="tab-pane fade">
+                        <div id="material" class="tab-pane fade <%if(etiqueta.equals("material")){%>  in active<%}%>">
                             <h3>Material del curso</h3>
                             <div class="formleccion row">
                                 <form class="form-inline" role="form">
@@ -373,43 +375,121 @@
                             
                         </div>
                         
-                        <div id="profes" class="tab-pane fade">
+                        <div id="profes" class="tab-pane fade <%if(etiqueta.equals("profes")){%>  in active<%}%>">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <h2 id="profesores" class="titulo">Listado de Profesores asociados</h2>          
+                                       		<% 
+	                                        ArrayList<Usuario> asociados = (ArrayList<Usuario>) request.getAttribute("asociados");
+                                       		ArrayList<Usuario> asociadosSinValidar = (ArrayList<Usuario>) request.getAttribute("asociadosSinValidar");
+	                                       	if(asociados == null && asociadosSinValidar == null){
+                                       		%>
+                                       		<h4> No existen profesores asociados al curso</h4> 
+                                       		<%}else{%>
                                         <table class="table table-condensed table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Nombre</th>
-                                                <th>Primer apellido</th>
-                                                <th>Segundo apellido</th>
-                                                <th>Email</th>
-                                                <th>Nickname</th>
-                                                <th>Eliminar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><%=perfil.getNombre()%></td>
-                                                <td><%=perfil.getApellido1()%></td>
-                                                <td><%=perfil.getApellido2()%></td>
-                                                <td><%=perfil.getEmail()%></td>
-                                                <td><%=perfil.getNickName()%></td>
-                                                <td><input class="btn btn-default btn-xs" type="submit" value="Eliminar"></td>
-                                            </tr>
-                                        </tbody>
+	                                        <thead>
+	                                            <tr>
+	                                                <th>Nombre</th>
+	                                                <th>Primer apellido</th>
+	                                                <th>Segundo apellido</th>
+	                                                <th>Email</th>
+	                                                <th>Nickname</th>
+	                                                <th>Eliminar</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+					                        <%    
+					                        for(int i = 0; i < asociados.size(); i++){
+					                        %>            
+	                                            <tr>
+	                                                <td><%= asociados.get(i).getNombre()%></td>
+	                                                <td><%= asociados.get(i).getApellido1()%></td>
+	                                                <td><%= asociados.get(i).getApellido2()%></td>
+	                                                <td><%= asociados.get(i).getEmail()%></td>
+	                                                <td><%= asociados.get(i).getNickname()%></td>
+	                                                <td>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+					                                		<input type="hidden" value="<%= asociados.get(i).getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="eliminarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Eliminar">
+					                                	</form>
+	                                                </td>
+	                                            </tr>
+	                        				<%}
+											/* Asociados sin validar */
+											if(asociadosSinValidar != null || !asociadosSinValidar.isEmpty())
+					                        for(int i = 0; i < asociadosSinValidar.size(); i++){
+					                        %>            
+	                                            <tr class="asociadosSinValidar">
+	                                                <td><%= asociadosSinValidar.get(i).getNombre()%></td>
+	                                                <td><%= asociadosSinValidar.get(i).getApellido1()%></td>
+	                                                <td><%= asociadosSinValidar.get(i).getApellido2()%></td>
+	                                                <td><%= asociadosSinValidar.get(i).getEmail()%></td>
+	                                                <td><%= asociadosSinValidar.get(i).getNickname()%></td>
+	                                                <td>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="validarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Aceptar">
+					                                	</form>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="eliminarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Denegar">
+					                                	</form>
+	                                                </td>
+	                                            </tr>
+	                        				<%}%>                    
+	                                        </tbody>
                                         </table>
+                        				<%}%>
                                     </div>
+                                    
+									<div class="container">
+									  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">A&ntilde;adir asociado</button>
+									
+									  <!-- Modal -->
+									  <div class="modal fade" id="myModal" role="dialog">
+									    <div class="modal-dialog modal-md">
+									      <div class="modal-content">
+									      	<form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+										        <div class="modal-header">
+										          <button type="button" class="close" data-dismiss="modal">&times;</button>
+										          <h4 class="modal-title">Agregar nuevo profesor asociado</h4>
+										        </div>
+										        <div class="modal-body">
+										         	<p>Escribe el nick o el correo electr&oacute;nico del profesor que quieres agregar como asociado del curso.</p>
+										         	<input type="hidden" value="<%= ID %>" name="curso"/>
+										         	<input type="hidden" value="agregarAsociado" name="tipo"/>	
+										         	<input type="text" name="asociado" placeholder="P.e profe@profe.es o profe1"/>
+										        </div>
+										        <div class="modal-footer">
+										        	<input type="submit" class="btn btn-default" value="Agregar"/>
+										        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										        </div>
+									        </form>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+                                    
                                 </div>
                             </div>
                         </div>
                         
-                        <div id="delete" class="tab-pane fade">
+                        <div id="delete" class="tab-pane fade <%if(etiqueta.equals("delete")){%> in active<%}%>">
                             <h3>¿Est&aacute;s seguro de que deseas borrar el curso?</h3>
                             <p>Si borras el curso eliminaras todo el rastro del curso de las bases de datos, como pueden ser los alumnos matriculados, logros, cupones de descuento,
                                 este cambio no podra ser deshecho, por lo que una vez que confirme su eliminaci&oacute;n no hay vuelta a atras. ¿Esta seguro de que desea borrar el curso?</p>
-                            <button type="button" class="btn btn-danger" name="delete">Eliminar curso</button>
+							<form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+								<input type="hidden" value="<%= ID %>" name="curso"/>
+								<input type="hidden" value="eliminar" name="tipo"/>	
+								<input class="btn btn-danger" type="submit" value="Si, eliminar">
+					     	</form>
                         </div>
                     </div>
                 </div>
