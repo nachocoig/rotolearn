@@ -84,14 +84,21 @@ public class RegistroRequestHandler implements RequestHandler {
 			request.setAttribute("error","reg");
 			ruta = "formulario_registro.jsp";
 		}catch (javax.persistence.NoResultException e){
+			
 			String intereses="";
 			MultipartRequest mr = new MultipartRequest(request);
-
-			for(int i=1;i<11;i++){
-				if(request.getParameter("intereses"+i)!=null){
-					intereses = intereses+mr.getParameterValues("intereses"+i)[0]+"/";
+			String [] it = mr.getParameterValues("intereses");
+			if(it!=null){
+				for(int i=0;i<it.length;i++){
+					System.out.println("Elemento "+ i + ": " + it[i] );
+					if(it[i]!=null){
+						intereses = intereses + it[i] +"/";
+					}
 				}
 			}
+			
+			
+			
 			nAux.setNickname(mr.getParameterValues("nick")[0]);
 			nAux.setNombre(mr.getParameterValues("nombre")[0]);
 			nAux.setTipo(mr.getParameterValues("optradio")[0]);

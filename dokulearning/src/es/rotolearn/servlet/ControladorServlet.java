@@ -26,9 +26,9 @@ public class ControladorServlet extends HttpServlet {
 		handlerHash.put("/reg.form", new es.rotolearn.servlet.RegistroRequestHandler());
 		handlerHash.put("/logout.form", new es.rotolearn.servlet.LogoutRequestHandler());
 		handlerHash.put("/vale.form", new es.rotolearn.servlet.ValeRequestHandler());
-		handlerHash.put("/curso.form", new es.rotolearn.servlet.CursoRequestHandler());
+		handlerHash.put("/curso.form", new es.rotolearn.servlet.CrearCursoRequestHandler());
 		handlerHash.put("/catalogo.form", new es.rotolearn.servlet.CatalogoRequestHandler());
-		handlerHash.put("/showCurso.form", new es.rotolearn.servlet.ShowCursoRequestHandler());
+		handlerHash.put("/showCurso.form", new es.rotolearn.servlet.MostrarCursoRequestHandler());
 		handlerHash.put("/perfil.form", new es.rotolearn.servlet.PerfilRequestHandler());
         handlerHash.put("/añadirDeseo.form", new es.rotolearn.servlet.AddDeseoRequestHandler());
         handlerHash.put("/busquedaAvanzada.form", new es.rotolearn.servlet.busquedaAvanzadaRequestHandler());

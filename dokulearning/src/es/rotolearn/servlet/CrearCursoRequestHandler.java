@@ -31,7 +31,7 @@ import es.rotolearn.controlImagenes.UploadedFile;
 import es.rotolearn.javaBean.RegistroBean;
 
 @MultipartConfig(location="/tmp")
-public class CursoRequestHandler implements RequestHandler {
+public class CrearCursoRequestHandler implements RequestHandler {
 
 	public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile foto, int id_creador) throws ServletException, IOException {
 		

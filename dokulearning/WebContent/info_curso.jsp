@@ -119,12 +119,18 @@
 					</li>
 					<li class="list-group-item">
 						<span class="glyphicon glyphicon-education" aria-hidden="true"></span>
-						<span class="info">Profesor/es:</span><%=aux.getUsuario().getNombre() + "" + aux.getUsuario().getApellido1() + "" + aux.getUsuario().getApellido2()  %>
+						<span class="info">Profesor/es:</span><%=aux.getUsuario().getNombre() + " " + aux.getUsuario().getApellido1() + " " + aux.getUsuario().getApellido2()  %>
 						<br>
 					</li>
 					<li class="list-group-item">
-						<a class="btn btn-success breg " href="#"><span>Inscr&iacute;bete</span></a>
-						<a class="btn btn-success breg glyphicon glyphicon-heart" href="añadirDeseo.form?id=<%=h %>" rel="prettyPhoto"><span>  Deseado</span></a>
+						<form method=post action="inscribirse">
+							<input type="hidden" value="<%=h %>" name="id"/>
+							<button class="btn btn-success breg btn-block" type="submit">Inscr&iacute;bete</button>
+						</form>
+						<form method="post" action="añadirDeseo.form">
+							<input type="hidden" value="<%=h %>" name="id"/>
+							<button class="btn btn-danger breg btn-block" type="submit">Deseado <span class="glyphicon glyphicon-heart" aria-hidden="true"/></button>
+						</form>
 					</li>
 				</ul>
 			</div>

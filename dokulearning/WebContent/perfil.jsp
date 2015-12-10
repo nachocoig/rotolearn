@@ -171,7 +171,29 @@
                             <p><%=perfil.getDescripcion()%></p>
                             
                             <h3>Intereses</h3>
-                            <p><%=perfil.getIntereses()%></p>
+                            
+                            <%
+                            	String [] interes = perfil.getIntereses().split("/");
+                            	
+                            	if(interes[0].equals("")){
+                            %>
+                            	<p>No tienes intereses</p>
+                            
+                            <%
+                            	}else{
+                           	%>
+                           	<ul>
+                           	<%
+                            		for(int i=0;i<interes.length;i++){
+                            			if(!interes[i].equals("")){
+                            %>
+                            	<li><%=interes[i] %></li>
+                            <%
+                            			}
+                            		}
+                            	}
+                            %>
+                            </ul>
                         </div>
                         <div id="cursos" class="tab-pane fade">  
                         
@@ -320,7 +342,7 @@
                              <table class="table table-condensed table-hover">
                             <thead>
                               <tr>                                   
-                               	<th>Curso</th>
+                               	<th><h3>Cursos en lista de deseos</h3></th>
                               </tr>
                             </thead>
                         <%

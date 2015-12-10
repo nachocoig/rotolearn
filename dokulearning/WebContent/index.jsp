@@ -61,7 +61,7 @@
 			<div class="col-md-6">
 				<h1>&iquest;Porqu&eacute; quedarme?</h1>
 				<p>En <span>rotolearn</span> te ofrecemos los mejores cursos de toda la red. Podr&aacute;s inscribirte en cualquier curso por un precio m&aacute;s que jugoso, y podr&aacute;s disfrutar de nuestros cursos gratuitos.</p>
-				<p>No dejes escapar esta oportunidad y <a href="formualario_registro.jsp">Reg&iacute;strate</a></p>
+				<p>No dejes escapar esta oportunidad y <a href="formulario_registro.jsp">Reg&iacute;strate</a></p>
 			</div>
 			<div class="limpiador"></div>
 		</div>

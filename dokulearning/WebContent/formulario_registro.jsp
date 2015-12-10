@@ -142,36 +142,36 @@
 						
 						<div class="col-md-6">
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses1" value="Programacion">Programaci&oacute;n</label>
+								<label><input type="checkbox" name="intereses" value="Programacion">Programaci&oacute;n</label>
 							</div>
 							<div class="checkbox">
-							  	<label><input type="checkbox" name="intereses2" value="IT y Software">IT y Software</label>
+							  	<label><input type="checkbox" name="intereses" value="IT y Software">IT y Software</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses3" value="Negocios">Negocios</label>
+								<label><input type="checkbox" name="intereses" value="Negocios">Negocios</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses4" value="Diseño">Dise&ntilde;o</label>
+								<label><input type="checkbox" name="intereses" value="Dise&ntilde;o">Dise&ntilde;o</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses5" value="Fotografia">Fotograf&iacute;a</label>
+								<label><input type="checkbox" name="intereses" value="Fotografia">Fotograf&iacute;a</label>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses6" value="Salud y Fitness">Salud y Fitness</label>
+								<label><input type="checkbox" name="intereses" value="Salud y Fitness">Salud y Fitness</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses7" value="Lifestyle">Lifestyle</label>
+								<label><input type="checkbox" name="intereses" value="Lifestyle">Lifestyle</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses8" value="Musica">M&uacute;sica</label>
+								<label><input type="checkbox" name="intereses" value="Musica">M&uacute;sica</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses9" value="Idioma">Idioma</label>
+								<label><input type="checkbox" name="intereses" value="Idioma">Idioma</label>
 							</div>
 							<div class="checkbox">
-								<label><input type="checkbox" name="intereses10" value="Academico">Acad&eacute;mico</label>
+								<label><input type="checkbox" name="intereses" value="Academico">Acad&eacute;mico</label>
 							</div>
 						</div>
 					</div>

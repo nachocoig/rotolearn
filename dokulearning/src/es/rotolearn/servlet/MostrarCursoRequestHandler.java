@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 import entities.Curso;
 import es.rotolearn.javaBean.RegistroBean;
 
-public class ShowCursoRequestHandler implements RequestHandler {
+public class MostrarCursoRequestHandler implements RequestHandler {
 
 	public int cargarImagen(byte []img, HttpServletRequest request, int idCurso) throws IOException{
 		ServletContext context = request.getServletContext();
@@ -55,8 +55,30 @@ public class ShowCursoRequestHandler implements RequestHandler {
 	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Handler MostrarCurso received the request");
 		
+		String ruta = "info_curso.jsp";
 		
+		HttpSession session = ((HttpServletRequest) request).getSession();
+		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		//Conexion con JPA
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
+		
+		//Obtenemos los datos del curso
+		try{
+			Curso verCurso = em.find(Curso.class, id);
+			cargarImagen(verCurso.getImagen(), request, verCurso.getId());
+			request.setAttribute("curso", verCurso);
+		}catch(javax.persistence.NoResultException e){
+			System.out.println("Descripcion: " + e.getMessage());  
+		}
+		
+		return ruta;
+		/*
 		
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
@@ -88,7 +110,7 @@ public class ShowCursoRequestHandler implements RequestHandler {
 		}
 		em.close();
 		System.out.println("Me piro aparentemente con toda la caca");
-		return ruta;
+		return ruta;*/
 	}
 
 }

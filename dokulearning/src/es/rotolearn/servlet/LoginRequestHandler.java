@@ -44,21 +44,14 @@ public class LoginRequestHandler implements RequestHandler {
 	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session;
 		System.out.println("Handler login received the request");
+
+		HttpSession session;
+		
 		//HAY QUE AÑADIR/MODIFICAR PARA METERLE LA BBDD
 		String ruta = null;
 		String nick = request.getParameter("Nickname");
 		String pass = String.valueOf(request.getParameter("Password").hashCode());
-
-		// 1 Create the factory of Entity Manager
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
-
-		// 2 Create the Entity Manager
-		EntityManager em = factory.createEntityManager();
-
-		// 3 Get one EntityTransaction
-		EntityTransaction tx = em.getTransaction();
 
 		//Creamos el usuario a buscar en la BBDD
 		Usuario aux = new Usuario();
@@ -66,12 +59,17 @@ public class LoginRequestHandler implements RequestHandler {
 		aux.setPass(pass);
 		Usuario resultado;
 		//PARA BUSCAR EL USUARIO QUE HEMOS RECIBIDO POR PARAMETROS, si devuelve null no existe si devuelve algo es que existe
-		tx.begin();//Comenzamos la transaccion
+		
+		//Conexion con JPA
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
+		EntityManager em = factory.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
 
 		try{
 			resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, nick).getSingleResult();
-			System.out.println("Comparo users " + resultado.getNickname() + " " + nick);
-			System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
+			//System.out.println("Comparo users " + resultado.getNickname() + " " + nick);
+			//System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
 			if(resultado.getPass().equals(pass)){
 				
 					RegistroBean regbean = new RegistroBean();
@@ -83,7 +81,7 @@ public class LoginRequestHandler implements RequestHandler {
 					regbean.setTipo(resultado.getTipo());
 					regbean.setEmail(resultado.getEmail());
 					regbean.setDescripcion(resultado.getDescripcion());
-					regbean.setIntereses(resultado.getIntereses());//por si no te has dado cuenta, esrto hay que cambiarlo.
+					regbean.setIntereses(resultado.getIntereses());
 					regbean.setTelefono(resultado.getTelefono());
 					regbean.setNacimiento(resultado.getFecha_nac());
 				    regbean.setDireccion(resultado.getDireccion());
