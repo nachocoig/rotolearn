@@ -7,5 +7,8 @@
         <dependent-module archiveName="ProyectoJPA.jar" deploy-path="/lib" handle="module:/resource/ProyectoJPA/ProyectoJPA">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="CodigoPedidoClient.jar" deploy-path="/lib" handle="module:/resource/CodigoPedidoClient/CodigoPedidoClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

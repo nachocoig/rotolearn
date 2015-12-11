@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.rotolearn.listener.AsynchConsumer;
+
 
 @WebServlet("/ControladorServlet")
 public class ControladorServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	
 	// Hash table of RequestHandler instances, keyed by request URL
@@ -20,6 +23,12 @@ public class ControladorServlet extends HttpServlet {
        
 	// Initialize mappings: not implemented here
 	public void init() throws ServletException {
+		
+		// Listener de pagos
+		System.out.println("LecturaAsincrona ON...");
+		AsynchConsumer miAc=new AsynchConsumer();
+		miAc.lecturaAsynch();
+		
 		// This will read mapping definitions and populate handlerHash
 		handlerHash.put("/login.form", new es.rotolearn.servlet.LoginRequestHandler());
 		handlerHash.put("/reg_user.form", new es.rotolearn.servlet.RegistroRequestHandler());

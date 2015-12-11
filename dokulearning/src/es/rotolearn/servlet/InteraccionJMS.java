@@ -74,84 +74,29 @@ public class InteraccionJMS {
 		}
 
 	}
-
-/*	public String lecturaJMS(int opcion, String strSelectorPasado) {
-
-		StringBuffer mSB = new StringBuffer(64);
+	public void escrituraPago(String mensaje) {
+	    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
+        /* HAY QUE CONCATENAR AL MENSAJE EL NICK DEL USUARIO OBTENIDO DEL BEAN*/
 		try {
+
 			contextoInicial = new javax.naming.InitialContext();
 
-			switch (opcion) {
-			case 1:
 				factory = (javax.jms.ConnectionFactory) contextoInicial
-						.lookup(InformacionProperties.getQCF());
+						.lookup("jms/cf1.1");
 				cola = (javax.jms.Destination) contextoInicial
-						.lookup(InformacionProperties.getQueue());
-				break;
-			case 2:
-				factory = (javax.jms.ConnectionFactory) contextoInicial
-						.lookup("java:comp/env/"
-								+ InformacionProperties.getQCF() + "Ref");
-				cola = (javax.jms.Destination) contextoInicial
-						.lookup("java:comp/env/"
-								+ InformacionProperties.getQueue() + "Ref");
-				break;
-			default:
-				factory = (javax.jms.ConnectionFactory) contextoInicial
-						.lookup(InformacionProperties.getQCF());
-				cola = (javax.jms.Destination) contextoInicial
-						.lookup(InformacionProperties.getQueue());
-				break;
-			}
-
+						.lookup("jms/queuePagos");
 			Qcon = factory.createConnection();
-
 			QSes = Qcon
 					.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
 
-			String sSelector = "JMSCorrelationID = '"
-					+ strSelectorPasado.trim() + "'";
+			Mpro = QSes.createProducer(cola);
+			javax.jms.TextMessage men = QSes.createTextMessage();
 
-			if (strSelectorPasado.equals("")) {
-				Mcon = QSes.createConsumer(cola);
-			} else {
-				Mcon = QSes.createConsumer(cola, sSelector);
-
-			}
+			men.setText(mensaje); //PONER EL NOMBRE DEL BEAN
 			Qcon.start();
-			StringBuffer _sB = new StringBuffer(32);
-			_sB.append("<br>");
-			QueueBrowser browser = QSes.createBrowser((Queue) cola, "AAAAAAAA");
-			System.out.println("Try cuatro");
+			Mpro.send(men);
 
-			@SuppressWarnings("rawtypes")
-			Enumeration msgs = browser.getEnumeration();
-
-			while (msgs.hasMoreElements()) {
-				Message tempMsg = (Message) msgs.nextElement();
-				_sB.append(tempMsg);
-			}
-			System.out.println("OJOJOJOJO"+_sB.toString());
-			
-			Message mensaje = null;
-
-			while (true) {
-				mensaje = Mcon.receive(100);
-				if (mensaje != null) {
-					if (mensaje instanceof TextMessage) {
-						TextMessage m = (TextMessage) mensaje;
-						mSB.append(m.getText() + " </br>");
-					} else {
-						// JHC ************ No es del tipo correcto
-						break;
-					}
-				} else // NO existe mensaje, mensaje es null
-				{
-					break;
-				}
-
-			}
-			this.Mcon.close();
+			this.Mpro.close();
 			this.QSes.close();
 			this.Qcon.close();
 
@@ -168,8 +113,6 @@ public class InteraccionJMS {
 							+ e.getMessage());
 		}
 
-		return mSB.toString();
-
-	}*/
+	}
 
 }

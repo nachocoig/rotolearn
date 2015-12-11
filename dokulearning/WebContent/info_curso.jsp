@@ -123,7 +123,7 @@
 						<br>
 					</li>
 					<li class="list-group-item">
-						<form method=post action="inscribirse">
+						<form method=post action="pago.form">
 							<input type="hidden" value="<%=h %>" name="id"/>
 							<button class="btn btn-success breg btn-block" type="submit">Inscr&iacute;bete</button>
 						</form>

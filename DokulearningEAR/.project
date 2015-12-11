@@ -5,6 +5,7 @@
 	<projects>
 		<project>dokulearning</project>
 		<project>ProyectoJPA</project>
+		<project>CodigoPedidoClient</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

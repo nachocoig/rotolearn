@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>AdministracionEAR</name>
+	<name>BancoEAR</name>
 	<comment></comment>
 	<projects>
-		<project>administracion</project>
-		<project>ProyectoJPA</project>
-		<project>CodigoPedido</project>
-		<project>CodigoPedidoClient</project>
+		<project>Banco</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
