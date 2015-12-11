@@ -429,17 +429,12 @@
 	                                                <td><%= asociadosSinValidar.get(i).getEmail()%></td>
 	                                                <td><%= asociadosSinValidar.get(i).getNickname()%></td>
 	                                                <td>
-		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
-					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
-					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
-					                                		<input type="hidden" value="validarAsociado" name="tipo"/>	
-					                                		<input class="btn btn-default btn-xs" type="submit" value="Aceptar">
-					                                	</form>
+		                                               
 		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
 					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
 					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
 					                                		<input type="hidden" value="eliminarAsociado" name="tipo"/>	
-					                                		<input class="btn btn-default btn-xs" type="submit" value="Denegar">
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Eliminar">
 					                                	</form>
 	                                                </td>
 	                                            </tr>

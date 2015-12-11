@@ -268,7 +268,7 @@
                             	ArrayList<Curso> pet = (ArrayList<Curso>) request.getAttribute("listaPeticiones");
                             	for(int i=0; i<pet.size();i++){                            		                          	
                 					Curso aux = pet.get(i);
-                					String datos = Integer.toString(perfil.getId()) + '-' + Integer.toString(aux.getId());
+                				
                 			 %>    
                 			
                                   <tr>
@@ -278,9 +278,21 @@
 	                                <td><%=aux.getDescripcion() %></td>
 	                                <td><%=aux.getUsuario().getNickname() %></td>
 	                                <td><%=aux.getHoras() %></td>
-	                                <td><a href="validarPeticion.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Aceptar" ></a></td>
-	                                <td><a href="denegarCurso.form?datos=<%= datos %>" ><input class="btn btn-default btn-xs" type="submit" value="Denegar" ></a></td>
-	                                </tr>    
+	                                 <td>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= aux.getId() %>" name="curso"/>
+					                                		<input type="hidden" value="<%= perfil.getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="validarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Aceptar">
+					                                	</form></td>
+					                                	<td>
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= aux.getId() %>" name="curso"/>
+					                                		<input type="hidden" value="<%= perfil.getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="denegarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Denegar">
+					                                	</form>
+	                                                </td></tr>    
 	                         <%}} %>                     
                             </tbody>
                             </table> 

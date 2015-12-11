@@ -63,12 +63,13 @@ public class AdministrarCursoRequestHandler implements RequestHandler {
 				request.setAttribute("aviso","NO/La descripci&oacute;n no ha podido ser modificada");
 			}
 			request.setAttribute("actual", "info");
-		}else if(tipo.equals("eliminarAsociado")){ //para eliminar un profesor asociado
+		}else if(tipo.equals("eliminarAsociado") || tipo.equals("denegarAsociado")){ //para eliminar un profesor asociado
 			int idProfesor = Integer.parseInt(mr.getParameterValues("asociado")[0]);
 			em.createQuery("DELETE FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Profesor asociado eliminado correctamente");
 			request.setAttribute("actual", "profes");
+			if(tipo.equals("denegarAsociado")){ ruta = "/perfil.form";}
 		}else if(tipo.equals("agregarAsociado")){ //agregar de la lista de tooodos los profesores 
 			String profesor = mr.getParameterValues("asociado")[0];
 			try{
@@ -101,6 +102,7 @@ public class AdministrarCursoRequestHandler implements RequestHandler {
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Profesor asociado validado correctamente");
 			request.setAttribute("actual", "profes");
+			ruta = "/perfil.form";
 		}else if(tipo.equals("eliminarAlumno")){
 			int idAlumno = Integer.parseInt(mr.getParameterValues("alumno")[0]);
 			em.createQuery("DELETE FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.id.ID_u = ?2").setParameter(1, idCurso).setParameter(2, idAlumno).executeUpdate();
