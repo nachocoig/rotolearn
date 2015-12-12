@@ -37,6 +37,8 @@ public class ControladorServlet extends HttpServlet {
         handlerHash.put("/verCursosProfe.form", new es.rotolearn.servlet.CursosProfeRequestHandler());
         handlerHash.put("/administrarCursos.form", new es.rotolearn.servlet.AdministrarCursoRequestHandler());
         handlerHash.put("/pago.form", new es.rotolearn.servlet.PagoRequestHandler());
+        handlerHash.put("/pagina_pago.form", new es.rotolearn.servlet.PaginaPagoRequestHandler());
+
         /*
          * Todos estos handlers hay que dejarlos en 1... Si hacemos esto para toda la web, acabamos con 10131341u34234231321thwfghasfuhg2342342343 x INF handlers
          *  (NO HEMOS BORRADO NADA DE TU CODIGO, SOLO HAY QUE MOVER Y MODIFICAR T0DO AL ADRMINISTRARCURSOREQUESTHANDLER

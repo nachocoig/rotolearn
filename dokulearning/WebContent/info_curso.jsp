@@ -123,13 +123,13 @@
 						<br>
 					</li>
 					<li class="list-group-item">
-						<form method=post action="pago.form">
-							<input type="hidden" value="<%=h %>" name="id"/>
+						<form method=post action="pagina_pago.form">
+							<input type="hidden" value="<%=h %>" name="cursoCompra"/>
 							<button class="btn btn-success breg btn-block" type="submit">Inscr&iacute;bete</button>
 						</form>
 						<form method="post" action="añadirDeseo.form">
 							<input type="hidden" value="<%=h %>" name="id"/>
-							<button class="btn btn-danger breg btn-block" type="submit">Deseado <span class="glyphicon glyphicon-heart" aria-hidden="true"/></button>
+							<button class="btn btn-danger breg btn-block" type="submit">Deseado <span class="glyphicon glyphicon-heart" aria-hidden="true"></span></button>
 						</form>
 					</li>
 				</ul>
