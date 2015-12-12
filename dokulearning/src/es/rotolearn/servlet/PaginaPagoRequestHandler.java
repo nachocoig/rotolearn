@@ -41,19 +41,54 @@ public class PaginaPagoRequestHandler implements RequestHandler {
 			if(!desc.isEmpty()){//Quiere decir que existe una rebaja del admin
 				int precio = verCurso.getPrecio();
 				double descuento = desc.get(0).getDescuento();//Puede ser [0,30]
-				double cuenta = descuento/precio;
 				
 				double rebaja = Math.rint((precio*(descuento/100))*100)/100;
 				total = Math.rint((precio-rebaja)*100)/100;		
 				
 				System.out.println("El precio es: "+precio);
 				System.out.println("El descuento es: "+descuento);
-				System.out.println("El porcentaje es: "+cuenta);
 				System.out.println("La rebaja es: "+rebaja);
 				
-				request.setAttribute("descuento", ""+descuento);
+				request.setAttribute("descuento", ""+desc.get(0).getDescuento());
 				request.setAttribute("rebaja", String.valueOf(rebaja));
 			}
+			
+			if(tipo != null){
+				if(tipo.equals("valeDesc")){
+					String cuponDesc = request.getParameter("Cuponazo");
+					
+					try{
+						Descuento cuponDescuento = (Descuento) em.createQuery("SELECT i FROM Descuento i WHERE i.curso = ?1").setParameter(1, verCurso).getSingleResult();
+						
+						if(cuponDescuento!=null){
+							System.out.println("HAGO LA COMPARACION DE CUPONES");
+							if(cuponDescuento.getCupon().equals(cuponDesc)){
+								int precio = verCurso.getPrecio();
+								System.out.println("Cupon valido, descontamos el precio");
+								String cuponazo = cuponDesc.substring(cuponDesc.length()-2);//cuponDesc.charAt(cuponDesc.length()-2) + cuponDesc.charAt(cuponDesc.length()-1) + ""
+								
+								System.out.println("El vale descuento es de: "+cuponazo);
+								double cupo = (double) Integer.parseInt(cuponazo);
+								double des = Math.rint((precio*(cupo/100))*100)/100;
+								
+								total = Math.rint((total-des)*100)/100;	
+								
+								request.setAttribute("valePromocional", cuponDesc);
+								request.setAttribute("cuponVale", cuponazo);
+								request.setAttribute("precioCupon", String.valueOf(des));
+							
+								
+							}else{
+								System.out.println("Cupon no valido");
+							}
+						}
+						
+					}catch(Exception e1){
+						System.out.println("DA EXCEPCION Al no encontrar nada");
+					}
+				}
+			}
+			
 			request.setAttribute("total", total);
 			
 		}catch(javax.persistence.NoResultException e){
@@ -61,11 +96,6 @@ public class PaginaPagoRequestHandler implements RequestHandler {
 		}
 		
 		
-				
-		/*if(tipo.equals("valeDesc")){
-				
-			
-		}*/
 		em.close();
 		return ruta;
 	}

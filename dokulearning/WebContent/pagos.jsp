@@ -124,9 +124,23 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>CUPON12312312AM</td>
-                                        <td>13%</td>
-                                        <td>- 10&euro;</td>
+                                    	<%
+                                        	String vale = (String) request.getAttribute("valePromocional");
+                                        	if(vale != null){
+                                        		String rebaja = (String) request.getAttribute("rebaja");
+                                        %>
+                                        <td><%=vale %></td>
+                                        <td><%=request.getAttribute("cuponVale") %>%</td>
+                                        <td>-<%=request.getAttribute("precioCupon") %>&euro;</td>
+                                        <%
+                                        	}else{
+                                        %>
+                                        <td>No hay ning&uacute;n vale promocional aplicado</td>
+                                        <td>0%</td>
+                                        <td>-0&euro;</td>
+                                        <%		
+                                        	}
+                                        %>
                                     </tr>
                                 </tbody>
                             </table>
@@ -136,15 +150,18 @@
                 </div>
 			</div>
 		</div>
+		<%
+        	if(vale == null){
+        %>
 		<div class="row">
 		    <div class="col-md-8 col-md-offset-2">
-		        <form>
+		        <form action="pagina_pago.form" method=post>
    					<h4>Vale de Descuento</h4>
    					<div class="form-group">
 						<label  for="desc">Cupon promocional</label>
-						<input type="text" class="form-control" name="desc" placeholder="Introduce un cupon promocional" required>
+						<input type="text" class="form-control" name="Cuponazo" placeholder="Introduce un cupon promocional" required>
 					</div>
-					<input type="hidden" value="<%=h %>" name="id"/>
+					<input type="hidden" value="<%=h %>" name="cursoCompra"/>
 					<input type="hidden" value="valeDesc" name="tipo"/>
 					<div class="form-group">        
 						<button type="submit" class="btn btn-success">Aplicar vale descuento</button>
@@ -152,6 +169,9 @@
    				</form>
 		    </div>
 		</div>
+		<%
+        	}
+		%>
 		<div class="row">
 		    <div class="col-md-8 col-md-offset-2">
 		        <form method=post action="pago.form">
@@ -166,6 +186,7 @@
 					</div>
 					<div class="form-group">
 						<%request.setAttribute("totalprecio",request.getAttribute("total"));%>
+						<%request.setAttribute("valePromocional",request.getAttribute("valePromocional"));%>
 						<input type="hidden" value="<%=h %>" name="cursoCompra"/>        
 						<button type="submit" class="btn btn-success">Comprar Curso</button>
 					</div>
