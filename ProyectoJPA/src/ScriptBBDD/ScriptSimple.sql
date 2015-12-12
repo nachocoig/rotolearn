@@ -241,6 +241,28 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`NOTIFICACION`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`NOTIFICACION` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`NOTIFICACION` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Destinatario` INT NOT NULL,
+  `Descripcion` VARCHAR(100) NOT NULL,
+  `Leido` INT NOT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_Notificaciones_1_idx` (`Destinatario` ASC),
+  CONSTRAINT `fk_Notificaciones_1`
+    FOREIGN KEY (`Destinatario`)
+    REFERENCES `rotolearnbd`.`USUARIO` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

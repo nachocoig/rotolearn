@@ -61,16 +61,20 @@ public class Usuario implements Serializable {
 	private String tipo;
 
 	//bi-directional many-to-one association to Curso
-	@OneToMany(mappedBy="usuario", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="usuario")
 	private List<Curso> cursos;
 
 	//bi-directional many-to-one association to CursoAlumno
-	@OneToMany(mappedBy="usuario", cascade={CascadeType.ALL})
+	@OneToMany(mappedBy="usuario")
 	private List<CursoAlumno> cursoAlumnos;
 
 	//bi-directional many-to-one association to ProfesorAsociado
 	@OneToMany(mappedBy="usuario")
 	private List<ProfesorAsociado> profesorAsociados;
+
+	//bi-directional many-to-one association to Notificacion
+	@OneToMany(mappedBy="usuario")
+	private List<Notificacion> notificacions;
 
 	public Usuario() {
 	}
@@ -251,6 +255,28 @@ public class Usuario implements Serializable {
 		profesorAsociado.setUsuario(null);
 
 		return profesorAsociado;
+	}
+
+	public List<Notificacion> getNotificacions() {
+		return this.notificacions;
+	}
+
+	public void setNotificacions(List<Notificacion> notificacions) {
+		this.notificacions = notificacions;
+	}
+
+	public Notificacion addNotificacion(Notificacion notificacion) {
+		getNotificacions().add(notificacion);
+		notificacion.setUsuario(this);
+
+		return notificacion;
+	}
+
+	public Notificacion removeNotificacion(Notificacion notificacion) {
+		getNotificacions().remove(notificacion);
+		notificacion.setUsuario(null);
+
+		return notificacion;
 	}
 
 }
