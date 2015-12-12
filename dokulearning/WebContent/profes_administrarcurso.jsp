@@ -226,152 +226,114 @@
                         </div>
                         
                         <div id="material" class="tab-pane fade <%if(etiqueta.equals("material")){%>  in active<%}%>">
-                            <h3>Material del curso</h3>
-                            <div class="formleccion row">
-                                <form class="form-inline" role="form">
-                                    <div class="form-group">
-                                        <label for="titulo">T&iacute;tulo Secci&oacute;n:</label>
-                                        <input type="text" class="form-control input-sm" id="titulo" placeholder="Introduce el t&iacute;tulo" required>
+                          <%ArrayList<Seccion> secciones = (ArrayList<Seccion>) request.getAttribute("secciones");%>
+                          <%ArrayList<Leccion> lecciones = (ArrayList<Leccion>) request.getAttribute("lecciones");%>
+                          <%ArrayList<Material> materiales = (ArrayList<Material>) request.getAttribute("materiales");%>
+                          <%ArrayList<Leccion> leccionesAux = new ArrayList<Leccion>();%>
+                          <%ArrayList<Material> materialesAux = new ArrayList<Material>();%>
+                             <h3>Material del curso</h3>
+                             
+                             
+                              <div class="panel-group">
+                              <%for(int i = 0; i < secciones.size(); i++){
+	                              for(int w = 0; w < lecciones.size(); w++){
+	                            	  if(lecciones.get(w).getSeccion().getId() == secciones.get(i).getId())
+	                            		  leccionesAux.add(lecciones.get(w));
+	                              }
+	                              %>
+                              
+                                <div class="panel panel-primary">
+                                  <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                      <a data-toggle="collapse" href="#seccion<%=secciones.get(i).getId()%>"><%=secciones.get(i).getNombre() %></a>
+                                    </h4>
+                                  </div>
+                                  <div id="seccion<%=secciones.get(i).getId()%>" class="panel-collapse collapse">
+                                    <%
+                                    if(leccionesAux != null)
+                                    for(int j = 0; j < leccionesAux.size(); j++){ %>
+                                    <div class="panel-body">
+                                        <h2><%=leccionesAux.get(j).getNombre()%></h2>
+                                        <p><%=leccionesAux.get(j).getDescripcion() %></p>
+                                        <div class="list-group">
+                                        <% //para obtener todas los materiales de una leccion
+	      	                              for(int w = 0; w < materiales.size(); w++){
+	    	                            	  if(materiales.get(w).getLeccion().getId() == lecciones.get(j).getId())
+	    	                            		  materialesAux.add(materiales.get(w));
+	    	                              }
+                                          if(materialesAux != null)
+                                          for(int w = 0; w < materialesAux.size(); w++){
+                                          %>
+                                          <a href="materiales/<%=materialesAux.get(w).getId()%>_mat.<%=materialesAux.get(w).getTipo() %>" download="<%=materialesAux.get(w).getNombre()%>.<%=materialesAux.get(w).getTipo() %>" class="list-group-item"><%=materialesAux.get(w).getNombre()%></a>
+                                          <%} %>
+                                          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-plus"></span></button>
+                                        </div>
                                     </div>
-                                    <button type="submit" id="seccion" name="seccion" class="btn btn-info btn-sm">Crear Seccion</button>
-                                </form>   
-                            </div>
-                            
-                            <!--Seccion-->
-                            <div class="row panel panel-info">
-                                <div class="panel-heading col-md-12">
-                                    <div class="col-md-9">
-                                        Titulo de la Secci&oacute;n
-                                        <span class="rojo"><span title="Eliminar Secci&oacute;n" class="glyphicon glyphicon-remove borrarSec"/></span>
-                                    </div>
+                                    
+                                    <!-- Modal -->
+	                                <div id="myModal3" class="modal fade" role="dialog">
+	                                  <div class="modal-dialog">
+	                                    <!-- Modal content-->
+	                                    <div class="modal-content">
+	                                       	  <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+	                                              <div class="modal-header">
+	                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                                                <h4 class="modal-title">Nuevo material</h4>
+	                                              </div>
+	                                              <div class="modal-body">
+		                               				 <input type="hidden" value="<%= ID %>" name="curso"/>
+		                               				 <input type="hidden" value="<%=leccionesAux.get(j).getId() %>" name="leccion">
+		                                     		 <input type="hidden" value="crearMaterial" name="tipo"/>
+	                                                 <label for="material">Nombre del material: </label>
+	                                                 <input type="text" class="form-control" id="material" placeholder="Introduce aqu&iacute; el nombre del material" name="nombre">
+	                                                 <label for="material2">Archivo: </label>
+	                                                 <input type="file" class="form-control" id="material2" name="fichero">
+	                                              </div>
+	                                              <div class="modal-footer">
+	                                                <button type="submit" class="btn btn-default">A&ntilde;adir</button>
+	                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+	                                              </div>
+	                                        </form>
+	                                    </div>
+	                                
+	                                  </div>
+	                                </div>
+                                    
+                                    
+                                    
+                                    
+                                    <%}
+                                	 leccionesAux.clear();
+                                     %>
+                                    <div class="panel-footer">
+                                    <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+                               				  <input type="hidden" value="<%= ID %>" name="curso"/>
+                               				  <input type="hidden" value="<%=secciones.get(i).getId() %>" name="seccion">
+                                     		  <input type="hidden" value="crearLeccion" name="tipo"/>
+                                              <div class="modal-header">
+                                                <h4 class="modal-title">A&ntilde;adir nueva lecci&oacute;n</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                  <label for="leccion">Nombre de la lecci&oacute;n: </label>
+                                                  <input type="text" class="form-control" id="leccion" placeholder="Introduce aqu&iacute; el nombre de la lecci&oacute;n" name="nombre">
+                                                  <label for="leccion2">Descripci&oacute;n de la lecci&oacute;n </label>
+                                                  <textarea class="form-control" rows="5" id="leccion2" name="descripcion"></textarea>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" class="btn btn-default">A&ntilde;adir</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                              </div>
+                                     </form>
+                                     <!-- Trigger the modal with a button
+                                        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal2">A&ntilde;adir nueva lecci&oacute;n</button>
+                                     --></div>
+                                  </div>
                                 </div>
-                                <div class="panel-body">
-                                    <!--Crear leccion-->
-                                    <div class="formleccion col-md-12">
-                                        <form class="form-inline" role="form">
-                                            <div class="form-group">
-                                                <label for="titulo">T&iacute;tulo lecci&oacute;n:</label>
-                                                <input type="text" class="form-control input-sm" id="titulo" placeholder="Introduce el t&iacute;tulo" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-info btn-sm">Crear Lecci&oacute;n</button>
-                                        </form>   
-                                    </div>
-                                    
-                                    <!--Leccion-->
-                                    <div class="panel panel-warning borrarLec">
-                                        <div class="panel-heading col-md-12">
-                                            <div class="col-md-9">
-                                                Titulo de la Lecci&oacute;n
-                                                <span class="rojo"><span title="Eliminar Lecci&oacute;n" class="glyphicon glyphicon-remove borrarLecB"/></span>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <!--Añadir material-->
-                                            <div class="formleccion col-md-12">
-                                                <form class="form-inline" role="form">
-                                                    <div class="form-group">
-                                                        <label for="nombremat">Nombre material:</label>
-                                                        <input type="text" class="form-control input-sm" id="nombremat" placeholder="Introduce el nombre" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                						<input type="file" id="exampleInputFile" required>
-                                					</div>
-                                                    <button type="submit" class="btn btn-info btn-sm">Agregar material</button>
-                                              </form>   
-                                            </div>
-                                            
-                                            <!--AÑADIR TABLA MATERIAL-->
-                                            
-                                        </div>
-                                    </div>
-                                    <!--Fin Leccion-->
-                                    
-                                </div>
-                            </div>
-                            <!--Fin Seccion-->
-                            
-                            
-                            <!--Seccion-->
-                            <div class="row panel panel-info">
-                                <div class="panel-heading col-md-12">
-                                    <div class="col-md-9">
-                                        Titulo de la Secci&oacute;n
-                                        <span class="rojo"><span title="Eliminar Secci&oacute;n" class="glyphicon glyphicon-remove borrarSec"/></span>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <!--Crear leccion-->
-                                    <div class="formleccion col-md-12">
-                                        <form class="form-inline" role="form">
-                                            <div class="form-group">
-                                                <label for="titulo">T&iacute;tulo lecci&oacute;n:</label>
-                                                <input type="text" class="form-control input-sm" id="titulo" placeholder="Introduce el t&iacute;tulo" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-info btn-sm">Crear Lecci&oacute;n</button>
-                                      </form>   
-                                    </div>
-                                    
-                                    <!--Leccion-->
-                                    <div class="panel panel-warning borrarLec">
-                                        <div class="panel-heading col-md-12">
-                                            <div class="col-md-9">
-                                                Titulo de la Lecci&oacute;n
-                                                <span class="rojo"><span title="Eliminar Lecci&oacute;n" class="glyphicon glyphicon-remove borrarLecB"/></span>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <!--Añadir material-->
-                                            <div class="formleccion col-md-12">
-                                                <form class="form-inline" role="form">
-                                                    <div class="form-group">
-                                                        <label for="nombremat">Nombre material:</label>
-                                                        <input type="text" class="form-control input-sm" id="nombremat" placeholder="Introduce el nombre" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                						<input type="file" id="exampleInputFile" required>
-                                					</div>
-                                                    <button type="submit" class="btn btn-info btn-sm">Agregar material</button>
-                                              </form>   
-                                            </div>
-                                            
-                                            <!--AÑADIR TABLA MATERIAL-->
-                                            
-                                        </div>
-                                    </div>
-                                    <!--Fin Leccion-->
-                                    
-                                    <!--Leccion-->
-                                    <div class="panel panel-warning borrarLec">
-                                        <div class="panel-heading col-md-12">
-                                            <div class="col-md-9">
-                                                Titulo de la Lecci&oacute;n
-                                                <span class="rojo"><span title="Eliminar Lecci&oacute;n" class="glyphicon glyphicon-remove borrarLecB"/></span>
-                                            </div>
-                                        </div>
-                                        <div class="panel-body">
-                                            <!--Añadir material-->
-                                            <div class="formleccion col-md-12">
-                                                <form class="form-inline" role="form">
-                                                    <div class="form-group">
-                                                        <label for="nombremat">Nombre material:</label>
-                                                        <input type="text" class="form-control input-sm" id="nombremat" placeholder="Introduce el nombre" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                						<input type="file" id="exampleInputFile" required>
-                                					</div>
-                                                    <button type="submit" class="btn btn-info btn-sm">Agregar material</button>
-                                              </form>   
-                                            </div>
-                                            
-                                            <!--A&NTILDE;ADIR TABLA MATERIAL-->
-                                            
-                                        </div>
-                                    </div>
-                                    <!--Fin Leccion-->
-                                    
-                                </div>
-                            </div>
-                            <!--Fin Seccion-->
+                             <%} %>
+                              </div>
+                              
+                               <!-- Trigger the modal with a button -->
+                              <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal1">A&ntilde;adir nueva secci&oacute;n</button>
                             
                         </div>
                         
@@ -429,12 +391,17 @@
 	                                                <td><%= asociadosSinValidar.get(i).getEmail()%></td>
 	                                                <td><%= asociadosSinValidar.get(i).getNickname()%></td>
 	                                                <td>
-		                                               
+		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
+					                                		<input type="hidden" value="validarAsociado" name="tipo"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Aceptar">
+					                                	</form>
 		                                                <form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
 					                                		<input type="hidden" value="<%= ID %>" name="curso"/>
 					                                		<input type="hidden" value="<%= asociadosSinValidar.get(i).getId() %>" name="asociado"/>	
 					                                		<input type="hidden" value="eliminarAsociado" name="tipo"/>	
-					                                		<input class="btn btn-default btn-xs" type="submit" value="Eliminar">
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Denegar">
 					                                	</form>
 	                                                </td>
 	                                            </tr>
@@ -535,6 +502,33 @@
     	    </div>
 	    </footer>
         <!--FIN PIE DE PAGINA-->
-    
+   		<!-- MODALES -->                                      
+                                <!-- Modal -->
+                                <div id="myModal1" class="modal fade" role="dialog">
+                                  <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                     	<form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+                               				  <input type="hidden" value="<%= ID %>" name="curso"/>
+                                     		  <input type="hidden" value="crearSeccion" name="tipo"/>
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Nueva secci&oacute;n</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                  <label for="seccion">Nombre de la secci&oacute;n: </label>
+                                                  <input type="text" class="form-control" id="seccion" placeholder="Introduce aqu&iacute; el nombre de la secci&oacute;n" name="nombre">
+                                              </div>
+                                              <div class="modal-footer">
+                                                <input type="submit" class="btn btn-default" value="A&ntilde;adir"></input>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                              </div>
+                                        </form>
+                                    </div>
+                                
+                                  </div>
+                                </div>
+                                
+
     </body>
 </html>
