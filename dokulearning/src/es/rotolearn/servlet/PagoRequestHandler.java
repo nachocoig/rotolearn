@@ -57,14 +57,33 @@ public class PagoRequestHandler implements RequestHandler {
 				EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 				EntityManager em = factory.createEntityManager();
 				em.getTransaction().begin();
-				
+				/*try{
+					CursoAlumno pet = new CursoAlumno();
+					pet = em.createQuery("SELECT i FROM CursoAlumno i WHERE i. = ?1").setParameter(1, nick).getSingleResult();
+				pet.
+				}catch(Exception e3){
+					
+					System.out.println("HE CASCAO");
+				}*/
 				Curso verCurso;
 				Usuario userio;
+				CursoAlumno curAl;
 				//Obtenemos los datos del curso
 				try{
+					System.out.println("Entro en el try");
 					verCurso = em.find(Curso.class, id_curso);
 					userio = em.find(Usuario.class, user.getId());
+					CursoAlumnoPK prueba = new CursoAlumnoPK();
+					prueba.setID_c(id_curso);
+					prueba.setID_u(user.getId());
+					System.out.println("Entro el find");
+					curAl = em.find(CursoAlumno.class, prueba);
+					System.out.println("Salgo del find");
 					request.setAttribute("curso", verCurso);
+					if(curAl!=null){
+						System.out.println("YA ESTA INSCRITO");
+						return "catalogo.form";
+					}
 				}catch(javax.persistence.NoResultException e){
 					System.out.println("Descripcion: " + e.getMessage()); 
 					return "pagos.jsp";
