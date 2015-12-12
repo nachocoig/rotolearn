@@ -86,7 +86,7 @@ public class PagoRequestHandler implements RequestHandler {
 					}
 				}catch(javax.persistence.NoResultException e){
 					System.out.println("Descripcion: " + e.getMessage()); 
-					return "pagos.jsp";
+					return "pagos.jsp";//ojo
 
 				}
 		
