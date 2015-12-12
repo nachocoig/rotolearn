@@ -26,6 +26,7 @@ public class TextListener implements MessageListener {
 				mensajes = mensaje.split("-");
 				//INSERTAR EN LA BASE DE DATOS CADA CAMPO
 				
+				
 			} else {
 				System.err.println("Message is not a TextMessage");
 			}
