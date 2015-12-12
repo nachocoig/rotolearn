@@ -1,5 +1,5 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
-<%@ page import="entities.Curso" %>
+<%@ page import="entities.*" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,6 +18,20 @@
       		$(document).ready(function(){
 				$('[data-toggle="tooltip"]').tooltip();   
 			});
+      		$(function(){
+      		    $('[rel="popover"]').popover({
+      		        container: 'body',
+      		        html: true,
+      		        content: function () {
+      		            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+      		         
+      		            return clone;
+      		        }
+      		    }).click(function(e) {      		    	
+      		        e.preventDefault();
+      		   
+      		    });
+      		});
       	</script>
     </head>
     <body>
@@ -51,6 +65,54 @@
                         	}else{ 
                         %>
                         <!-- REGISTRADO -->
+                         <li><a href="#" rel="popover" data-placement="bottom" data-popover-content="#myPopover" id="leer">
+                        	<% String n = (String)request.getAttribute("Notificaciones");
+                        	if(n.equals("0") || n.equals("no") || n == null){%>
+                        		<span class="badge">0</span>
+                        	<% }
+                        	else{%>
+                        		<span class="badge"><%=n %></span>
+                        	<% } %>
+                        	</a>
+                        	</li>
+                        	<div id="myPopover" class="hide">
+                        		
+                        		<p>Tus notificaciones: </p>
+                        		<p></p>
+                        		<%
+                        		ArrayList<Notificacion> noLeidas= (ArrayList<Notificacion>)request.getAttribute("ListaNoLeidas");
+                        		ArrayList<Notificacion> notificaciones= (ArrayList<Notificacion>)request.getAttribute("ListaNotificaciones");
+                        	
+                        		if(noLeidas == null && notificaciones == null){ %>
+                        		<p> No tienes notificaciones </p>
+                        		<%}else{ 
+                        			if(noLeidas == null){}
+                        			else{
+                        				for(int i=0; i<noLeidas.size();i++){                 			
+                        					%>
+                        						<p> <strong><%=noLeidas.get(i).getDescripcion() %> </strong></p>
+                        				<%}
+                        			                      			}
+                        			if(notificaciones == null){}
+                        			else{
+                        				int size;
+                        				if(notificaciones.size() >=5){
+                        					size=notificaciones.size()-5;
+                        				}
+                        				else size=0;
+                        				for(int i=notificaciones.size()-1; i>=size;i--){                 			
+                        					%>
+                        						<p><%=  notificaciones.get(i).getDescripcion() %></p>
+                        				<%}
+                        			}
+                        		}%>
+                        		 <form method="POST" action="perfil.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="perfil" name="tipo"/>	
+					                                		<input type="hidden" value="SI" name="leido"/>	
+					                                		<input class="btn btn-default btn-xs glyphicon glyphicon-eye-open" type="submit" value="Marcar como leido">
+					                                	</form>
+                        	</div>
+                        
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
                             <ul class="dropdown-menu">

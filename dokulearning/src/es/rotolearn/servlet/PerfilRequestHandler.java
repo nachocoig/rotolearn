@@ -47,7 +47,7 @@ implements RequestHandler {
     		ArrayList <Curso> cursos = new ArrayList <Curso> ();
     		ArrayList <Curso> peticiones = new ArrayList <Curso> ();
     		
-            String ruta = "perfil.jsp";
+            String ruta = "getNotificacionPerfil.form";
             HttpSession miSession = request.getSession(false);
            
          //------------------------JPA--------------   
