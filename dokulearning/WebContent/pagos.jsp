@@ -154,7 +154,7 @@
 		</div>
 		<div class="row">
 		    <div class="col-md-8 col-md-offset-2">
-		        <form>
+		        <form method=post action="pago.form">
    					<h4>Datos de pago</h4>
    					<div class="form-group">
 						<label  for="tarjeta">Nombre y apellidos</label>
@@ -164,7 +164,9 @@
 						<label  for="tarjeta">Tarjeta de credito</label>
 						<input type="text" class="form-control" name="tarjeta" placeholder="Introduce tu tarjeta de credito" required>
 					</div>
-					<div class="form-group">        
+					<div class="form-group">
+						<%request.setAttribute("totalprecio",request.getAttribute("total"));%>
+						<input type="hidden" value="<%=h %>" name="cursoCompra"/>        
 						<button type="submit" class="btn btn-success">Comprar Curso</button>
 					</div>
    				</form>
