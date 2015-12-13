@@ -139,8 +139,8 @@
 				<div class="row" id="descrip">
 			<ul class="nav nav-pills nav-justified">
 			  <li class="active"><a data-toggle="tab" href="#descripcion">Descripci&oacute;n</a></li>
-			  <li><a data-toggle="tab" href="#1">Aqui lo que te salga del rabo</a></li>
-			  <li><a data-toggle="tab" href="#menu2">Temario</a></li>
+			  <li><a data-toggle="tab" href="#menu2">Temario del curso</a></li>
+			  <li><a data-toggle="tab" href="#chat">Chat</a></li>
 			</ul>
 			
 			<div class="tab-content opciones col-md-6 col-md-offset-3">
@@ -212,16 +212,36 @@
 			<%	auxLecciones.clear();
 		    	}
 		    } %>
-	
-
-
-
-
-
 			  </div>
-			  <div id="menu1" class="tab-pane fade">
-			    <h3>Menu 1</h3>
-			    <p>Some content in menu 1.</p>
+			  <div id="chat" class="tab-pane fade">
+			    <h3>Chat</h3>
+			    
+			    <div id="wrapper">
+				    <div id="menu">
+				        <p class="welcome">Welcome, <b></b></p>
+				        <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
+				        <div style="clear:both"></div>
+				    </div>
+				    <% String mensaje;
+				    if(request.getAttribute("mensajes")==null){
+				    	mensaje = "";
+				    	
+				    }else mensaje=request.getAttribute("mensajes").toString(); %>
+				    <ul id="chatbox">
+				    <li><%=mensaje%> </li>
+				    </ul>
+			     
+				    <form name="message" method="post" action="escribirChat.form">
+				        <input name="mensaje" type="text" id="usermsg" size="63" />
+				        <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
+				     </form>
+				    <form name="leer" method="post" action="leerChat.form">
+				        <input name="refrescar" type="submit"  id="refrescar" value="Refrescar" />
+				    </form>
+				</div>
+			    
+			    
+
 			  </div>
 			  
 			</div>

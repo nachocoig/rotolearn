@@ -101,7 +101,7 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 			cargarImagen(verCurso.getImagen(), request, verCurso.getId());
 			request.setAttribute("curso", verCurso);
 			
-			List<Seccion> secciones =  verCurso.getSeccions();
+			List<Seccion> secciones =  em.createQuery("SELECT i FROM Seccion i WHERE i.curso.id = ?1").setParameter(1, verCurso.getId()).getResultList();
 			List<Leccion> lecciones = null;
 			List<Leccion> leccionesAux = null;
 			List<Material> materiales = null;
@@ -112,40 +112,19 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 			ArrayList<Material> lmateriales = new ArrayList<Material>();
 			
 			for(int i = 0; i < secciones.size(); i++){
-				if(lecciones == null)
-					lecciones = secciones.get(i).getLeccions();
-				else{
-					leccionesAux = secciones.get(i).getLeccions();
-					for(int j = 0; j< leccionesAux.size(); j++)
-						lecciones.add(leccionesAux.get(j));
-				}
-				if(leccionesAux != null)
-					leccionesAux.clear();
-			}
-			
-			for(int i = 0; i < lecciones.size(); i++){
-				if(materiales == null)
-					materiales = lecciones.get(i).getMaterials();
-				else{
-					materialesAux = lecciones.get(i).getMaterials();
-					for(int j = 0; j < materialesAux.size(); j++)
-						materiales.add(materialesAux.get(j));
-				}
-				if(materialesAux != null)
-					materialesAux.clear();	
-			}
-			
-			for(int i = 0; i < secciones.size(); i++)
 				lsecciones.add(secciones.get(i));
-			for(int i = 0; i < lecciones.size(); i++)
-				llecciones.add(lecciones.get(i));
-			for(int i = 0; i < materiales.size();i++){
-				lmateriales.add(materiales.get(i));
-				if(materiales.get(i).getContenido() == null)
-					System.out.println("ES NUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULLLL");
-				else
-					cargarFichero(materiales.get(i).getContenido(), request, materiales.get(i).getId(), materiales.get(i).getTipo());
+				lecciones = em.createQuery("SELECT i FROM Leccion i WHERE i.seccion.id = ?1").setParameter(1, secciones.get(i).getId()).getResultList();
+				for(int j = 0; j < lecciones.size(); j++){
+					llecciones.add(lecciones.get(j));
+					materiales = em.createQuery("SELECT i FROM Material i WHERE i.leccion.id = ?1").setParameter(1, lecciones.get(j).getId()).getResultList();
+					for(int k = 0; k < materiales.size();k++){
+						lmateriales.add(materiales.get(k));
+						cargarFichero(materiales.get(k).getContenido(), request, materiales.get(k).getId(), materiales.get(k).getTipo());
+					}
+				}
+
 			}
+			
 			request.setAttribute("secciones", lsecciones);
 			request.setAttribute("lecciones", llecciones);
 			request.setAttribute("materiales", lmateriales);
@@ -155,39 +134,6 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 		}
 		
 		return ruta;
-		/*
-		
-		HttpSession session = ((HttpServletRequest) request).getSession();
-		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
-		
-		String ruta = request.getServletPath();
-	 	
-	    System.out.println("Procedemos a ver el curso");
-	    
-	    int id = Integer.parseInt(request.getParameter("id"));
-	    
-	    System.out.println("Me da a mi que peta aqui, llamame loco");
-	    EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
-		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		
-		try{
-			Curso verCurso = em.find(Curso.class, id);
-			cargarImagen(verCurso.getImagen(), request, verCurso.getId());
-			request.setAttribute("curso", verCurso);
-		}catch(javax.persistence.NoResultException e){ 
-			System.out.println("Descripcion: " + e.getMessage());  
-		}
-		
-		if(ruta.equals("/showCurso.form")){
-			ruta = "info_curso.jsp";
-		}
-		else{
-			ruta = "mostrarInscritos.form?ID="+id;
-		}
-		em.close();
-		System.out.println("Me piro aparentemente con toda la caca");
-		return ruta;*/
 	}
 
 }
