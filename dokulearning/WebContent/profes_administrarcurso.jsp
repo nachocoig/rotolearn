@@ -258,20 +258,22 @@
                                         <div class="list-group">
                                         <% //para obtener todas los materiales de una leccion
 	      	                              for(int w = 0; w < materiales.size(); w++){
-	    	                            	  if(materiales.get(w).getLeccion().getId() == lecciones.get(j).getId())
+	    	                            	  if(materiales.get(w).getLeccion().getId() == leccionesAux.get(j).getId())
 	    	                            		  materialesAux.add(materiales.get(w));
 	    	                              }
                                           if(materialesAux != null)
                                           for(int w = 0; w < materialesAux.size(); w++){
                                           %>
                                           <a href="materiales/<%=materialesAux.get(w).getId()%>_mat.<%=materialesAux.get(w).getTipo() %>" download="<%=materialesAux.get(w).getNombre()%>.<%=materialesAux.get(w).getTipo() %>" class="list-group-item"><%=materialesAux.get(w).getNombre()%></a>
-                                          <%} %>
-                                          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal3"><span class="glyphicon glyphicon-plus"></span></button>
+                                          <%} 
+                                          	materialesAux.clear();
+                                          %>
+                                          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal<%=i+1%><%=j+1%>"><span class="glyphicon glyphicon-plus"></span></button>
                                         </div>
                                     </div>
                                     
                                     <!-- Modal -->
-	                                <div id="myModal3" class="modal fade" role="dialog">
+	                                <div id="myModal<%=i+1%><%=j+1%>" class="modal fade" role="dialog">
 	                                  <div class="modal-dialog">
 	                                    <!-- Modal content-->
 	                                    <div class="modal-content">
@@ -285,9 +287,9 @@
 		                               				 <input type="hidden" value="<%=leccionesAux.get(j).getId() %>" name="leccion">
 		                                     		 <input type="hidden" value="crearMaterial" name="tipo"/>
 	                                                 <label for="material">Nombre del material: </label>
-	                                                 <input type="text" class="form-control" id="material" placeholder="Introduce aqu&iacute; el nombre del material" name="nombre">
+	                                                 <input type="text" class="form-control" id="material" placeholder="Introduce aqu&iacute; el nombre del material" name="nombre" required>
 	                                                 <label for="material2">Archivo: </label>
-	                                                 <input type="file" class="form-control" id="material2" name="fichero">
+	                                                 <input type="file" class="form-control" id="material2" name="fichero" required>
 	                                              </div>
 	                                              <div class="modal-footer">
 	                                                <button type="submit" class="btn btn-default">A&ntilde;adir</button>
@@ -298,10 +300,6 @@
 	                                
 	                                  </div>
 	                                </div>
-                                    
-                                    
-                                    
-                                    
                                     <%}
                                 	 leccionesAux.clear();
                                      %>

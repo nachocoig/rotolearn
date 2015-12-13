@@ -1,5 +1,6 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
-<%@ page import="entities.Curso" %>
+<%@ page import="entities.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="es">
 	<head>
@@ -142,7 +143,7 @@
 			  <li><a data-toggle="tab" href="#menu2">Temario</a></li>
 			</ul>
 			
-			<div class="tab-content opciones col-md-8 col-md-offset-2">
+			<div class="tab-content opciones col-md-6 col-md-offset-3">
 			  <div id="descripcion" class="tab-pane fade in active">
 			    <h3>Descripci&oacute;n del curso</h3>
 			    <p><%=aux.getDescripcion() %></p>
@@ -151,53 +152,71 @@
 			  <div id="menu2" class="tab-pane fade">
 			    <h3>Temario del curso</h3>
 			    
-			    <h4>Seccion 1: Titulo de la seccion</h4>
+			    <%
+			    ArrayList<Seccion> secciones = (ArrayList<Seccion>) request.getAttribute("secciones");
+			    ArrayList<Leccion> lecciones = (ArrayList<Leccion>) request.getAttribute("lecciones");
+			    ArrayList<Leccion> auxLecciones = new ArrayList<Leccion>();
+			    ArrayList<Material> materiales = (ArrayList<Material>) request.getAttribute("materiales");
+				ArrayList<Material> auxMateriales = new ArrayList<Material>();
 			    
+			    
+		    for(int i = 0; i < secciones.size(); i++){    %>
+			    <h4>Seccion <%=i+1%>: <%=secciones.get(i).getNombre() %></h4>
+		    	<%
+		    	for(int j = 0; j < lecciones.size(); j++)
+		    		if(lecciones.get(j).getSeccion().getId() == secciones.get(i).getId())
+		    			auxLecciones.add(lecciones.get(j));
+		    	
+		    	for(int j = 0; j < auxLecciones.size(); j++){
+		    	%>
 			     <div class="panel-group" id="accordion">
 				  <div class="panel panel-default">
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Leccion 1</a>
+				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i+1%><%=j+1%>"><%=auxLecciones.get(j).getNombre()%></a>
 				      </h4>
 				    </div>
-				    <div id="collapse1" class="panel-collapse collapse in">
-				      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-				      commodo consequat.</div>
-				    </div>
-				  </div>
-				  <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Leccion 2</a>
-				      </h4>
-				    </div>
-				    <div id="collapse2" class="panel-collapse collapse">
-				      <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-				      commodo consequat.</div>
-				    </div>
-				  </div>
-				  <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Leccion 3</a>
-				      </h4>
-				    </div>
-				    <div id="collapse3" class="panel-collapse collapse">
+				    <div id="collapse<%=i+1%><%=j+1%>" class="panel-collapse collapse in">
 				      <div class="panel-body">
-				      	
-				      	Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-				      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-				      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-				      commodo consequat.
-				      
+						<p><%=auxLecciones.get(j).getDescripcion() %>
+						
+						<div class="list-group">
+						<%
+		    			for(int k = 0; k < materiales.size(); k++)
+		    				if(materiales.get(k).getLeccion().getId() == auxLecciones.get(j).getId())
+		    					auxMateriales.add(materiales.get(k));
+		    			for(int k = 0; k < auxMateriales.size(); k++){
+		    				
+		    				String glyphicon = "";
+		    				if(auxMateriales.get(k).getTipo().toLowerCase().equals("mp3"))
+		    					glyphicon = "music";
+		    				else if(auxMateriales.get(k).getTipo().toLowerCase().equals("mp4") || auxMateriales.get(k).getTipo().toLowerCase().equals("m4v"))
+		    					glyphicon = "film";
+		    				else
+		    					glyphicon = "file";
+		    			%>
+					        <a href="materiales/<%=auxMateriales.get(k).getId()%>_mat.<%=auxMateriales.get(k).getTipo() %>" download="<%=auxMateriales.get(k).getNombre()%>.<%=auxMateriales.get(k).getTipo() %>" class="list-group-item">
+					            <span class="glyphicon glyphicon-<%=glyphicon%>"></span> 
+					            <%=auxMateriales.get(k).getNombre()%> 
+					        </a>
+					    <%auxMateriales.clear();
+					    } %>
+					    </div>
+						
+						
+						
 				      </div>
 				    </div>
 				  </div>
 				</div> 
+			<%	auxLecciones.clear();
+		    	}
+		    } %>
+	
+
+
+
+
 
 			  </div>
 			  <div id="menu1" class="tab-pane fade">
