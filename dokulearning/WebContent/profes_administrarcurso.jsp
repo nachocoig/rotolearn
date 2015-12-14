@@ -271,17 +271,61 @@
                               
                                 <div class="panel panel-primary">
                                   <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                      <a data-toggle="collapse" href="#seccion<%=secciones.get(i).getId()%>"><%=secciones.get(i).getNombre() %></a>
-                                    </h4>
+                                      <div class="modBorrar">
+	                                      <h2 class="panel-title">
+	                                        <a data-toggle="collapse" href="#seccion<%=secciones.get(i).getId()%>">Seccion<%=i+1%>: <%=secciones.get(i).getNombre() %></a>
+	                                      </h2>
+	                                      <button data-toggle="collapse" data-target="#cambiarSeccion" class="btn btn-default">Cambiar nombre</button> 
+										  <form class="form-inline" role="form" method="POST" action="administrarCursos.form" enctype="multipart/form-data">
+										    <div class="form-group">
+					                          <input type="hidden" value="<%= ID %>" name="curso"/>
+										      <input type="hidden" value="eliminarSeccion" name="tipo">
+										      <input type="hidden" value="<%=secciones.get(i).getId()%>" name="seccion">
+										      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+										    </div>
+										  </form>
+										  <div id="cambiarSeccion" class="collapse">
+											  <form class="form-inline" role="form" method="POST" action="administrarCursos.form" enctype="multipart/form-data">
+											    <div class="form-group">
+					                              <input type="hidden" value="<%= ID %>" name="curso"/>
+											      <input type="hidden" value="editarSeccion" name="tipo">
+											      <input type="hidden" value="<%=secciones.get(i).getId()%>" name="seccion">
+											      <input type="text" name="nombre" placeholder="introduce aqu&iacute; el nuevo nombre" required>
+											      <button type="submit" class="btn btn-default">Guardar</button>
+											    </div>
+											  </form>
+										  </div>
+									  </div>
+   
                                   </div>
                                   <div id="seccion<%=secciones.get(i).getId()%>" class="panel-collapse collapse">
                                     <%
                                     if(leccionesAux != null)
                                     for(int j = 0; j < leccionesAux.size(); j++){ %>
                                     <div class="panel-body">
-                                        <h2><%=leccionesAux.get(j).getNombre()%></h2>
-                                        <p><%=leccionesAux.get(j).getDescripcion() %></p>
+                                        <form  method="POST" action="administrarCursos.form" enctype="multipart/form-data">
+			                                <input type="hidden" value="<%= ID %>" name="curso"/>
+									        <input type="hidden" value="eliminarLeccion" name="tipo">
+									        <input type="hidden" value="<%=lecciones.get(j).getId()%>" name="leccion">
+											<button type="submit" class="btn btn-default">Borrar leccion</button>
+                                        </form>
+                                    	<form  class="form-horizontal" method="POST" action="administrarCursos.form" enctype="multipart/form-data">
+                                    		<label class="control-label col-md-2" for="text">Titulo de lecci&oacute;n: </label>
+                                    		<div class="col-md-10">
+	                                        	<input type="text" value="<%=leccionesAux.get(j).getNombre()%>" name="nombre" class="form-control" required><br>
+	                                        </div>
+                                    		<label class="control-label col-md-2" for="text">Descripci&oacute;n: </label>
+                                    		<div class="col-md-10">
+	                                        	<textarea name="descripcion" class="form-control" required><%=leccionesAux.get(j).getDescripcion() %></textarea><br>
+			                                </div>
+			                                <input type="hidden" value="<%= ID %>" name="curso"/>
+									        <input type="hidden" value="editarLeccion" name="tipo">
+									        <input type="hidden" value="<%=lecciones.get(j).getId()%>" name="leccion">
+											<div class="col-md-10 col-md-offset-2">
+												<button type="submit" class="btn btn-success form-control" >Guardar cambios</button><br><br>
+											</div>
+                                        </form>
+
                                         <div class="list-group">
                                         <% //para obtener todas los materiales de una leccion
 	      	                              for(int w = 0; w < materiales.size(); w++){
@@ -291,12 +335,27 @@
                                           if(materialesAux != null)
                                           for(int w = 0; w < materialesAux.size(); w++){
                                           %>
-                                          <a href="materiales/<%=materialesAux.get(w).getId()%>_mat.<%=materialesAux.get(w).getTipo() %>" download="<%=materialesAux.get(w).getNombre()%>.<%=materialesAux.get(w).getTipo() %>" class="list-group-item"><%=materialesAux.get(w).getNombre()%></a>
+                                          <div style="margin-top:10px">
+	                                          <form  method="POST" action="administrarCursos.form" enctype="multipart/form-data">
+				                                <input type="hidden" value="<%= ID %>" name="curso"/>
+										        <input type="hidden" value="eliminarMaterial" name="tipo">
+										        <input type="hidden" value="<%=materiales.get(w).getId()%>" name="material">
+										        <div class="col-md-10">
+											        <a href="materiales/<%=materialesAux.get(w).getId()%>_mat.<%=materialesAux.get(w).getTipo() %>" download="<%=materialesAux.get(w).getNombre()%>.<%=materialesAux.get(w).getTipo() %>" class="list-group-item">
+											        	<%=materialesAux.get(w).getNombre()%>
+											        </a>
+											    </div>
+											    <div class="col-md-2">
+   										        	<button type="submit" class="btn btn-danger">Borrar Material</button>
+											    </div>
+	                                          </form>
+	                                      </div>
                                           <%} 
                                           	materialesAux.clear();
                                           %>
-                                          <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal<%=i+1%><%=j+1%>"><span class="glyphicon glyphicon-plus"></span></button>
                                         </div>
+                                        <br><br>
+                                        <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#myModal<%=i+1%><%=j+1%>"><span class="glyphicon glyphicon-plus"></span></button>
                                     </div>
                                     
                                     <!-- Modal -->

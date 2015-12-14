@@ -303,7 +303,43 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				
 				//em.getTransaction().commit();
 				//em.close();
-			}
+		}else if(tipo.equals("eliminarSeccion")){
+			int seccion = Integer.parseInt(mr.getParameterValues("seccion")[0]);
+			em.createQuery("DELETE FROM Seccion i WHERE i.id = ?1").setParameter(1, seccion).executeUpdate();
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Secci&oacute;n eliminada correctamente");
+			request.setAttribute("actual", "material");
+		}else if(tipo.equals("editarSeccion")){
+			int seccion = Integer.parseInt(mr.getParameterValues("seccion")[0]);
+			String nombre = mr.getParameterValues("nombre")[0];
+			Seccion sec =(Seccion) em.createQuery("SELECT i FROM Seccion i WHERE i.id = ?1").setParameter(1, seccion).getSingleResult();
+			sec.setNombre(nombre);
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Secci&oacute;n modificada correctamente");
+			request.setAttribute("actual", "material");
+		}else if(tipo.equals("editarLeccion")){
+			int leccion = Integer.parseInt(mr.getParameterValues("leccion")[0]);
+			String nombre = mr.getParameterValues("nombre")[0];
+			String desc = mr.getParameterValues("descripcion")[0];
+			Leccion lec =(Leccion) em.createQuery("SELECT i FROM Leccion i WHERE i.id = ?1").setParameter(1, leccion).getSingleResult();
+			lec.setNombre(nombre);
+			lec.setDescripcion(desc);
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Lecci&oacute;n modificada correctamente");
+			request.setAttribute("actual", "material");
+		}else if(tipo.equals("eliminarLeccion")){
+			int leccion = Integer.parseInt(mr.getParameterValues("leccion")[0]);
+			em.createQuery("DELETE FROM Leccion i WHERE i.id = ?1").setParameter(1, leccion).executeUpdate();
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Lecci&oacute;n eliminada correctamente");
+			request.setAttribute("actual", "material");
+		}else if(tipo.equals("eliminarMaterial")){
+			int material = Integer.parseInt(mr.getParameterValues("material")[0]);
+			em.createQuery("DELETE FROM Material i WHERE i.id = ?1").setParameter(1, material).executeUpdate();
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Material eliminado correctamente");
+			request.setAttribute("actual", "material");
+		}
 		
 		
 		asociados = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='SI'").setParameter(1, idCurso).getResultList();	
