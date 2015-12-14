@@ -274,16 +274,15 @@ CREATE TABLE IF NOT EXISTS `rotolearnbd`.`CONCILIACION` (
   `Cobrador` INT NOT NULL,
   `Anio` VARCHAR(4) NOT NULL,
   `Mes` VARCHAR(15) NOT NULL,
-  `Importe` VARCHAR(45) NOT NULL,
+  `Importe` INT NOT NULL,
   `CodOp` VARCHAR(45) NOT NULL,
   `CodPed` VARCHAR(45) NOT NULL,
-  `Descuento` INT NULL,
+  `Descuento` VARCHAR(45) NULL,
   `Promocion` INT NULL,
   `Pagado` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`ID`),
   INDEX `fk_CONCILIACION_1_idx` (`Cobrador` ASC),
   INDEX `fk_CONCILIACION_2_idx` (`Promocion` ASC),
-  INDEX `fk_CONCILIACION_3_idx` (`Descuento` ASC),
   CONSTRAINT `fk_CONCILIACION_1`
     FOREIGN KEY (`Cobrador`)
     REFERENCES `rotolearnbd`.`USUARIO` (`ID`)
@@ -292,11 +291,6 @@ CREATE TABLE IF NOT EXISTS `rotolearnbd`.`CONCILIACION` (
   CONSTRAINT `fk_CONCILIACION_2`
     FOREIGN KEY (`Promocion`)
     REFERENCES `rotolearnbd`.`PROMOCION` (`ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_CONCILIACION_3`
-    FOREIGN KEY (`Descuento`)
-    REFERENCES `rotolearnbd`.`DESCUENTO` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

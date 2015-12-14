@@ -68,13 +68,17 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<CursoAlumno> cursoAlumnos;
 
+	//bi-directional many-to-one association to Notificacion
+	@OneToMany(mappedBy="usuario")
+	private List<Notificacion> notificacions;
+
 	//bi-directional many-to-one association to ProfesorAsociado
 	@OneToMany(mappedBy="usuario")
 	private List<ProfesorAsociado> profesorAsociados;
 
-	//bi-directional many-to-one association to Notificacion
+	//bi-directional many-to-one association to Conciliacion
 	@OneToMany(mappedBy="usuario")
-	private List<Notificacion> notificacions;
+	private List<Conciliacion> conciliacions;
 
 	public Usuario() {
 	}
@@ -235,6 +239,28 @@ public class Usuario implements Serializable {
 		return cursoAlumno;
 	}
 
+	public List<Notificacion> getNotificacions() {
+		return this.notificacions;
+	}
+
+	public void setNotificacions(List<Notificacion> notificacions) {
+		this.notificacions = notificacions;
+	}
+
+	public Notificacion addNotificacion(Notificacion notificacion) {
+		getNotificacions().add(notificacion);
+		notificacion.setUsuario(this);
+
+		return notificacion;
+	}
+
+	public Notificacion removeNotificacion(Notificacion notificacion) {
+		getNotificacions().remove(notificacion);
+		notificacion.setUsuario(null);
+
+		return notificacion;
+	}
+
 	public List<ProfesorAsociado> getProfesorAsociados() {
 		return this.profesorAsociados;
 	}
@@ -257,26 +283,26 @@ public class Usuario implements Serializable {
 		return profesorAsociado;
 	}
 
-	public List<Notificacion> getNotificacions() {
-		return this.notificacions;
+	public List<Conciliacion> getConciliacions() {
+		return this.conciliacions;
 	}
 
-	public void setNotificacions(List<Notificacion> notificacions) {
-		this.notificacions = notificacions;
+	public void setConciliacions(List<Conciliacion> conciliacions) {
+		this.conciliacions = conciliacions;
 	}
 
-	public Notificacion addNotificacion(Notificacion notificacion) {
-		getNotificacions().add(notificacion);
-		notificacion.setUsuario(this);
+	public Conciliacion addConciliacion(Conciliacion conciliacion) {
+		getConciliacions().add(conciliacion);
+		conciliacion.setUsuario(this);
 
-		return notificacion;
+		return conciliacion;
 	}
 
-	public Notificacion removeNotificacion(Notificacion notificacion) {
-		getNotificacions().remove(notificacion);
-		notificacion.setUsuario(null);
+	public Conciliacion removeConciliacion(Conciliacion conciliacion) {
+		getConciliacions().remove(conciliacion);
+		conciliacion.setUsuario(null);
 
-		return notificacion;
+		return conciliacion;
 	}
 
 }

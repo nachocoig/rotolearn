@@ -14,6 +14,7 @@
 		<class>entities.Material</class>
 		<class>entities.Seccion</class>
 		<class>entities.Notificacion</class>
+		<class>entities.Conciliacion</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rotolearnbd"/>
