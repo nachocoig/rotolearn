@@ -103,7 +103,7 @@
                     <th>Precio</th>
                     <th>Categoria</th>
                     <th>Descripci&oacute;n</th>
-                    <th>Imagen</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -132,7 +132,7 @@
 			            		<td><%= aux.getPrecio() %></td>			            		
 			            		<td><%= aux.getCategoria() %></td>			            		
 			            		<td><%= aux.getDescripcion() %></td>
-			            		<td>Imagen.jpg</td>
+			            		
 		            		</tr>
 			           	<% }} %>
             </tbody>
