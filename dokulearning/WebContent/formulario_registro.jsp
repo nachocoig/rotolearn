@@ -25,7 +25,7 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.jsp">Inicio</a></li>
+                        <li><a href="Notificacion.form">Inicio</a></li>
                         <li><a href="perfil.form">Mi perfil</a></li>
                         <li><a class="activa" href="catalogo.form">Catalogo de cursos</a></li>
                     </ul>

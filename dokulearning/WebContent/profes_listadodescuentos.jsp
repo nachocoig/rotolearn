@@ -32,7 +32,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
-                            <li><a href="index.jsp">Inicio</a></li>
+                            <li><a href="Notificacion.form">Inicio</a></li>
                             <!--<li><a href="perfil.form">Mi Perfil</a></li>-->
                             <li><a href="catalogo.form">Cat&aacute;logo de cursos</a></li>
                             <!--<li><a class="activa" href="profes_panel.jsp">Panel de control</a></li>-->

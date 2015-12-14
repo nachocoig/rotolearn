@@ -92,12 +92,14 @@ public class LoginRequestHandler implements RequestHandler {
 					session = ((HttpServletRequest) request).getSession();
 					session.setAttribute("logueado", "true");
 					session.setAttribute("usuario",nick);
-					session.setAttribute("perfil",regbean);						
-					ruta = "index.jsp";
+					session.setAttribute("perfil",regbean);	
+					request.setAttribute("tipo", "index");
+					ruta = "Notificacion.form";
 					
 				}else{
 					System.out.println("Pass incorrecta, no puede entrar");
 					request.setAttribute("error", "pass");
+					request.setAttribute("tipo", "index");
 					ruta = "login.jsp";
 				 }
 				

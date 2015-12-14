@@ -7,6 +7,10 @@
     clear:both;
 }
 
+#not{
+	margin-top : 20%;
+}
+
 #portada{
     height: 100vh;
     background:url("../images/index/back.jpg");

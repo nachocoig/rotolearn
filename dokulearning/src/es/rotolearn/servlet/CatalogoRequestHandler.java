@@ -56,7 +56,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 	
 	@Override
 	public String handleRequest(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String ruta="catalogo.jsp";
+		String ruta="Notificacion.form";
 		
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
@@ -131,6 +131,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 		
 		/*FALTAN LOS CLOSE*/
 		System.out.println("vuelvo a salir");
+		request.setAttribute("tipo", "catalogo");
 		return ruta;
 	}
 

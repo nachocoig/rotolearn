@@ -65,7 +65,7 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 		String query = "";
 
 		String palabra = request.getParameter("palabra");
-		String ruta = "busquedaAvanzada.jsp";
+		String ruta = "Notificacion.form";
 		String destacados = request.getParameter("destacados");
 		String recomendados = request.getParameter("recomendados");
 		
@@ -199,6 +199,7 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 			}
 		}
 		System.out.println("Me piro chaval");
+		request.setAttribute("tipo", "busqueda");
 		request.setAttribute("categorias", categorias);
 		request.setAttribute("palabras", palabrasSeparadas);
 		request.setAttribute("buscados", cur);

@@ -1,4 +1,6 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
+<%@ page import="entities.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html lang="en-us">
 
@@ -23,7 +25,23 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="./style/footer.css" media="screen"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-		
+		  	<script>
+      		
+      		$(function(){
+      		    $('[rel="popover"]').popover({
+      		        container: 'body',
+      		        html: true,
+      		        content: function () {
+      		            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+      		         
+      		            return clone;
+      		        }
+      		    }).click(function(e) {      		    	
+      		        e.preventDefault();
+      		   
+      		    });
+      		});
+      	</script>
 	</head>
 
 <body>
@@ -40,7 +58,57 @@
 			</div>
 			
 			<%}else{ %>
+			
+			
 			<div id="conectado" class="pull-right">
+			<div class="pull-left" id = "not"><a href="#" rel="popover" data-placement="bottom" data-popover-content="#myPopover" id="leer">
+                        	<% String n = (String)request.getAttribute("Notificaciones");
+                        	if(n.equals("0") || n.equals("no") || n == null){%>
+                        		<span class="badge">0</span>
+                        	<% }
+                        	else{%>
+                        		<span class="badge"><%=n %></span>
+                        	<% } %>
+                        	</a>
+                        	</li>
+                        	<div id="myPopover" class="hide">
+                        		
+                        		<p>Tus notificaciones: </p>
+                        		<p></p>
+                        		<%
+                        		ArrayList<Notificacion> noLeidas= (ArrayList<Notificacion>)request.getAttribute("ListaNoLeidas");
+                        		ArrayList<Notificacion> notificaciones= (ArrayList<Notificacion>)request.getAttribute("ListaNotificaciones");
+                        	
+                        		if(noLeidas == null && notificaciones == null){ %>
+                        		<p> No tienes notificaciones </p>
+                        		<%}else{ 
+                        			if(noLeidas == null){}
+                        			else{
+                        				for(int i=0; i<noLeidas.size();i++){                 			
+                        					%>
+                        						<p> <strong><%=noLeidas.get(i).getDescripcion() %> </strong></p>
+                        				<%}
+                        			                      			}
+                        			if(notificaciones == null){}
+                        			else{
+                        				int size;
+                        				if(notificaciones.size() >=5){
+                        					size=notificaciones.size()-5;
+                        				}
+                        				else size=0;
+                        				for(int i=notificaciones.size()-1; i>=size;i--){                 			
+                        					%>
+                        						<p><%=  notificaciones.get(i).getDescripcion() %></p>
+                        				<%}
+                        			}
+                        		}%>
+                        		 <form method="POST" action="Notificacion.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="index" name="tipo"/>	
+					                                		<input type="hidden" value="SI" name="leido"/>	
+					                                		<input class="btn btn-default btn-xs glyphicon glyphicon-eye-open" type="submit" value="Marcar como leido">
+					                                	</form>
+                        	</div>
+                        </div>
 				<a href="perfil.form"><img id="imgConectado" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg"  class="img-circle" alt="Cinque Terre" width="40" height="40"></a>
 				<p id="nombreConectado"><a href="perfil.form"><%=session.getAttribute("usuario")%></a></p> 
 			</div>
@@ -189,7 +257,7 @@
 	    		<div class="col-md-3 col-md-offset-1" id="footer-left">
 	    			<img class="logotipo img-responsive" src="./images/logo.png">
 	                <p class="footer-links">
-	    				<a href="index.jsp">Home</a> &#45;
+	    				<a href="Notificacion.form">Home</a> &#45;
 	    				<a href="#">Faq</a> &#45;
 	    				<a href="#">Contact</a>
 	    			</p>

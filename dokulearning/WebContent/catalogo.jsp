@@ -1,12 +1,13 @@
 <jsp:useBean id="perfil" class="es.rotolearn.javaBean.RegistroBean" scope="session"/>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entities.Curso" %>
+<%@ page import="entities.*" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <title>C&aacute;talogo de cursos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -17,13 +18,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 		<!-- The JavaScript -->
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script type="text/javascript">
+		
+        
+        <script>
+        
+        $(function() {
+        	$('[rel="popover"]').popover({
+       
+	 		        container: 'body',
+	 		        html: true,
+	 		        content: function () {
+	 		            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+	 		         
+	 		            return clone;
+	 		        }
+	 		    }).click(function(e) {      		    	
+	 		        e.preventDefault();
+	 		   
+	 		    });   });
             $(function() {
 
 				var $ui = $('#ui_element');
 				
-
+				
 				$ui.find('.sb_input').bind('focus click',function(){
 					$ui.find('.sb_down')
 					   .addClass('sb_up')
@@ -42,12 +59,24 @@
 					   .find('.sb_dropdown')
 					   .hide();
 				});
-				
+				 $('[rel="popover"]').popover({
+		 		        container: 'body',
+		 		        html: true,
+		 		        content: function () {
+		 		            var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+		 		         
+		 		            return clone;
+		 		        }
+		 		    }).click(function(e) {      		    	
+		 		        e.preventDefault();
+		 		   
+		 		    });  
 
 				$ui.find('.sb_dropdown').find('label[for="all"]').prev().bind('click',function(){
 					$(this).parent().siblings().find(':checkbox').attr('checked',this.checked).attr('disabled',this.checked);
 				});
             });
+            
         </script>	
   
 </head>
@@ -67,7 +96,7 @@
 				</div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                 	<ul class="nav navbar-nav">
-                    	<li><a href="index.jsp">Inicio</a></li>
+                    	<li><a href="Notificacion.form">Inicio</a></li>
                         <!--<li><a href="perfil.form">Mi perfil</a></li>-->
                         <li><a class="activa" href="catalogo.form">Cat&aacute;logo de cursos</a></li>
                     </ul>
@@ -83,6 +112,53 @@
                         	}else{ 
                         %>
                         <!-- REGISTRADO -->
+                         <li><a href="#" rel="popover" data-placement="bottom" data-popover-content="#myPopover" id="leer">
+                        	<% String n = (String)request.getAttribute("Notificaciones");
+                        	if(n.equals("0") || n.equals("no") || n == null){%>
+                        		<span class="badge">0</span>
+                        	<% }
+                        	else{%>
+                        		<span class="badge"><%=n %></span>
+                        	<% } %>
+                        	</a>
+                        	</li>
+                        	<div id="myPopover" class="hide">
+                        		
+                        		<p>Tus notificaciones: </p>
+                        		<p></p>
+                        		<%
+                        		ArrayList<Notificacion> noLeidas= (ArrayList<Notificacion>)request.getAttribute("ListaNoLeidas");
+                        		ArrayList<Notificacion> notificaciones= (ArrayList<Notificacion>)request.getAttribute("ListaNotificaciones");
+                        	
+                        		if(noLeidas == null && notificaciones == null){ %>
+                        		<p> No tienes notificaciones </p>
+                        		<%}else{ 
+                        			if(noLeidas == null){}
+                        			else{
+                        				for(int i=0; i<noLeidas.size();i++){                 			
+                        					%>
+                        						<p> <strong><%=noLeidas.get(i).getDescripcion() %> </strong></p>
+                        				<%}
+                        			                      			}
+                        			if(notificaciones == null){}
+                        			else{
+                        				int size;
+                        				if(notificaciones.size() >=5){
+                        					size=notificaciones.size()-5;
+                        				}
+                        				else size=0;
+                        				for(int i=notificaciones.size()-1; i>=size;i--){                 			
+                        					%>
+                        						<p><%=  notificaciones.get(i).getDescripcion() %></p>
+                        				<%}
+                        			}
+                        		}%>
+                        		 <form method="POST" action="Notificacion.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="catalogo" name="tipo"/>	
+					                                		<input type="hidden" value="SI" name="leido"/>	
+					                                		<input class="btn btn-default btn-xs glyphicon glyphicon-eye-open" type="submit" value="Marcar como leido">
+					                                	</form>
+                        	</div>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
                             <ul class="dropdown-menu">
@@ -195,7 +271,7 @@
     		<div class="col-md-3 col-md-offset-1" id="footer-left">
     			<img class="logotipo img-responsive" src="./images/logo.png">
                 <p class="footer-links">
-    				<a href="index.jsp">Home</a> &#45;
+    				<a href="Notificacion.form">Home</a> &#45;
     				<a href="https://www.forocoches.com/">Faq</a> &#45;
     				<a href="#">Contact</a>
     			</p>

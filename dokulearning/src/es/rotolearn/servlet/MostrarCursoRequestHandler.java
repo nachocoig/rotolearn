@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import entities.*;
+import es.rotolearn.controlImagenes.MultipartRequest;
 import es.rotolearn.javaBean.RegistroBean;
 
 public class MostrarCursoRequestHandler implements RequestHandler {
@@ -82,14 +83,24 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Handler MostrarCurso received the request");
+		System.out.println("Handler MostrarCurso received the request" );
 		
-		String ruta = "info_curso.jsp";
+		String ruta = request.getContextPath();
+		if(request.getAttribute("notif")!= null){
+			ruta = "info_curso.jsp";
+		}
+		else{
+			ruta = "Notificacion.form";
+			}
+		request.setAttribute("tipo", "curso");
 		
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
-		int id = Integer.parseInt(request.getParameter("id"));
-		
+		String Id = request.getParameter("id");
+		if (Id == null){
+			Id=(String)request.getAttribute("id");
+		}
+		int id = Integer.parseInt(Id);
 		//Conexion con JPA
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();

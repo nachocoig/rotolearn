@@ -85,7 +85,8 @@ public class NotificacionRequestHandler implements RequestHandler {
 		//}
 	}
 	System.out.println("Aqui no llego");
-			if(ruta.equals("/getNotificacionPerfil.form") || ruta.equals("/marcarLeido.form")){
+	String path = (String)request.getAttribute("tipo");
+	if(mr.getParameter("tipo")!=null){path = mr.getParameter("tipo");}	
 				System.out.println("Aqui tampoco"); 				
 				try{
 				notificaciones = em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido=1").setParameter(1, user.getId()).getResultList();	
@@ -99,7 +100,7 @@ public class NotificacionRequestHandler implements RequestHandler {
 				System.out.println("Notificaciones size: " + noLeidas.size());
 				}catch(Exception E){
 					System.out.println("WEJEJEJE YOLO2");
-					ruta = "perfil.jsp";
+					//ruta = "perfil.jsp";
 				}
 				if(notificaciones.size() == 0 && noLeidas.size() == 0){
 					request.setAttribute("Notificaciones", "no");
@@ -137,8 +138,16 @@ public class NotificacionRequestHandler implements RequestHandler {
 				}
 			em.getTransaction().commit();
 			em.close();
-			ruta = "perfil.jsp";
-			}
+			System.out.println(path);
+			if(path == null){ruta = "index.jsp";}
+			else if(path.equals("curso")){ruta="showCurso.form";
+			request.setAttribute("id", mr.getParameter("id"));
+			request.setAttribute("notif", "si");}
+			else if(path.equals("perfil")){ruta = "perfil.jsp";}
+			else if(path.equals("catalogo")){ruta = "catalogo.jsp";}			
+			else if(path.equals("busqueda")){ruta = "busquedaAvanzada.jsp";}
+			else if(path.equals("index")){ruta = "index.jsp";}
+			else{ruta = "index.jsp";}
 	//	}
 		return ruta;
 	}
