@@ -137,7 +137,7 @@ public class PagoRequestHandler implements RequestHandler {
 		nuevoalumno.setUsuario(userio);
 		nuevoalumno.setEstado("INCOMPLETO");//YOKSE
 		nuevoalumno.setId(pk);
-		//System.out.println("CURSOID "+id_curso +"USERID "+verCurso.getId());
+		//System.out.println(" CURSOID "+id_curso +"USERID "+verCurso.getId());
 		try{
 		System.out.println("Intento persist");
 		em.persist(nuevoalumno);

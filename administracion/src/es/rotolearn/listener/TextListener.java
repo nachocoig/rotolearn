@@ -21,7 +21,7 @@ public class TextListener implements MessageListener {
 /*
 	@EJB(lookup = "ejb/ValesPedidoOperacionBean")
 	private ValesPedidoOperacionBeanRemote _vales;*/
-	/*****PROBAR CON CUPONES****/
+	/*****PROBAR CON CUPONES* ***/
 	public void onMessage(Message message) {
 
 		TextMessage msg = null;

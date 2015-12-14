@@ -197,7 +197,7 @@
 		    </div>
 		</div>
 	</div>
-	<!--FIN CUERPO-->
+	<!--FIN CUERPO -->
 
     <!--PIE DE PAGINA-->
 	    <footer>

@@ -200,7 +200,7 @@
 					            <%=auxMateriales.get(k).getNombre()%> 
 					        </a>
 					    <%auxMateriales.clear();
-					    } %>
+					    }  %>
 					    </div>
 						
 						
