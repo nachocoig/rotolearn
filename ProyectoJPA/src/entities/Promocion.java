@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -27,10 +26,6 @@ public class Promocion implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_c")
 	private Curso curso;
-
-	//bi-directional many-to-one association to Conciliacion
-	@OneToMany(mappedBy="promocionBean")
-	private List<Conciliacion> conciliacions;
 
 	public Promocion() {
 	}
@@ -57,28 +52,6 @@ public class Promocion implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
-	}
-
-	public List<Conciliacion> getConciliacions() {
-		return this.conciliacions;
-	}
-
-	public void setConciliacions(List<Conciliacion> conciliacions) {
-		this.conciliacions = conciliacions;
-	}
-
-	public Conciliacion addConciliacion(Conciliacion conciliacion) {
-		getConciliacions().add(conciliacion);
-		conciliacion.setPromocionBean(this);
-
-		return conciliacion;
-	}
-
-	public Conciliacion removeConciliacion(Conciliacion conciliacion) {
-		getConciliacions().remove(conciliacion);
-		conciliacion.setPromocionBean(null);
-
-		return conciliacion;
 	}
 
 }

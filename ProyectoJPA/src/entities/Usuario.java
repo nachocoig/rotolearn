@@ -60,6 +60,10 @@ public class Usuario implements Serializable {
 	@Column(name="Tipo")
 	private String tipo;
 
+	//bi-directional many-to-one association to Conciliacion
+	@OneToMany(mappedBy="usuario")
+	private List<Conciliacion> conciliacions;
+
 	//bi-directional many-to-one association to Curso
 	@OneToMany(mappedBy="usuario")
 	private List<Curso> cursos;
@@ -75,10 +79,6 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to ProfesorAsociado
 	@OneToMany(mappedBy="usuario")
 	private List<ProfesorAsociado> profesorAsociados;
-
-	//bi-directional many-to-one association to Conciliacion
-	@OneToMany(mappedBy="usuario")
-	private List<Conciliacion> conciliacions;
 
 	public Usuario() {
 	}
@@ -195,6 +195,28 @@ public class Usuario implements Serializable {
 		this.tipo = tipo;
 	}
 
+	public List<Conciliacion> getConciliacions() {
+		return this.conciliacions;
+	}
+
+	public void setConciliacions(List<Conciliacion> conciliacions) {
+		this.conciliacions = conciliacions;
+	}
+
+	public Conciliacion addConciliacion(Conciliacion conciliacion) {
+		getConciliacions().add(conciliacion);
+		conciliacion.setUsuario(this);
+
+		return conciliacion;
+	}
+
+	public Conciliacion removeConciliacion(Conciliacion conciliacion) {
+		getConciliacions().remove(conciliacion);
+		conciliacion.setUsuario(null);
+
+		return conciliacion;
+	}
+
 	public List<Curso> getCursos() {
 		return this.cursos;
 	}
@@ -281,28 +303,6 @@ public class Usuario implements Serializable {
 		profesorAsociado.setUsuario(null);
 
 		return profesorAsociado;
-	}
-
-	public List<Conciliacion> getConciliacions() {
-		return this.conciliacions;
-	}
-
-	public void setConciliacions(List<Conciliacion> conciliacions) {
-		this.conciliacions = conciliacions;
-	}
-
-	public Conciliacion addConciliacion(Conciliacion conciliacion) {
-		getConciliacions().add(conciliacion);
-		conciliacion.setUsuario(this);
-
-		return conciliacion;
-	}
-
-	public Conciliacion removeConciliacion(Conciliacion conciliacion) {
-		getConciliacions().remove(conciliacion);
-		conciliacion.setUsuario(null);
-
-		return conciliacion;
 	}
 
 }

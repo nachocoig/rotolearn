@@ -2,19 +2,19 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="ProyectoJPA" transaction-type="RESOURCE_LOCAL">
 		<class>entities.Admin</class>
+		<class>entities.Conciliacion</class>
 		<class>entities.Curso</class>
 		<class>entities.CursoAlumno</class>
 		<class>entities.CursoAlumnoPK</class>
 		<class>entities.Descuento</class>
-		<class>entities.Promocion</class>
-		<class>entities.Usuario</class>
-		<class>entities.ProfesorAsociado</class>
-		<class>entities.ProfesorAsociadoPK</class>
 		<class>entities.Leccion</class>
 		<class>entities.Material</class>
-		<class>entities.Seccion</class>
 		<class>entities.Notificacion</class>
-		<class>entities.Conciliacion</class>
+		<class>entities.ProfesorAsociado</class>
+		<class>entities.ProfesorAsociadoPK</class>
+		<class>entities.Promocion</class>
+		<class>entities.Seccion</class>
+		<class>entities.Usuario</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/rotolearnbd"/>

@@ -40,15 +40,13 @@ public class Conciliacion implements Serializable {
 	@Column(name="Pagado")
 	private String pagado;
 
+	@Column(name="Promocion")
+	private int promocion;
+
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="Cobrador")
 	private Usuario usuario;
-
-	//bi-directional many-to-one association to Promocion
-	@ManyToOne
-	@JoinColumn(name="Promocion")
-	private Promocion promocionBean;
 
 	public Conciliacion() {
 	}
@@ -117,20 +115,20 @@ public class Conciliacion implements Serializable {
 		this.pagado = pagado;
 	}
 
+	public int getPromocion() {
+		return this.promocion;
+	}
+
+	public void setPromocion(int promocion) {
+		this.promocion = promocion;
+	}
+
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public Promocion getPromocionBean() {
-		return this.promocionBean;
-	}
-
-	public void setPromocionBean(Promocion promocionBean) {
-		this.promocionBean = promocionBean;
 	}
 
 }
