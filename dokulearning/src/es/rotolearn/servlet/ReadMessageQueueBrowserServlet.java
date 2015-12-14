@@ -18,7 +18,7 @@ public class ReadMessageQueueBrowserServlet  {
 	private static final long serialVersionUID = 1L;
     /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
 	
-	public String leerbw()  {
+	public String leerbw(String correlation)  {
 
 		StringBuffer _sB = new StringBuffer(32);
 		//_sB.append("<br>");
@@ -41,8 +41,9 @@ public class ReadMessageQueueBrowserServlet  {
 				connection.createSession(bTransacted, iAcknowledgeMode);
 		 			   
 			javax.jms.QueueBrowser browser;
-
-			browser = session.createBrowser(queue,"JMSCorrelationID = 'RUSH'");
+			//browser = session.createBrowser(queue,"JMSCorrelationID = 'RUSH'");
+			String correlationn = "JMSCorrelationID = '"+correlation+"'";
+			browser = session.createBrowser(queue, correlationn);
 
 			//Start the connection
 			connection.start();

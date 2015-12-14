@@ -215,30 +215,20 @@
 			  </div>
 			  <div id="chat" class="tab-pane fade">
 			    <h3>Chat</h3>
+			    <%session.setAttribute("correlationID", h); %>
+			    <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+					function popitup(url)
+					{
+						newwindow=window.open(url,'name','height=200,width=600'); 
+						if (window.focus) {newwindow.focus()}
+						return false;
+					}
+				</SCRIPT>
 			    
-			    <div id="wrapper">
-				    <div id="menu">
-				        <p class="welcome">Welcome, <b></b></p>
-				        <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
-				        <div style="clear:both"></div>
-				    </div>
-				    <% String mensaje;
-				    if(request.getAttribute("mensajes")==null){
-				    	mensaje = "";
-				    	
-				    }else mensaje=request.getAttribute("mensajes").toString(); %>
-				    <ul id="chatbox">
-				    <li><%=mensaje%> </li>
-				    </ul>
-			     
-				    <form name="message" method="post" action="escribirChat.form">
-				        <input name="mensaje" type="text" id="usermsg" size="63" />
-				        <input name="submitmsg" type="submit"  id="submitmsg" value="Send" />
-				     </form>
-				    <form name="leer" method="post" action="leerChat.form">
-				        <input name="refrescar" type="submit"  id="refrescar" value="Refrescar" />
-				    </form>
-				</div>
+			    <a href="Chat.jsp" onClick="return popitup('Chat.jsp')">Accede al chat</a>
+			    
+			    
+			    </form>
 			    
 			    
 

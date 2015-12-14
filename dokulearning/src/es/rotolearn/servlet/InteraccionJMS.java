@@ -32,11 +32,10 @@ public class InteraccionJMS {
 	private javax.jms.MessageConsumer Mcon = null;
 
 
-	public void escrituraJMS(String mensaje,  String selector) {
-	    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
-        /* HAY QUE CONCATENAR AL MENSAJE EL NICK DEL USUARIO OBTENIDO DEL BEAN*/
+	public void escrituraJMS(String mensaje,  String selector, String user) {
+	    
 		try {
-
+			
 			contextoInicial = new javax.naming.InitialContext();
 
 				factory = (javax.jms.ConnectionFactory) contextoInicial
@@ -51,8 +50,8 @@ public class InteraccionJMS {
 			Mpro.setTimeToLive(60000);//60 segundos de vida los mensajes
 			javax.jms.TextMessage men = QSes.createTextMessage();
 
-			men.setText(mensaje); //PONER EL NOMBRE DEL BEAN
-			men.setJMSCorrelationID("RUSH");
+			men.setText(user+": "+mensaje); 
+			men.setJMSCorrelationID(selector);
 			Qcon.start();
 			Mpro.send(men);
 
@@ -77,6 +76,7 @@ public class InteraccionJMS {
 	public void escrituraPago(String mensaje) {
 	    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
         /* HAY QUE CONCATENAR AL MENSAJE EL NICK DEL USUARIO OBTENIDO DEL BEAN*/
+		
 		try {
 
 			contextoInicial = new javax.naming.InitialContext();
