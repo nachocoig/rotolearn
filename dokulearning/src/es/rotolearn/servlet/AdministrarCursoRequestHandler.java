@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,6 +24,7 @@ import entities.Curso;
 import entities.CursoAlumno;
 import entities.Leccion;
 import entities.Material;
+import entities.Notificacion;
 import entities.ProfesorAsociado;
 import entities.ProfesorAsociadoPK;
 import entities.Seccion;
@@ -109,10 +111,11 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		String ruta = "profes_administrarcurso.jsp";
 		
 		MultipartRequest mr = new MultipartRequest(request);
-
+		System.out.println("Paso 1");
 		String tipo = mr.getParameterValues("tipo")[0];
+		System.out.println("Paso 2");
 		int idCurso = Integer.parseInt(mr.getParameterValues("curso")[0]);
-		
+		System.out.println("Paso 3");
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
@@ -264,6 +267,43 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			}
 			request.setAttribute("actual", "material");
 		}
+		
+		
+		else if(tipo.equals("enviarAviso")){						
+				
+				int ID = Integer.parseInt(mr.getParameterValues("curso")[0]);
+				
+				List<CursoAlumno> alumnos2 = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.estado='inscrito'").setParameter(1, ID).getResultList();
+				List<ProfesorAsociado> profes = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='SI'").setParameter(1, ID).getResultList();
+				Iterator<CursoAlumno> it1 = alumnos2.iterator();
+				Iterator<ProfesorAsociado> it2 = profes.iterator();
+				Curso curs = em.find(Curso.class,Integer.parseInt(mr.getParameterValues("curso")[0]) );
+				System.out.println("paso");
+				String descripcion = mr.getParameterValues("descripcion")[0];
+				System.out.println("paso2");
+				//if(mr.getParameter("al")!=null){
+				while(it1.hasNext()){	
+					System.out.println("paso3");
+					Notificacion nueva = new Notificacion();
+					nueva.setDescripcion("Notificacion del curso " + curs.getTitulo() + " : " + descripcion);
+					nueva.setLeido(0);
+					nueva.setUsuario(em.find(Usuario.class,it1.next().getId().getID_u()));
+					em.persist(nueva);
+				
+				}//}
+				//if(mr.getParameter("profe")!=null){
+					System.out.println("paso4");
+				while(it2.hasNext()){		
+					Notificacion nueva = new Notificacion();
+					nueva.setDescripcion("Notificacion del curso " + curs.getTitulo() + " : " + descripcion);
+					nueva.setLeido(0);
+					nueva.setUsuario(em.find(Usuario.class,it2.next().getId().getID_p()));
+					em.persist(nueva);
+				}//}
+				
+				//em.getTransaction().commit();
+				//em.close();
+			}
 		
 		
 		asociados = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='SI'").setParameter(1, idCurso).getResultList();	

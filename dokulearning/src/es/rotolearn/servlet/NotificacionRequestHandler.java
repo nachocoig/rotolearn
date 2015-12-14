@@ -49,38 +49,9 @@ public class NotificacionRequestHandler implements RequestHandler {
 		ArrayList<Notificacion> listaNoLeidas = new ArrayList<Notificacion>();
 		ArrayList<Notificacion> listaLeidas = new ArrayList<Notificacion>();
 		
-		//******************************************************************************************************************************
-		//***************************************insertar notificaciones****************************************************************
-		//******************************************************************************************************************************
 		
-		if(ruta.equals("/enviarAlerta.form")){
-			MultipartRequest mr = new MultipartRequest(request);
-			
-			int ID = Integer.parseInt(mr.getParameterValues("curso")[0]);
-			ruta="profes_administarCurso.form?id="+ID;
-			List<CursoAlumno> alumnos = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.estado='inscrito'").setParameter(1, ID).getResultList();
-			List<ProfesorAsociado> profes = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='SI'").setParameter(1, ID).getResultList();
-			Iterator<CursoAlumno> it1 = alumnos.iterator();
-			Iterator<ProfesorAsociado> it2 = profes.iterator();
-			while(it1.hasNext()){			
-				Notificacion nueva = new Notificacion();
-				nueva.setDescripcion(mr.getParameterValues("descripcion")[0]);
-				nueva.setLeido(0);
-				nueva.setUsuario(em.find(Usuario.class,it1.next().getId().getID_u()));
-				em.persist(nueva);
-			}
-			while(it2.hasNext()){		
-				Notificacion nueva = new Notificacion();
-				nueva.setDescripcion(mr.getParameterValues("descripcion")[0]);
-				nueva.setLeido(0);
-				nueva.setUsuario(em.find(Usuario.class,it2.next().getId().getID_p()));
-				em.persist(nueva);
-			}
-			em.getTransaction().commit();
-			em.close();
-		}
 		
-		else{
+	//	else{
 			//******************************************************************************************************************************
 			//******************************************leer notificaciones*****************************************************************
 			//******************************************************************************************************************************
@@ -168,7 +139,7 @@ public class NotificacionRequestHandler implements RequestHandler {
 			em.close();
 			ruta = "perfil.jsp";
 			}
-		}
+	//	}
 		return ruta;
 	}
 

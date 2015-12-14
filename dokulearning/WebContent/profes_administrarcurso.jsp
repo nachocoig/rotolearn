@@ -157,8 +157,35 @@
                         <li<%if(etiqueta.equals("material")){%> class="active"<%}%>><a data-toggle="tab" href="#material">Material</a></li>
                         <li<%if(etiqueta.equals("profes")){%> class="active"<%}%>><a data-toggle="tab" href="#profes">Profesores</a></li>
                         <li<%if(etiqueta.equals("alumn")){%> class="active"<%}%>><a data-toggle="tab" href="#alumn">Alumnos</a></li>
+                        <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlert">Enviar alerta</button></li>
+							
                         <li<%if(etiqueta.equals("delete")){%> class="active"<%}%>><a data-toggle="tab" href="#delete"><span class="red">Eliminar curso</span></a></li>
                     </ul>
+                    		
+									  <!-- Modal -->
+									  <div class="modal fade" id="myAlert" role="dialog">
+									    <div class="modal-dialog modal-md">
+									      <div class="modal-content">
+									      	<form method="POST" action="administrarCursos.form"  enctype="multipart/form-data">
+										        <div class="modal-header">
+										          <button type="button" class="close" data-dismiss="modal">&times;</button>
+										          <h4 class="modal-title">Enviar nueva alerta</h4>
+										        </div>
+										        <div class="modal-body">
+										         	<p>Escribe la alerta a enviar.</p>
+										         	<input type="hidden" value="<%= ID %>" name="curso"/>
+										         	<input type="hidden" value="enviarAviso" name="tipo"/>
+										         	<textarea name="descripcion" class="form-control" rows="4" placeholder="Escribe la alerta" required></textarea>
+										         	
+										        </div>
+										        <div class="modal-footer">
+										        	<input type="submit" class="btn btn-default" value="Agregar"/>
+										        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										        </div>
+									        </form>
+									      </div>
+									    </div>
+									  </div>
                     <div class="tab-content">
                     
                         <div id="info" class="tab-pane fade <%if(etiqueta.equals("info")){%>  in active<%}%>">
