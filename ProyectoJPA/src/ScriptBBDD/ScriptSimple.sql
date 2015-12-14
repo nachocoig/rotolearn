@@ -263,6 +263,46 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+-- -----------------------------------------------------
+-- Table `rotolearnbd`.`CONCILIACION`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rotolearnbd`.`CONCILIACION` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `rotolearnbd`.`CONCILIACION` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `Cobrador` INT NOT NULL,
+  `Anio` VARCHAR(4) NOT NULL,
+  `Mes` VARCHAR(15) NOT NULL,
+  `Importe` VARCHAR(45) NOT NULL,
+  `CodOp` VARCHAR(45) NOT NULL,
+  `CodPed` VARCHAR(45) NOT NULL,
+  `Descuento` INT NULL,
+  `Promocion` INT NULL,
+  `Pagado` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`ID`),
+  INDEX `fk_CONCILIACION_1_idx` (`Cobrador` ASC),
+  INDEX `fk_CONCILIACION_2_idx` (`Promocion` ASC),
+  INDEX `fk_CONCILIACION_3_idx` (`Descuento` ASC),
+  CONSTRAINT `fk_CONCILIACION_1`
+    FOREIGN KEY (`Cobrador`)
+    REFERENCES `rotolearnbd`.`USUARIO` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_CONCILIACION_2`
+    FOREIGN KEY (`Promocion`)
+    REFERENCES `rotolearnbd`.`PROMOCION` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_CONCILIACION_3`
+    FOREIGN KEY (`Descuento`)
+    REFERENCES `rotolearnbd`.`DESCUENTO` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
