@@ -39,14 +39,7 @@ public class PagoRequestHandler implements RequestHandler {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//comprobar tarjeta
-		if(request.getParameter("tarjeta").length()==20 && (request.getParameter("tarjeta").charAt(0)=='A' || request.getParameter("tarjeta").charAt(0)=='B') ){
-			//correcto
-		}else{
-				
-				
-				return "pagos.jsp";
-			  }
+
 		
 		RegistroBean user = new RegistroBean();
 		HttpSession session;
@@ -82,6 +75,7 @@ public class PagoRequestHandler implements RequestHandler {
 					request.setAttribute("curso", verCurso);
 					if(curAl!=null){
 						System.out.println("YA ESTA INSCRITO");
+						/****** AVISARLE****/
 						return "catalogo.form";
 					}
 				}catch(javax.persistence.NoResultException e){
@@ -112,20 +106,27 @@ public class PagoRequestHandler implements RequestHandler {
 		
 		WebTarget wt = client.target("http://localhost:8080/Banco/ws");
 		
+		System.out.println(request.getParameter("totalprecio"));
+		System.out.println(request.getParameter("tarjeta"));
 		
-		String result = wt.path("codigo").path("operacion").path("300").path("A57575757").path(codPed).request().accept(MediaType.TEXT_PLAIN).get(String.class);
+		String result = wt.path("codigo").path("operacion").path(request.getParameter("totalprecio")).path(request.getParameter("tarjeta")).path(codPed).request().accept(MediaType.TEXT_PLAIN).get(String.class);
 		System.out.println(result);
 		//descomponer result OPERACION201512110409590902PM;300;ORDER777;201509110459902+0100
+		if(result.equalsIgnoreCase("error")){
+			/*****************REVISAR CUANDO HAY ERROR*********************/
+			return "index.jsp";
+			
+		}
 		String mensajes[] = result.split("-");
 		
 		//String codigoOp
 		Curso aux = (Curso) request.getAttribute("curso");
 		//3 . Escribir en la cola
 		//String mensaje = codigpPedido + "-" + codigoOp + "-" + request.getAtributte("precio") + "-" + request.getAtributte("numbreCurso");
-		String mensaje = codPed+mensajes[1]+"400"+verCurso.getTitulo();
+		String mensaje = codPed+ "-" +mensajes[0]+ "-" +request.getParameter("totalprecio")+ "-" +request.getParameter("valePromocional")+ "-" +request.getParameter("valeAdmin")+ "-" +request.getParameter("precioOriginal")+ "-" +request.getParameter("profesor");
 		InteraccionJMS mq=new InteraccionJMS();
 		/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
-		System.out.println("Me escriben esto:"+mensaje);
+		System.out.println("Me escriben esto: "+mensaje);
 		mq.escrituraPago(mensaje);
 		//4 . Insertar usuario en base de datos curso
 		CursoAlumno nuevoalumno = new	CursoAlumno();
@@ -145,9 +146,10 @@ public class PagoRequestHandler implements RequestHandler {
 		em.close();
 		}catch(Exception e){
 			System.out.println("YA EXISTE EL USUARIO INSCRIBICIONADO");
-			// AVISAR AL MENDIGO QUE YA ESTA INSCRITO
+			/******* AVISAR QUE YA ESTA INSCRITO*******/
 			return "catalogo.jsp";
 		}
+		System.out.println("redirijo al index");
 		return "index.jsp";
 	}
 

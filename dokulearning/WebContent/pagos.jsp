@@ -29,7 +29,7 @@
 				</div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                 	<ul class="nav navbar-nav">
-                    	<li><a href="Notificacion.form">Inicio</a></li>
+                    	<li><a href="index.jsp">Inicio</a></li>
                         <!--<li><a href="perfil.form">Mi perfil</a></li>-->
                         <li><a href="catalogo.form">Catalogo de cursos</a></li>
                     </ul>
@@ -185,8 +185,11 @@
 						<input type="text" class="form-control" name="tarjeta" placeholder="Introduce tu tarjeta de credito" required>
 					</div>
 					<div class="form-group">
-						<%request.setAttribute("totalprecio",request.getAttribute("total"));%>
-						<%request.setAttribute("valePromocional",request.getAttribute("valePromocional"));%>
+						<input type="hidden" name="totalprecio" value="<%= request.getAttribute("total") %>" />
+						<input type="hidden" name="valePromocional" value="<%= request.getAttribute("valePromocional") %>" />
+						<input type="hidden" name="valeAdmin" value="<%= request.getAttribute("descuento") %>" />
+						<input type="hidden" name="precioOriginal" value="<%= aux.getPrecio() %>" />
+						<input type="hidden" name="profesor" value="<%= aux.getUsuario().getId() %>" />					
 						<input type="hidden" value="<%=h %>" name="cursoCompra"/>        
 						<button type="submit" class="btn btn-success">Comprar Curso</button>
 					</div>
