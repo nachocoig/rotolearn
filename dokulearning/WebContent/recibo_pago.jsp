@@ -66,6 +66,13 @@
     <!--FIN CABECERA-->
     
     <!--CUERPO-->
+    <%
+    	Curso a = (Curso) request.getAttribute("curso");
+    	String codOP = (String) request.getAttribute("codigOP");
+    	String trans = (String) request.getAttribute("bank");
+    	String valor = (String) request.getAttribute("valor");
+    %>
+    
 	<div id="cuerpo" class="container-fluid">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -82,8 +89,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Curso de JAVA III</td>
-                                        <td>100&euro;</td>
+                                        <td><%=a.getTitulo() %></td>
+                                        <td><%=a.getPrecio() %>&euro;</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -94,15 +101,15 @@
                                 <thead>
                                     <tr>
                                         <th>C&oacute;digo de factura</th>
-                                        <th>Fecha</th>
+                                        <th>C&oacute;digo de pago</th>
                                         <th>Valor</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>CUPON12312312AM</td>
-                                        <td>11/08/2015</td>
-                                        <td>100&euro;</td>
+                                        <td><%=codOP %></td>
+                                        <td><%=trans %></td>
+                                        <td><%=valor %>&euro;</td>
                                     </tr>
                                 </tbody>
                             </table>

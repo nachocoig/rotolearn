@@ -39,17 +39,15 @@ public class PagoRequestHandler implements RequestHandler {
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
-		
 		RegistroBean user = new RegistroBean();
 		HttpSession session;
 		session = ((HttpServletRequest) request).getSession();
 		user = (RegistroBean) session.getAttribute("perfil");
 		int id_curso = Integer.parseInt(request.getParameter("cursoCompra"));
 		//Conexion con JPA
-				EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
-				EntityManager em = factory.createEntityManager();
-				em.getTransaction().begin();
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
+		EntityManager em = factory.createEntityManager();
+		em.getTransaction().begin();
 				/*try{
 					CursoAlumno pet = new CursoAlumno();
 					pet = em.createQuery("SELECT i FROM CursoAlumno i WHERE i. = ?1").setParameter(1, nick).getSingleResult();
@@ -58,31 +56,32 @@ public class PagoRequestHandler implements RequestHandler {
 					
 					System.out.println("HE CASCAO");
 				}*/
-				Curso verCurso;
-				Usuario userio;
-				CursoAlumno curAl;
-				//Obtenemos los datos del curso
-				try{
-					System.out.println("Entro en el try");
-					verCurso = em.find(Curso.class, id_curso);
-					userio = em.find(Usuario.class, user.getId());
-					CursoAlumnoPK prueba = new CursoAlumnoPK();
-					prueba.setID_c(id_curso);
-					prueba.setID_u(user.getId());
-					System.out.println("Entro el find");
-					curAl = em.find(CursoAlumno.class, prueba);
-					System.out.println("Salgo del find");
-					request.setAttribute("curso", verCurso);
-					if(curAl!=null){
-						System.out.println("YA ESTA INSCRITO");
-						/****** AVISARLE****/
-						return "catalogo.form";
-					}
-				}catch(javax.persistence.NoResultException e){
-					System.out.println("Descripcion: " + e.getMessage()); 
-					return "pagos.jsp";//ojo
-
-				}
+		Curso verCurso;
+		Usuario userio;
+		CursoAlumno curAl;
+		
+		//Obtenemos los datos del curso
+		try{
+			System.out.println("Entro en el try");
+			verCurso = em.find(Curso.class, id_curso);
+			userio = em.find(Usuario.class, user.getId());
+			CursoAlumnoPK prueba = new CursoAlumnoPK();
+			prueba.setID_c(id_curso);
+			prueba.setID_u(user.getId());
+			System.out.println("Entro el find");
+			curAl = em.find(CursoAlumno.class, prueba);
+			System.out.println("Salgo del find");
+			request.setAttribute("curso", verCurso);
+			if(curAl!=null){
+				System.out.println("YA ESTA INSCRITO");
+				/****** AVISARLE****/
+				return "catalogo.form";
+			}
+		}catch(javax.persistence.NoResultException e){
+			System.out.println("Descripcion: " + e.getMessage()); 
+			return "pagos.jsp";//ojo
+	
+		}
 		
 		//1 . Pedir codigo de pedido
 			//String codigoPedido
@@ -110,6 +109,13 @@ public class PagoRequestHandler implements RequestHandler {
 		System.out.println(request.getParameter("tarjeta"));
 		
 		String result = wt.path("codigo").path("operacion").path(request.getParameter("totalprecio")).path(request.getParameter("tarjeta")).path(codPed).request().accept(MediaType.TEXT_PLAIN).get(String.class);
+		
+		String [] aux1 = result.split("-");
+		
+		request.setAttribute("codigOP", aux1[2]);
+		request.setAttribute("valor", aux1[1]);
+		request.setAttribute("bank", aux1[0]);
+		
 		System.out.println(result);
 		//descomponer result OPERACION201512110409590902PM;300;ORDER777;201509110459902+0100
 		if(result.equalsIgnoreCase("error")){
@@ -121,6 +127,7 @@ public class PagoRequestHandler implements RequestHandler {
 		
 		//String codigoOp
 		Curso aux = (Curso) request.getAttribute("curso");
+		
 		//3 . Escribir en la cola
 		//String mensaje = codigpPedido + "-" + codigoOp + "-" + request.getAtributte("precio") + "-" + request.getAtributte("numbreCurso");
 		String mensaje = codPed+ "-" +mensajes[0]+ "-" +request.getParameter("totalprecio")+ "-" +request.getParameter("valePromocional")+ "-" +request.getParameter("valeAdmin")+ "-" +request.getParameter("precioOriginal")+ "-" +request.getParameter("profesor");
@@ -149,8 +156,11 @@ public class PagoRequestHandler implements RequestHandler {
 			/******* AVISAR QUE YA ESTA INSCRITO*******/
 			return "catalogo.jsp";
 		}
-		System.out.println("redirijo al index");
-		return "index.jsp";
+		
+		
+		
+		System.out.println("redirijo al recibo_pago");
+		return "recibo_pago.jsp";
 	}
 
 }
