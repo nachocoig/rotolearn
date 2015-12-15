@@ -40,9 +40,9 @@ public class EditPerfilRequestHandler implements RequestHandler {
 	    String Nacimiento = request.getParameter("date");
 	    String Direccion = request.getParameter("direccion");
 	    String Descripcion = request.getParameter("descripcion");
-	  
+	    
 	    int Telefono = Integer.parseInt(request.getParameter("tlf"));
-
+	    
 	    RegistroBean actualizado = (RegistroBean) miSession.getAttribute("perfil");
 
 		System.out.println("PO AQUI");
@@ -55,8 +55,13 @@ public class EditPerfilRequestHandler implements RequestHandler {
 	    actualizado.setDescripcion(Descripcion);
 	    actualizado.setIntereses(intereses);
 	    actualizado.setTelefono(Telefono);
-
-		System.out.println("EL BEAN PARECE QUE FUNSIONA NOSE:" + actualizado.getIntereses());
+	    if(request.getParameter("imagen") == null){
+	    	actualizado.setImagen(false);
+	    }
+	    else{
+	    	actualizado.setImagen(true);
+	    }
+		
 	    try{
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 			EntityManager em = factory.createEntityManager();

@@ -86,7 +86,12 @@ public class LoginRequestHandler implements RequestHandler {
 					regbean.setNacimiento(resultado.getFecha_nac());
 				    regbean.setDireccion(resultado.getDireccion());
 				    regbean.setNombre(resultado.getNombre());
-				    
+				    if(resultado.getImagen()==null){
+				    	regbean.setImagen(false);
+				    }
+				    else{
+				    	regbean.setImagen(true);
+				    }
 				    cargarImagen(resultado.getImagen(), request, resultado.getNickname());
 				    
 					session = ((HttpServletRequest) request).getSession();

@@ -64,6 +64,9 @@ public class RegistroRequestHandler implements RequestHandler {
 			if(fis != null)
 				fis.close();
 	    }
+        
+        
+        
 	    return ficheroTotal;
 	}
 	
@@ -113,7 +116,9 @@ public class RegistroRequestHandler implements RequestHandler {
 			nAux.setTelefono(Integer.parseInt(mr.getParameterValues("tlf")[0]));
 		    
 			UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");
-
+			
+			
+			//System.out.println(foto.getData());
 			nAux.setImagen(obtenerFicheroBytes(request, foto, mr.getParameterValues("nick")[0] ));
 			//nAux.setImagen(request.getParameter("exampleInputFile"));
 			

@@ -114,8 +114,13 @@
                         	</div>
                         
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
-                            <ul class="dropdown-menu">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                              <%if(perfil.getImagen()){%>
+                            <img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
+                            <%}else{ %>
+                            <img src="./images/perfil/anonimo.jpeg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
+                            
+                            <%} %> <ul class="dropdown-menu">
                                 <li><a href="perfil.form"><span class="glyphicon glyphicon-user"></span>Mi perfil</a></li>
                                 <% if(!perfil.getTipo().equals("alumn")){%>
                                 <li><a href="profes_panel.jsp"><span class="glyphicon glyphicon-th-large"></span>Panel de Control</a></li>
@@ -203,7 +208,12 @@
 					                                	</form>
 		            </div>
 		            <div id="bMedio">
-						<img id="imgPerfil" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-rounded"/>
+		            <%if(perfil.getImagen()){%>
+                            <img id="imgPerfil" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-rounded"/>
+                            <%}else{ %>
+                            <img id="imgPerfil" src="images/im_usuarios/defecto.jpg" class="img-rounded"/>
+                            <%} %>
+						
 						<div class="limpiador"></div>
 					</div>
 		            <div id="bInferior">

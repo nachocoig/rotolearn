@@ -14,7 +14,16 @@ public class RegistroBean{
 	private String descripcion;
 	private String intereses;
 	private int telefono;
+	private boolean imagen;
 	
+	public boolean getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(boolean imagen) {
+		this.imagen = imagen;
+	}
+
 	public RegistroBean(){}
 	
 	public RegistroBean( int id, String tipo, String nickName, String nombre,
