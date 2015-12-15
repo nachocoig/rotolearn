@@ -22,16 +22,25 @@ public class Authorization {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/operacion/{importe}/{tarjeta}/{codpedido}")
 	public String generarCodigoOperacion(@PathParam("importe") String importe,@PathParam("tarjeta") String tarjeta, @PathParam("codpedido") String codpedido){
+		//comprobar tarjeta
+		if(tarjeta.length()==20 && (tarjeta.charAt(0)=='A' || tarjeta.charAt(0)=='B') ){
+			ValesPedidoOperacion _valesPedidoOperacion = new ValesPedidoOperacion();
+		   	String codigoOp = _valesPedidoOperacion.generacionCodigoOperacion();
+		 	Date dNow = new Date( );
+		    SimpleDateFormat ft =
+		    new SimpleDateFormat ("yyyymmddhhssSSSa");
+	    
+		    return codigoOp+"-"+importe+"-"+codpedido+"-"+ft.format(dNow);
+		}else{
+				
+				
+				return "error";
+			  }
 		
-		//COMPROBAR LA TARJETA EN LA WEB QUE EMPIEZA POR A o B Y LONGITUD 20
-		ValesPedidoOperacion _valesPedidoOperacion = new ValesPedidoOperacion();
-	   	String codigoOp = _valesPedidoOperacion.generacionCodigoOperacion();
-	 	Date dNow = new Date( );
-	    SimpleDateFormat ft =
-	    new SimpleDateFormat ("yyyymmddhhssSSSa");
-    
-	    return codigoOp+"-"+importe+"-"+codpedido+"-"+ft.format(dNow);
+
 	}
+
+	
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
