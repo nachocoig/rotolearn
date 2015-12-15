@@ -42,7 +42,7 @@ public class ConciliacionProfesorRequestHandler implements RequestHandler{
 		System.out.println("QUERY CONCILIACION EMPRESA");
 		Date dNow = new Date( );
 	    SimpleDateFormat an = new SimpleDateFormat ("yyyy");
-	    SimpleDateFormat me = new SimpleDateFormat ("mm");
+	    SimpleDateFormat me = new SimpleDateFormat ("MM");
 	    String anio = an.format(dNow);
 	    String mes = me.format(dNow);
 		Iterator<Conciliacion> d = lista.iterator();
@@ -61,12 +61,13 @@ public class ConciliacionProfesorRequestHandler implements RequestHandler{
 			System.out.println("PIDO AL WS");
 			int result = Integer.parseInt(wt.path("codigo").path("conciliacionProfesor").path(Integer.toString(recuento)).path(anio).path(mes).request().accept(MediaType.TEXT_PLAIN).get(String.class));
 			System.out.println("RECIBO WS "+result);
+			em.createQuery("UPDATE Conciliacion i SET i.pagado='SI' WHERE i.usuario.id="+profeactual+" AND i.pagado='NO'").executeUpdate();
 		}
 
 		
 		//em.createQuery("UPDATE ProfesorAsociado i SET i.validado ='SI' WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
 
-		em.createQuery("UPDATE Conciliacion i SET i.pagado='SI' WHERE i.usuario.id NOT IN (1) AND i.pagado='NO'").executeUpdate();
+		
 		System.out.println("UPDATE CONCILIACION PROFESOR");
 		em.getTransaction().commit();
 		em.close();

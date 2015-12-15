@@ -33,7 +33,7 @@ public class TextListener implements MessageListener {
 		float aux;
 	 	Date dNow = new Date( );
 	    SimpleDateFormat an = new SimpleDateFormat ("yyyy");
-	    SimpleDateFormat me = new SimpleDateFormat ("mm");
+	    SimpleDateFormat me = new SimpleDateFormat ("MM");
 	    String anio = an.format(dNow);
 	    String mes = me.format(dNow);
 
@@ -69,9 +69,15 @@ public class TextListener implements MessageListener {
 				cobrador.setId(profid);
 				conc.setUsuario(cobrador);
 				if(valepromo!=null){
-					conc.setDescuento(valepromo);
-					System.out.println(Integer.parseInt(valepromo.substring(Math.max(valepromo.length() - 2, 0))));
-					dineroprofe = (int) ((int) precioorig*0.7*(1-Integer.parseInt(valepromo.substring(Math.max(valepromo.length() - 2, 0)))));
+					conc.setDescuento(valepromo);//substring(cuponDesc.length()-2);
+					System.out.println(Integer.parseInt(valepromo.substring(valepromo.length() - 2)));
+					int descuento = Integer.parseInt(valepromo.substring(valepromo.length() - 2));
+					double fraccion = descuento*0.01;
+					System.out.println("fraccion"+fraccion);
+					double descuentod = 1 - fraccion;
+					System.out.println("EL DESCUENTO"+descuentod);
+					descuentod = descuentod * 0.7;
+					dineroprofe = (int) ((int) (precioorig*descuentod));
 				}else{
 					dineroprofe = (int) (precioorig*0.7);
 				}
@@ -88,7 +94,9 @@ public class TextListener implements MessageListener {
 				empresa.setId(1);/****OJO EMPRESA ID 0***/
 				conc2.setUsuario(empresa);
 				if(descadmin!=0){
-					dineroempresa = (int) (0.3*precioorig*(1-(descadmin/100)));
+					double fraccion = descadmin * 0.01;
+					fraccion = 1 - fraccion;
+					dineroempresa = (int) (0.3*precioorig*fraccion);
 					conc2.setPromocion(descadmin);
 					
 				}else{

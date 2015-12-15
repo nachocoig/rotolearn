@@ -72,10 +72,14 @@ public class PagoRequestHandler implements RequestHandler {
 			curAl = em.find(CursoAlumno.class, prueba);
 			System.out.println("Salgo del find");
 			request.setAttribute("curso", verCurso);
-			if(curAl!=null){
-				System.out.println("YA ESTA INSCRITO");
-				/****** AVISARLE****/
-				return "catalogo.form";
+			if(curAl!=null ){
+				if(!curAl.getEstado().equals("lista deseos")){
+					System.out.println("YA ESTA INSCRITO");
+					/****** AVISARLE****/
+					return "catalogo.form";
+					
+				}
+				
 			}
 		}catch(javax.persistence.NoResultException e){
 			System.out.println("Descripcion: " + e.getMessage()); 
@@ -136,6 +140,15 @@ public class PagoRequestHandler implements RequestHandler {
 		System.out.println("Me escriben esto: "+mensaje);
 		mq.escrituraPago(mensaje);
 		//4 . Insertar usuario en base de datos curso
+		if(curAl!=null && curAl.getEstado().equals("lista deseos")){
+			CursoAlumnoPK cpk = new CursoAlumnoPK();
+			cpk.setID_u(user.getId());
+			cpk.setID_c(id_curso);
+			em.createQuery("UPDATE CursoAlumno i SET i.estado='INCOMPLETO' WHERE i.id=?1").setParameter(1,cpk).executeUpdate();
+			em.getTransaction().commit();
+			em.close();
+			return "recibo_pago.jsp";		
+		}
 		CursoAlumno nuevoalumno = new	CursoAlumno();
 		CursoAlumnoPK pk = new	CursoAlumnoPK();
 		pk.setID_c(id_curso);
