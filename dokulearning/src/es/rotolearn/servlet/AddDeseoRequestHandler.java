@@ -100,48 +100,52 @@ implements RequestHandler {
 		em.getTransaction().begin();
 		//Usuario resultado = em.find(nAux.getClass(), nAux.getNickname());
 		try{
-			System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR EL CURSO "+ id);
-			Curso aux = (Curso)em.find(Curso.class, id); //creo que al tener el ID ya, no haria falta hacer esta consulta.
-			System.out.println("HE SALIDO DE LA QUERY DE titulo= "+ id +" CON ID = " + aux.getId());
-				try{
-					System.out.println("HAGO LA SEGUNDA QUERY");
-					Usuario aux2 = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1 ").setParameter(1, user.getNickName() ).getSingleResult();	
-					//des = em.createQuery("SELECT * FROM CURSO_ALUMNO WHERE ID_u='" + user.getID() + "' AND Estado='lista deseos'").getResultList();
-					System.out.println("HE SALIDO DE LA QUERY DE Usuario= "+ user.getNickName() +" CON ID=  " + aux2.getId() );
-					System.out.println("HAGO LA TERCERA QUERY para añadir ");
-					CursoAlumno aux3 = new CursoAlumno();
-					CursoAlumnoPK aux4 = new CursoAlumnoPK();
-					aux4.setID_c(aux.getId());
-					aux4.setID_u(aux2.getId());
-					aux3.setId(aux4);
-					aux3.setCurso(aux);
-					aux3.setUsuario(aux2);
-					aux3.setEstado("lista deseos");
-					
-					try {
-						//em = factory.createEntityManager();
-						//em.getTransaction().begin();
-						em.persist(aux3);
-						em.getTransaction().commit();
-						request.setAttribute("deseo", "ok");
-						//em.close();
-				    	} catch (Exception e2) {
-				    		System.out.println("TENGO QUE PASAR AQUI-----------");
-						//em.close();
-						System.out.println("Descripcion: " + e2.getMessage());
-						request.setAttribute("deseo","no");
+			
+				System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR EL CURSO "+ id);
+				Curso aux = (Curso)em.find(Curso.class, id); //creo que al tener el ID ya, no haria falta hacer esta consulta.
+				System.out.println("HE SALIDO DE LA QUERY DE titulo= "+ id +" CON ID = " + aux.getId());
+					try{
+						System.out.println("HAGO LA SEGUNDA QUERY");
+						Usuario aux2 = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1 ").setParameter(1, user.getNickName() ).getSingleResult();	
+						//des = em.createQuery("SELECT * FROM CURSO_ALUMNO WHERE ID_u='" + user.getID() + "' AND Estado='lista deseos'").getResultList();
+						System.out.println("HE SALIDO DE LA QUERY DE Usuario= "+ user.getNickName() +" CON ID=  " + aux2.getId() );
+						System.out.println("HAGO LA TERCERA QUERY para añadir ");
+						CursoAlumno aux3 = new CursoAlumno();
+						CursoAlumnoPK aux4 = new CursoAlumnoPK();
+						aux4.setID_c(aux.getId());
+						aux4.setID_u(aux2.getId());
+						aux3.setId(aux4);
+						aux3.setCurso(aux);
+						aux3.setUsuario(aux2);
+						aux3.setEstado("lista deseos");
 						
+						try {
+							//em = factory.createEntityManager();
+							//em.getTransaction().begin();
+							em.persist(aux3);
+							em.getTransaction().commit();
+							request.setAttribute("deseo", "ok");
+							//em.close();
+					    	} catch (Exception e2) {
+					    		System.out.println("TENGO QUE PASAR AQUI-----------");
+							//em.close();
+							System.out.println("Descripcion: " + e2.getMessage());
+							request.setAttribute("deseo","no");
+							
+						}
+					}catch (javax.persistence.NoResultException e){   		
+						//em.close();
+						request.setAttribute("deseo", "no");
+						System.out.println("Descripcion: " + e.getMessage());    				   				    			   			
 					}
-				}catch (javax.persistence.NoResultException e){   		
-					//em.close();
-					request.setAttribute("deseo", "no");
-					System.out.println("Descripcion: " + e.getMessage());    				   				    			   			
-				}
+				
+			
 			}catch(javax.persistence.NoResultException e){ 
 				//em.close();
 				request.setAttribute("deseo", "no");
 				System.out.println("Descripcion: " + e.getMessage());  
 			}	
+		
 		em.close();
      return ruta;
     }

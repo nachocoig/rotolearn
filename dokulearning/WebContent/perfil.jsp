@@ -435,11 +435,11 @@
                         }else{
                         ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("deseos");
                 		for(int i=0; i<dest.size();i++){
-                			String h = dest.get(i).getTitulo();
+                			int h = dest.get(i).getId();
                 		%>
                 	  		<tbody>
                                <tr>
-                                 <td><a href="showCurso.form?titulo=<%= h %>"><%= dest.get(i).getTitulo()%></a></td> 
+                                 <td><a href="showCurso.form?id=<%= h %>"><%= dest.get(i).getTitulo()%></a></td> 
                                </tr>
                             </tbody>
                          <% }} %>
