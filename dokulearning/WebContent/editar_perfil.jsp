@@ -109,11 +109,11 @@
                         				<%}
                         			}
                         		}%>
-                        		 <form method="POST" action="Notificacion.form"  enctype="multipart/form-data">
-					                                		<input type="hidden" value="editar" name="tipo"/>	
-					                                		<input type="hidden" value="SI" name="leido"/>	
-					                                		<input class="btn btn-default btn-xs glyphicon glyphicon-eye-open" type="submit" value="Marcar como leido">
-					                                	</form>
+                        		<form method="POST" action="Notificacion.form"  enctype="multipart/form-data">
+                               		<input type="hidden" value="editar" name="tipo"/>	
+                               		<input type="hidden" value="SI" name="leido"/>	
+                               		<input class="btn btn-default btn-xs glyphicon glyphicon-eye-open" type="submit" value="Marcar como leido">
+                               	</form>
                         	</div>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
@@ -241,8 +241,8 @@
 	    		<div class="col-md-3 col-md-offset-1" id="footer-left">
 	    			<img class="logotipo img-responsive" src="./images/logo.png">
 	                <p class="footer-links">
-	    				<a href="index.html">Home</a> &#45;
-	    				<a href="https://www.forocoches.com/">Faq</a> &#45;
+	    				<a href="Notificacion.form">Home</a> &#45;
+	    				<a href="faq.jsp">Faq</a> &#45;
 	    				<a href="#">Contact</a>
 	    			</p>
 	    			<p class="footer-company-name">Roto2 Company &copy; 2015</p>
