@@ -196,8 +196,11 @@
 
 		        <div class="col-md-4 barra">
 		            <div id="bSuperior">
-		            	<a href="editar_perfil.jsp">Editar perfil<span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-		            	<div class="limpiador"></div>
+		            	<form method="POST" action="Notificacion.form"  enctype="multipart/form-data">
+					                                		<input type="hidden" value="editar" name="tipo"/>	
+					                                		<input type="hidden" value="NO" name="leido"/>	
+					                                		<input class="btn btn-default btn-xs" type="submit" value="Editar Perfil"><span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span>
+					                                	</form>
 		            </div>
 		            <div id="bMedio">
 						<img id="imgPerfil" src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-rounded"/>

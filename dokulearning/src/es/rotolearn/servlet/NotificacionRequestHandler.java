@@ -144,6 +144,7 @@ public class NotificacionRequestHandler implements RequestHandler {
 			request.setAttribute("id", mr.getParameter("id"));
 			request.setAttribute("notif", "si");}
 			else if(path.equals("perfil")){ruta = "perfil.jsp";}
+			else if(path.equals("editar")){ruta = "editar_perfil.jsp";}
 			else if(path.equals("catalogo")){ruta = "catalogo.jsp";}			
 			else if(path.equals("busqueda")){ruta = "busquedaAvanzada.jsp";}
 			else if(path.equals("index")){ruta = "index.jsp";}

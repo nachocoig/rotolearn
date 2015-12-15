@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Usuario;
+import es.rotolearn.controlImagenes.MultipartRequest;
 import es.rotolearn.javaBean.RegistroBean;
 
 public class EditPerfilRequestHandler implements RequestHandler {
@@ -21,7 +22,17 @@ public class EditPerfilRequestHandler implements RequestHandler {
 		System.out.println("al menos entramos aqui...");
 		String ruta = "perfil.form";
 		HttpSession miSession = request.getSession(true);
-		
+		String intereses = "";
+		MultipartRequest mr = new MultipartRequest(request);
+		String [] it = mr.getParameterValues("intereses");
+		if(it!=null){
+			for(int i=0;i<it.length;i++){
+				System.out.println("Elemento "+ i + ": " + it[i] );
+				if(it[i]!=null){
+					intereses = intereses + it[i] +"/";
+				}
+			}
+		}
 		String Nombre = request.getParameter("nombre");
 	    String Apellido1 = request.getParameter("apellido1");
 	    String Apellido2 = request.getParameter("apellido2");
@@ -29,7 +40,7 @@ public class EditPerfilRequestHandler implements RequestHandler {
 	    String Nacimiento = request.getParameter("date");
 	    String Direccion = request.getParameter("direccion");
 	    String Descripcion = request.getParameter("descripcion");
-	    String Intereses = request.getParameter("intereses"); ///////////ECHARLE UN OJO, YA NO ES ASI
+	  
 	    int Telefono = Integer.parseInt(request.getParameter("tlf"));
 
 	    RegistroBean actualizado = (RegistroBean) miSession.getAttribute("perfil");
@@ -42,10 +53,10 @@ public class EditPerfilRequestHandler implements RequestHandler {
 	    actualizado.setNacimiento(Nacimiento);
 	    actualizado.setDireccion(Direccion);
 	    actualizado.setDescripcion(Descripcion);
-	    actualizado.setIntereses(Intereses);
+	    actualizado.setIntereses(intereses);
 	    actualizado.setTelefono(Telefono);
 
-		System.out.println("EL BEAN PARECE QUE FUNSIONA NOSE:.");
+		System.out.println("EL BEAN PARECE QUE FUNSIONA NOSE:" + actualizado.getIntereses());
 	    try{
 			EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 			EntityManager em = factory.createEntityManager();
@@ -66,7 +77,7 @@ public class EditPerfilRequestHandler implements RequestHandler {
 				aux.setFecha_nac(Nacimiento);
 				aux.setDireccion(Direccion);
 				aux.setDescripcion(Descripcion);
-				aux.setIntereses(Intereses); 
+				aux.setIntereses(intereses); 
 				aux.setTelefono(Telefono);
 
 				System.out.println("al menos entramos aqui...3");
