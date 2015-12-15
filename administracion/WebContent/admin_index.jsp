@@ -75,7 +75,32 @@
                 <h1><span id="user"><%= session.getAttribute("usuario") %></span> bienvenido al panel de control.</h1>
                 <a href="admin_reg.jsp" class="opcionPanel btn btn-danger"><br><span class="simbolos glyphicon glyphicon-plus"></span><br>A&ntilde;adir usuario</a>
                 <a href="listadocursos.form" class="opcionPanel btn btn-primary"><br><span class="simbolos glyphicon glyphicon-th-list"></span><br>Listado de cursos</a>
-                <a href="mostrarDescuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon-tags"></span><br>Listado de descuentos</a>
+                <a href="mostrarDescuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon-tags"></span><br>Descuentos</a>
+            <!-- Trigger the modal with a button -->
+				<button type="button" class="opcionPanel btn btn-danger" data-toggle="modal" data-target="#myModal"><br><span class="simbolos  glyphicon glyphicon-credit-card"></span><br>Conciliaci&oacute;n</button>
+				
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+				
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title">Selecci&oacute;n de tipo de conciliaci&oacute;n</h4>
+				      </div>
+				      <div>
+				        <div class="col-md-10 col-md-offset-1">
+	                        <a href="#" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-education"></span><br>Profesores</a>
+	                        <a href="#" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-briefcase"></span><br>Empresa</a>
+				        </div>
+				      </div>
+				    </div>
+				
+				  </div>
+				</div>
+            
+            
             </div>
         </div>
     	<!--FIN CUERPO-->
