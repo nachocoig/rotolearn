@@ -278,9 +278,9 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				Iterator<CursoAlumno> it1 = alumnos2.iterator();
 				Iterator<ProfesorAsociado> it2 = profes.iterator();
 				Curso curs = em.find(Curso.class,Integer.parseInt(mr.getParameterValues("curso")[0]) );
-				System.out.println("paso");
+				System.out.println("paso1" + alumnos2.size() + 'y' + profes.size());
 				String descripcion = mr.getParameterValues("descripcion")[0];
-				System.out.println("paso2");
+				System.out.println("paso2:" + descripcion);
 				//if(mr.getParameter("al")!=null){
 				while(it1.hasNext()){	
 					System.out.println("paso3");
@@ -292,8 +292,9 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				
 				}//}
 				//if(mr.getParameter("profe")!=null){
+					
+				while(it2.hasNext()){	
 					System.out.println("paso4");
-				while(it2.hasNext()){		
 					Notificacion nueva = new Notificacion();
 					nueva.setDescripcion("Notificacion del curso " + curs.getTitulo() + " : " + descripcion);
 					nueva.setLeido(0);
@@ -301,7 +302,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 					em.persist(nueva);
 				}//}
 				
-				//em.getTransaction().commit();
+				em.getTransaction().commit();
 				//em.close();
 		}else if(tipo.equals("eliminarSeccion")){
 			int seccion = Integer.parseInt(mr.getParameterValues("seccion")[0]);
