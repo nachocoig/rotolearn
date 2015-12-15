@@ -135,6 +135,16 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 				}
 
 			}
+			try{
+				List<Promocion> desc = verCurso.getPromocions();
+				if(!desc.isEmpty()){//Quiere decir que existe una rebaja del admin
+					request.setAttribute("descuento", desc.get(0).getDescuento()+"");
+					
+				}
+			}catch(Exception e){
+				
+			}
+			
 			
 			request.setAttribute("secciones", lsecciones);
 			request.setAttribute("lecciones", llecciones);

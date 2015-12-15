@@ -112,7 +112,19 @@
 					</li>
 					<li class="list-group-item">
 						<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
-						<span class="info">Descuento activo:</span>75%
+						<%
+							String descuento = (String) request.getAttribute("descuento");
+							if(descuento!=null){
+						%>
+						<span class="info">Descuento activo: </span><%=descuento %>%
+						<%
+							}else{
+						%>
+						<span class="info">Descuento activo: </span>0%
+						<%		
+							}
+						%>
+						
 					</li>
 					<li class="list-group-item">
 						<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
