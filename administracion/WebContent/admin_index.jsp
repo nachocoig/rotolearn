@@ -77,7 +77,7 @@
                 <a href="listadocursos.form" class="opcionPanel btn btn-primary"><br><span class="simbolos glyphicon glyphicon-th-list"></span><br>Listado de cursos</a>
                 <a href="mostrarDescuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon-tags"></span><br>Descuentos</a>
             <!-- Trigger the modal with a button -->
-				<button type="button" class="opcionPanel btn btn-danger" data-toggle="modal" data-target="#myModal"><br><span class="simbolos  glyphicon glyphicon-credit-card"></span><br>Conciliaci&oacute;n</button>
+				<button type="button" class="opcionPanel btn btn-warning" data-toggle="modal" data-target="#myModal"><br><span class="simbolos  glyphicon glyphicon-credit-card"></span><br>Conciliaci&oacute;n</button>
 				
 				<!-- Modal -->
 				<div id="myModal" class="modal fade" role="dialog">
@@ -91,8 +91,8 @@
 				      </div>
 				      <div>
 				        <div class="col-md-10 col-md-offset-1">
-	                        <a href="#" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-education"></span><br>Profesores</a>
-	                        <a href="#" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-briefcase"></span><br>Empresa</a>
+	                        <a href="conciliacionProfesor.form" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-education"></span><br>Profesores</a>
+	                        <a href="conciliacionEmpresa.form" class="opcionPanel btn btn-default"><br><span class="simbolos glyphicon glyphicon-briefcase"></span><br>Empresa</a>
 				        </div>
 				      </div>
 				    </div>
