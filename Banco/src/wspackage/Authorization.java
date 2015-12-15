@@ -36,16 +36,20 @@ public class Authorization {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/conciliacionEmpresa/{importe}/{mes}/{anio}")
-	public double conciliacionEmpresa(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
+	public String conciliacionEmpresa(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
+		System.out.println("CONCILIACION EMPRESA");
 		int dinero = Integer.parseInt(importe);
-	    return  dinero*0.99;
+		dinero =  (int) (dinero*0.99);
+	    return  Integer.toString(dinero);
 	}
+	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/conciliacionProfesor/{importe}/{mes}/{anio}")
-	public int conciliacionProfesor(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
+	public String conciliacionProfesor(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
+		System.out.println("CONCILIACION PROFESORES");
 		int dinero = Integer.parseInt(importe);
-		return dinero;
+		return Integer.toString(dinero);
 	}
 	
 	

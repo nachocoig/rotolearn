@@ -33,26 +33,44 @@ public class ConciliacionProfesorRequestHandler implements RequestHandler{
 		Client client = ClientBuilder.newClient(config);
 		Conciliacion concil  = new Conciliacion();
 		int recuento = 0;
-		//COnsulta
+		int profeactual, primeravez=0;
+		System.out.println("CONSULTA CONCILIACION PROFESOR");
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
-		List <Conciliacion> lista = em.createQuery("SELECT i FROM Conciliacion i WHERE i.cobrador.id=1 AND i.pagado='NO'").getResultList();// 1 es el id del usuario empresa
-		Iterator<Conciliacion> d = lista.iterator();
-		while(d.hasNext()){
-			concil=d.next();
-			
-			recuento = recuento + concil.getImporte();					
-			}
+		List <Conciliacion> lista = em.createQuery("SELECT i FROM Conciliacion i WHERE i.usuario.id NOT IN (1) AND i.pagado='NO' ORDER BY i.usuario.id ASC").getResultList();// 1 es el id del usuario empresa
+		System.out.println("QUERY CONCILIACION EMPRESA");
 		Date dNow = new Date( );
 	    SimpleDateFormat an = new SimpleDateFormat ("yyyy");
 	    SimpleDateFormat me = new SimpleDateFormat ("mm");
 	    String anio = an.format(dNow);
 	    String mes = me.format(dNow);
-		WebTarget wt = client.target("http://localhost:8080/Banco/ws");
+		Iterator<Conciliacion> d = lista.iterator();
+		while(d.hasNext()){
+			if(primeravez==0){
+				concil=d.next();
+				primeravez=1;
+			}
+			profeactual = concil.getUsuario().getId();
+			while(profeactual == concil.getUsuario().getId() && d.hasNext()){
+					recuento = recuento + concil.getImporte();					
+					concil=d.next();
+			}
+			System.out.println("RECUENTO "+recuento);
+			WebTarget wt = client.target("http://localhost:8080/Banco/ws");
+			System.out.println("PIDO AL WS");
+			int result = Integer.parseInt(wt.path("codigo").path("conciliacionProfesor").path(Integer.toString(recuento)).path(anio).path(mes).request().accept(MediaType.TEXT_PLAIN).get(String.class));
+			System.out.println("RECIBO WS "+result);
+		}
+
 		
-		int result = Integer.parseInt(wt.path("codigo").path("conciliacionEmpresa").path(Integer.toString(recuento)).path(anio).path(mes).request().accept(MediaType.TEXT_PLAIN).get(String.class));
-		return null;
+		//em.createQuery("UPDATE ProfesorAsociado i SET i.validado ='SI' WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
+
+		em.createQuery("UPDATE Conciliacion i SET i.pagado='SI' WHERE i.usuario.id NOT IN (1) AND i.pagado='NO'").executeUpdate();
+		System.out.println("UPDATE CONCILIACION PROFESOR");
+		em.getTransaction().commit();
+		em.close();
+		return "admin_index.jsp";
 	}
 
 }
