@@ -158,3 +158,11 @@ li:hover{
   font-size:15pt;
   margin:5px;
 }
+
+#filtros{
+	padding:0px;
+}
+
+#filtros .btn-group-lg > .btn, #filtros .btn-lg, #filtros .btn{
+	border-radius:0px;
+}

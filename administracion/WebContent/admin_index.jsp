@@ -78,6 +78,7 @@
                 <a href="mostrarDescuentos.form" class="opcionPanel btn btn-success"><br><span class="simbolos glyphicon glyphicon-tags"></span><br>Descuentos</a>
             <!-- Trigger the modal with a button -->
 				<button type="button" class="opcionPanel btn btn-warning" data-toggle="modal" data-target="#myModal"><br><span class="simbolos  glyphicon glyphicon-credit-card"></span><br>Conciliaci&oacute;n</button>
+				<a href="historico.form" class="opcionPanel btn btn-info"><br><span class="simbolos glyphicon glyphicon-book"></span><br>Hist&oacute;rico</a>
 				
 				<!-- Modal -->
 				<div id="myModal" class="modal fade" role="dialog">
