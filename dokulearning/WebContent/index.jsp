@@ -148,105 +148,11 @@
 		<div id="topCursos">
 			 <div class="col-md-8 col-md-offset-2">
 			 	<h1> Descubre los cursos m&aacute;s destacados</h1>
-                <ul class="portfolio-items">
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item1.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item2.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item3.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item4.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                     <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item5.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item6.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item7.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                    <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item1.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                     <li class="portfolio-item col-md-3 ">
-                        <div class="itemCatalogo">
-                            <img src="images/portfolio/thumb/item2.jpg" alt="">
-                            <h5>Las Redes Sociales y los CEO </h5>
-                            <div class="overlay">
-                                <a class="preview glyphicon glyphicon-shopping-cart" href="#" rel="prettyPhoto"><br><span>Comprar</span></a>
-                                <a class="preview glyphicon glyphicon-eye-open" href="/info_curso.jsp" rel="prettyPhoto"><br><span>Ver</span></a>
-                            </div>           
-                        </div>           
-                    </li>
-                </ul>
+				<div class="limpiador"></div>
+			</div>
 
-			<div class="limpiador"></div>
-		</div>
-
-		<div class="limpiador"></div>
 			<div id="verMas">
-	           	<a class="verMas col-md-8 col-md-offset-2" href="catalogo.form">Ver m&aacute;s</a>
+	           	<a class="verMas col-md-8 col-md-offset-2" href="catalogo.form">Ver catalogo de cursos disponibles</a>
 	        </div>
 		</div>
 	</div>
@@ -258,7 +164,7 @@
 	    			<img class="logotipo img-responsive" src="./images/logo.png">
 	                <p class="footer-links">
 	    				<a href="Notificacion.form">Home</a> &#45;
-	    				<a href="#">Faq</a> &#45;
+	    				<a href="faq.jsp">Faq</a> &#45;
 	    				<a href="#">Contact</a>
 	    			</p>
 	    			<p class="footer-company-name">Roto2 Company &copy; 2015</p>

@@ -116,7 +116,7 @@
                         </div>
                         
                         <div class="form-group">        
-							<button type="submit" class="btn btn-success">Volver a la pagina del curso</button>
+							<a href="Notificacion.form" class="btn btn-success">Aceptar</a>
 						</div>
                     </div>
                 </div>
@@ -132,8 +132,8 @@
 	    		<div class="col-md-3 col-md-offset-1" id="footer-left">
 	    			<img class="logotipo img-responsive" src="./images/logo.png">
 	                <p class="footer-links">
-	    				<a href="index.html">Home</a> &#45;
-	    				<a href="https://www.forocoches.com/">Faq</a> &#45;
+	    				<a href="Notificacion.form">Home</a> &#45;
+	    				<a href="faq.jsp">Faq</a> &#45;
 	    				<a href="#">Contact</a>
 	    			</p>
 	    			<p class="footer-company-name">Roto2 Company &copy; 2015</p>

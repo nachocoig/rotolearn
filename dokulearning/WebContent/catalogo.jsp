@@ -272,7 +272,7 @@
     			<img class="logotipo img-responsive" src="./images/logo.png">
                 <p class="footer-links">
     				<a href="Notificacion.form">Home</a> &#45;
-    				<a href="https://www.forocoches.com/">Faq</a> &#45;
+    				<a href="faq.jsp">Faq</a> &#45;
     				<a href="#">Contact</a>
     			</p>
     			<p class="footer-company-name">Roto2 Company &copy; 2015</p>
