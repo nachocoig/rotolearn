@@ -162,6 +162,8 @@
                         <li<%if(etiqueta.equals("material")){%> class="active"<%}%>><a data-toggle="tab" href="#material">Material</a></li>
                         <li<%if(etiqueta.equals("profes")){%> class="active"<%}%>><a data-toggle="tab" href="#profes">Profesores</a></li>
                         <li<%if(etiqueta.equals("alumn")){%> class="active"<%}%>><a data-toggle="tab" href="#alumn">Alumnos</a></li>
+                        <li<%if(etiqueta.equals("examen")){%> class="active"<%}%>><a data-toggle="tab" href="#examen">Examen</a></li>
+                        
                         <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myAlert">Enviar alerta</button></li>
 							
                         <li<%if(etiqueta.equals("delete")){%> class="active"<%}%>><a data-toggle="tab" href="#delete"><span class="red">Eliminar curso</span></a></li>
@@ -542,6 +544,70 @@
 								<input class="btn btn-danger" type="submit" value="Si, eliminar">
 					     	</form>
                         </div>
+                        
+                        <%
+                        ArrayList<CursoAlumno> examinados =(ArrayList<CursoAlumno>) request.getAttribute("examinados");
+                        %>
+                        <div id="examen" class="tab-pane fade <%if(etiqueta.equals("examen")){%> in active<%}%>">
+                            <h3>Respuestas de los alumnos</h3>
+                           			<table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Alumno</th>
+                                                <th>Respuesta</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+				                        <%    
+				                        for(int i = 0; i < examinados.size(); i++){
+				                        %>            
+                                            <tr>
+                                                <td><%=examinados.get(i).getUsuario().getId() %></td>
+                                                <td>
+                                                	<a  data-toggle="modal" data-target="#respuesta<%=examinados.get(i).getUsuario().getId() %>">Ver respuesta</a>
+                                                	<!-- Modal -->
+													  <div class="modal fade" id="respuesta<%=examinados.get(i).getUsuario().getId() %>" role="dialog">
+													    <div class="modal-dialog modal-md">
+													      <div class="modal-content">
+														        <div class="modal-header">
+														          <h4 class="modal-title">Respuesta de <%=examinados.get(i).getUsuario().getId() %></h4>
+														        </div>
+														        <div class="modal-body">
+														         	<p>
+														         	<%=examinados.get(i).getRespuesta() %>
+														         	</p>
+														        </div>
+														        <div class="modal-footer">
+														        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+														        </div>
+													      </div>
+													    </div>
+													  </div>	
+                                                </td>
+                                                <td>
+	                                                <form method="POST" action="administrarCursos.form"   enctype="multipart/form-data">
+				                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+				                                		<input type="hidden" value="<%=examinados.get(i).getUsuario().getId() %>" name="examinado"/>	
+				                                		<input type="hidden" value="aprobarExamen" name="tipo"/>	
+				                                		<input class="btn btn-default btn-xs" type="submit" value="Aprobado">
+				                                	</form>
+	                                                <form method="POST" action="administrarCursos.form"   enctype="multipart/form-data">
+				                                		<input type="hidden" value="<%= ID %>" name="curso"/>
+				                                		<input type="hidden" value="<%=examinados.get(i).getUsuario().getId() %>" name="examinado"/>	
+				                                		<input type="hidden" value="suspenderExamen" name="tipo"/>	
+				                                		<input class="btn btn-default btn-xs" type="submit" value="Suspenso">
+				                                	</form>
+                                                </td>
+                                            </tr>
+                                            
+                        				<%}%>                    
+                                        </tbody>
+                                     </table>
+                        </div>
+                        
+                        
+                        
                     </div>
                 </div>
             </div>

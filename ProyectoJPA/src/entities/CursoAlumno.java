@@ -20,6 +20,9 @@ public class CursoAlumno implements Serializable {
 	@Column(name="Estado")
 	private String estado;
 
+	@Column(name="Respuesta")
+	private String respuesta;
+
 	//bi-directional many-to-one association to Curso
 	@ManyToOne
 	@JoinColumn(name="ID_c")
@@ -47,6 +50,14 @@ public class CursoAlumno implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getRespuesta() {
+		return this.respuesta;
+	}
+
+	public void setRespuesta(String respuesta) {
+		this.respuesta = respuesta;
 	}
 
 	public Curso getCurso() {

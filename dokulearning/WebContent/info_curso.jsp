@@ -162,11 +162,15 @@
 			<ul class="nav nav-pills nav-justified">
 			  <li class="active"><a data-toggle="tab" href="#descripcion">Descripci&oacute;n</a></li>
 			  <%
-			   if(request.getAttribute("inscrito").equals("si")){
+			   if(!request.getAttribute("inscrito").equals("no")){
 			  %>
 			  <li><a data-toggle="tab" href="#menu2">Temario del curso</a></li>
 			  <li><a data-toggle="tab" href="#chat">Chat</a></li>
-			  <%} %>
+			  <%
+			   if(request.getAttribute("inscrito").equals("sn")){
+			  %>
+			  <li><a data-toggle="tab" href="#examen">Examen</a></li>
+			  <%}} %>
 			</ul>
 			
 			<div class="tab-content opciones col-md-6 col-md-offset-3">
@@ -175,7 +179,7 @@
 			    <p><%=aux.getDescripcion() %></p>
 			  </div>
 			  <%
-			   if(request.getAttribute("inscrito").equals("si")){
+			   if(!request.getAttribute("inscrito").equals("no")){
 			  %>
 			  <div id="menu2" class="tab-pane fade">
 			    <h3>Temario del curso</h3>
@@ -255,7 +259,23 @@
 			    <a href="Chat.jsp" onClick="return popitup('Chat.jsp')">Accede al chat</a>
 			  </div>
 			  <%
-			   }
+			   if(request.getAttribute("inscrito").equals("sn")){
+			  %>
+			  <div id="examen" class="tab-pane fade">
+			    <h3>Examen</h3>
+			    <p>Contesta aqu&iacute; a las preguntas que te ha hecho el profesor en los materiales del curso</p>
+			    <form action="showCurso.form" method="POST">
+			    	 <input type="hidden" value="<%=h %>" name="curso"/>
+			    	 <label>Respuesta</label>
+  					 <textarea name="respuesta" class="form-control" placeholder="Responde aqui a las preguntas..."></textarea>
+  					 <input class="btn btn-lg btn-success" type="submit" value="Enviar respuesta">
+			    </form>
+			  </div>
+			  
+			  
+			  
+			  <%
+			   }}
 			  %>
 			</div>
 

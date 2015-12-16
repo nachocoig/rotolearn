@@ -123,10 +123,8 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 				capk.setID_u(userBean.getId());
 				
 				ca = em.find(CursoAlumno.class, capk);
-				
-				if(ca == null && verCurso.getUsuario().getId() != userBean.getId() && !verCurso.getProfesorAsociados().contains(u))
-					request.setAttribute("inscrito", "no");
-				else{
+
+				if(ca != null || verCurso.getUsuario().getId() == userBean.getId() || verCurso.getProfesorAsociados().contains(u)){
 					List<Seccion> secciones =  em.createQuery("SELECT i FROM Seccion i WHERE i.curso.id = ?1").setParameter(1, verCurso.getId()).getResultList();
 					List<Leccion> lecciones = null;
 					List<Material> materiales = null;
@@ -161,7 +159,13 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 					request.setAttribute("secciones", lsecciones);
 					request.setAttribute("lecciones", llecciones);
 					request.setAttribute("materiales", lmateriales);
-					request.setAttribute("inscrito", "si");
+					if(ca.getEstado().equals("COMPLETO")){
+						request.setAttribute("inscrito", "sn"); //esto es porque termina
+					}else{
+						request.setAttribute("inscrito", "si");
+					}
+				}else{
+					request.setAttribute("inscrito", "no");
 				}
 			}
 			

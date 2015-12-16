@@ -108,7 +108,7 @@
                 		for(int i=0; i<con.size();i++){
                 		%>
 			           		<tr>
-			           			<td><%=con.get(i).getId() %></td>
+			           			<td><%=con.get(i).getUsuario().getId() %></td>
 			            		<td><%=con.get(i).getAnio() %></td>
 			            		<td><%=con.get(i).getMes() %></td>
 			            		<td><%=con.get(i).getImporte() %></td>

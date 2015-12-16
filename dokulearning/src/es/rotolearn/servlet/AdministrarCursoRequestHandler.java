@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entities.Curso;
 import entities.CursoAlumno;
+import entities.CursoAlumnoPK;
 import entities.Leccion;
 import entities.Material;
 import entities.Notificacion;
@@ -134,7 +135,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		List <Seccion> secciones = null;
 		List <Leccion> lecciones = null;
 		List <Material> materiales = null;
-
+		List <CursoAlumno> examinados = null;
 		
 		ArrayList <Usuario> lasociados = new ArrayList <Usuario> ();
 		ArrayList <Usuario> lasociadosSinValidar = new ArrayList <Usuario> ();
@@ -144,6 +145,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		ArrayList <Leccion> llecciones = new ArrayList <Leccion> ();
 		ArrayList <Material> lmateriales = new ArrayList <Material> ();
 
+		ArrayList <CursoAlumno> lexaminados = new ArrayList<CursoAlumno>();
 		if(tipo.equals("editarDescripcion")){ //Para modificar la descripcion del curso
 			System.out.println("Modificar descripcion.");
 			try{
@@ -340,6 +342,28 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Material eliminado correctamente");
 			request.setAttribute("actual", "material");
+		}else if(tipo.equals("aprobarExamen")){
+			int usuario = Integer.parseInt(mr.getParameterValues("examinado")[0]);
+			CursoAlumnoPK capk = new CursoAlumnoPK();
+
+			capk.setID_c(idCurso);
+			capk.setID_u(usuario);
+			CursoAlumno ca = em.find(CursoAlumno.class, capk);
+			ca.setEstado("COMPLETO");
+			ca.setRespuesta(null);
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Usuario aprobado con &eacute;xito");
+			request.setAttribute("actual", "examen");
+		}else if(tipo.equals("suspenderExamen")){
+			int usuario = Integer.parseInt(mr.getParameterValues("examinado")[0]);
+			CursoAlumnoPK capk = new CursoAlumnoPK();
+			capk.setID_c(idCurso);
+			capk.setID_u(usuario);
+			CursoAlumno ca = em.find(CursoAlumno.class, capk);
+			ca.setRespuesta(null);
+			em.getTransaction().commit();
+			request.setAttribute("aviso","SI/Usuario suspendido con &eacute;xito");
+			request.setAttribute("actual", "examen");
 		}
 		
 		
@@ -347,7 +371,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		asociadosSinValidar = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='NO'").setParameter(1, idCurso).getResultList();	
 		alumnos = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_c = ?1").setParameter(1, idCurso).getResultList();	
 		secciones = em.createQuery("SELECT i FROM Seccion i WHERE i.curso.id = ?1").setParameter(1, idCurso).getResultList();
-
+		examinados = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.respuesta IS NOT NULL AND i.curso.id = ?1").setParameter(1, idCurso).getResultList();
 		for(int i = 0; i < asociados.size(); i++){
 			lasociados.add(asociados.get(i).getUsuario());
 		}		
@@ -370,6 +394,9 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			}
 
 		}
+		for(int i = 0; i < examinados.size(); i++){
+			lexaminados.add(examinados.get(i));
+		}
 		
 		Curso a = em.find(Curso.class, idCurso);
 		
@@ -380,7 +407,8 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		request.setAttribute("secciones", lsecciones);
 		request.setAttribute("lecciones", llecciones);
 		request.setAttribute("materiales", lmateriales);
-
+		request.setAttribute("examinados", lexaminados);
+		
 		em.close();
 	 return ruta;
 	}
