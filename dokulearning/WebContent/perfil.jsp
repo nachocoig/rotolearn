@@ -416,13 +416,16 @@
                         </div>
                         <div id="logros" class="tab-pane fade">
                             <h3>Mis logros</h3>
-                            <p>Los logros se consiguen completando cursos.</p>
-                            <div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en 'Curso de JAVA'"><img  src="./images/cursoTerminado.png" ></div>
-                            <div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en 'Curso de C++'"><img  src="./images/cursoTerminado.png" ></div>
-                            <div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en 'Curso de Wordpress'"><img  src="./images/cursoTerminado.png" ></div>
-                            <div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en 'Curso de Joomla'"><img  src="./images/cursoTerminado.png" ></div>
-                            <div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en 'Curso de MySQL'"><img  src="./images/cursoTerminado.png" ></div>
-
+                            <%
+                            ArrayList<CursoAlumno> cursosCompletados =(ArrayList<CursoAlumno>) request.getAttribute("cursosCompletados"); 
+                            if(cursosCompletados == null){
+                          	%>
+                            <p>No tienes a&uacute;n ning&uacute;n logro.</p>
+                            <%}else{ %>
+                            	<%for(int i = 0; i< cursosCompletados.size();i++){ %>
+	                            	<div class="logro col-md-1" data-toggle="tooltip" data-placement="top" title="Logro conseguido en <%=cursosCompletados.get(i).getCurso().getTitulo()%>"><img  src="./images/cursoTerminado.png" ></div>
+								<%}
+                            }%>
                         </div>
                         <div id="deseos" class="tab-pane fade">
                              <table class="table table-condensed table-hover">

@@ -193,7 +193,18 @@ public class PerfilRequestHandler implements RequestHandler {
     				System.out.println("Descripcion: " + e.getMessage());    				   				    			   			
     			}
     		}
-    				
+    ///////////////////////////////////////////////////////// LISTADO CURSOS COMPLETADOS //////////////////////////////////////////////////		
+    		try{
+    			List<CursoAlumno> cursoAlumnoCompletados = null;
+    			ArrayList<CursoAlumno> lcursoAlumnoCompletados = new ArrayList<CursoAlumno>();
+    			cursoAlumnoCompletados = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.usuario.id= ?1 AND i.estado = 'COMPLETO'").setParameter(1,user.getId()).getResultList();    						  						
+    			for(int i = 0; i < cursoAlumnoCompletados.size(); i++)
+    				lcursoAlumnoCompletados.add(cursoAlumnoCompletados.get(i));
+    			request.setAttribute("cursosCompletados", lcursoAlumnoCompletados);
+    		}catch(Exception e){
+    			System.out.println("Error en cursos completados.");
+    			e.printStackTrace();
+    		}
     		em.close();
     		return ruta;
     }
