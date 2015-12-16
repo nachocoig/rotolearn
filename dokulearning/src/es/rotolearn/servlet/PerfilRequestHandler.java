@@ -131,7 +131,7 @@ implements RequestHandler {
     				if(user.getTipo().equals("alumn")){
     					try{
         					System.out.println("HAGO LA PRIMERA QUERY");
-        					busq = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_u = ?1 AND i.estado='inscrito'").setParameter(1,  user.getId()).getResultList();	
+        					busq = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_u = ?1 AND i.estado='INCOMPLETO'").setParameter(1,  user.getId()).getResultList();	
         					//des = em.createQuery("SELECT * FROM CURSO_ALUMNO WHERE ID_u='" + user.getID() + "' AND Estado='lista deseos'").getResultList();
         					System.out.println("HE SALIDO DE LA QUERY DE ID= "+ user.getId() +" CON " + busq.size() +" RESULTADOS");
         					if(busq.size() == 0){
@@ -158,6 +158,7 @@ implements RequestHandler {
         						}
         	
         						request.setAttribute("listadoCursos", cursos);
+        						System.out.println("Estoy enviando: "+cursos.size());
         						request.setAttribute("cursos", "si");
         						System.out.println("Paso al añadir " + ((ArrayList<Curso>) request.getAttribute("listadoCursos")).size() +" elementos");
         						

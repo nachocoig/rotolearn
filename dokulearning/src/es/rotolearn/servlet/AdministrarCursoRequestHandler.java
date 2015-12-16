@@ -273,7 +273,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				
 				int ID = Integer.parseInt(mr.getParameterValues("curso")[0]);
 				
-				List<CursoAlumno> alumnos2 = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.estado='inscrito'").setParameter(1, ID).getResultList();
+				List<CursoAlumno> alumnos2 = em.createQuery("SELECT i FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.estado = 'INCOMPLETO'").setParameter(1, ID).getResultList();
 				List<ProfesorAsociado> profes = em.createQuery("SELECT i FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.validado='SI'").setParameter(1, ID).getResultList();
 				Iterator<CursoAlumno> it1 = alumnos2.iterator();
 				Iterator<ProfesorAsociado> it2 = profes.iterator();

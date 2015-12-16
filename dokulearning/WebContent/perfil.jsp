@@ -298,7 +298,7 @@
                             
                         	<% 
                                   }else{
-                        			ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listaCursos"); 
+                        			ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("listadoCursos"); 
                         			for(int i=0; i<dest.size();i++){
             						Curso aux = dest.get(i);
             					
@@ -393,10 +393,9 @@
                         	<% 
                                   }else{
                             	ArrayList<Curso> cursos = (ArrayList<Curso>) request.getAttribute("listaCursos");
-                            	for(int i=0; i<cursos.size();i++){                            		                          	
+                            	if(cursos != null)
+                            	for(int i=0; i < cursos.size();i++){                            		                          	
                 					Curso aux = cursos.get(i);
-                					
-                        			
                 			 %>  
                                  
                                   <tr>

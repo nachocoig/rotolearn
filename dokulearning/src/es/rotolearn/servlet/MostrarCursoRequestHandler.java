@@ -30,6 +30,7 @@ import es.rotolearn.javaBean.RegistroBean;
 public class MostrarCursoRequestHandler implements RequestHandler {
 
 	public int cargarFichero(byte []fichero, HttpServletRequest request, int idMaterial, String tipo) throws IOException{
+		
 		ServletContext context = request.getServletContext();
 	    final String path = context.getRealPath("/materiales/");
 	    
@@ -82,25 +83,23 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 	}
 	
 	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Handler MostrarCurso received the request" );
-		
-		String ruta = request.getContextPath();
-		if(request.getAttribute("notif")!= null){
-			ruta = "info_curso.jsp";
-		}
-		else{
-			ruta = "Notificacion.form";
-			}
-		request.setAttribute("tipo", "curso");
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
 		HttpSession session = ((HttpServletRequest) request).getSession();
-		RegistroBean user = (RegistroBean) session.getAttribute("perfil");
+		String ruta = request.getContextPath();
 		String Id = request.getParameter("id");
-		if (Id == null){
+
+		if(request.getAttribute("notif")!= null)
+			ruta = "info_curso.jsp";
+		else
+			ruta = "Notificacion.form";
+		
+		request.setAttribute("tipo", "curso");
+		
+		if (Id == null)
 			Id=(String)request.getAttribute("id");
-		}
 		int id = Integer.parseInt(Id);
+		
 		//Conexion con JPA
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();
@@ -109,46 +108,62 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 		//Obtenemos los datos del curso
 		try{
 			Curso verCurso = em.find(Curso.class, id);
+			
 			cargarImagen(verCurso.getImagen(), request, verCurso.getId());
 			request.setAttribute("curso", verCurso);
 			
-			List<Seccion> secciones =  em.createQuery("SELECT i FROM Seccion i WHERE i.curso.id = ?1").setParameter(1, verCurso.getId()).getResultList();
-			List<Leccion> lecciones = null;
-			List<Leccion> leccionesAux = null;
-			List<Material> materiales = null;
-			List<Material> materialesAux = null;
+			RegistroBean userBean = (RegistroBean) session.getAttribute("perfil");
 			
-			ArrayList<Seccion> lsecciones = new ArrayList<Seccion>();
-			ArrayList<Leccion> llecciones = new ArrayList<Leccion>();
-			ArrayList<Material> lmateriales = new ArrayList<Material>();
-			
-			for(int i = 0; i < secciones.size(); i++){
-				lsecciones.add(secciones.get(i));
-				lecciones = em.createQuery("SELECT i FROM Leccion i WHERE i.seccion.id = ?1").setParameter(1, secciones.get(i).getId()).getResultList();
-				for(int j = 0; j < lecciones.size(); j++){
-					llecciones.add(lecciones.get(j));
-					materiales = em.createQuery("SELECT i FROM Material i WHERE i.leccion.id = ?1").setParameter(1, lecciones.get(j).getId()).getResultList();
-					for(int k = 0; k < materiales.size();k++){
-						lmateriales.add(materiales.get(k));
-						cargarFichero(materiales.get(k).getContenido(), request, materiales.get(k).getId(), materiales.get(k).getTipo());
-					}
-				}
-
-			}
-			try{
-				List<Promocion> desc = verCurso.getPromocions();
-				if(!desc.isEmpty()){//Quiere decir que existe una rebaja del admin
-					request.setAttribute("descuento", desc.get(0).getDescuento()+"");
-					
-				}
-			}catch(Exception e){
+			if(userBean != null){
+				CursoAlumno ca = new CursoAlumno();
+				CursoAlumnoPK capk = new CursoAlumnoPK();
+				Usuario u = new Usuario();
+				u.setId(userBean.getId());
+				capk.setID_c(verCurso.getId());
+				capk.setID_u(userBean.getId());
 				
+				ca = em.find(CursoAlumno.class, capk);
+				
+				if(ca == null && verCurso.getUsuario().getId() != userBean.getId() && !verCurso.getProfesorAsociados().contains(u))
+					request.setAttribute("inscrito", "no");
+				else{
+					List<Seccion> secciones =  em.createQuery("SELECT i FROM Seccion i WHERE i.curso.id = ?1").setParameter(1, verCurso.getId()).getResultList();
+					List<Leccion> lecciones = null;
+					List<Material> materiales = null;
+					
+					ArrayList<Seccion> lsecciones = new ArrayList<Seccion>();
+					ArrayList<Leccion> llecciones = new ArrayList<Leccion>();
+					ArrayList<Material> lmateriales = new ArrayList<Material>();
+					
+					for(int i = 0; i < secciones.size(); i++){
+						lsecciones.add(secciones.get(i));
+						lecciones = em.createQuery("SELECT i FROM Leccion i WHERE i.seccion.id = ?1").setParameter(1, secciones.get(i).getId()).getResultList();
+						for(int j = 0; j < lecciones.size(); j++){
+							llecciones.add(lecciones.get(j));
+							materiales = em.createQuery("SELECT i FROM Material i WHERE i.leccion.id = ?1").setParameter(1, lecciones.get(j).getId()).getResultList();
+							for(int k = 0; k < materiales.size();k++){
+								lmateriales.add(materiales.get(k));
+								cargarFichero(materiales.get(k).getContenido(), request, materiales.get(k).getId(), materiales.get(k).getTipo());
+							}
+						}
+
+					}
+					try{
+						List<Promocion> desc = verCurso.getPromocions();
+						if(!desc.isEmpty()){//Quiere decir que existe una rebaja del admin
+							request.setAttribute("descuento", desc.get(0).getDescuento()+"");
+							
+						}
+					}catch(Exception e){
+						
+					}
+
+					request.setAttribute("secciones", lsecciones);
+					request.setAttribute("lecciones", llecciones);
+					request.setAttribute("materiales", lmateriales);
+					request.setAttribute("inscrito", "si");
+				}
 			}
-			
-			
-			request.setAttribute("secciones", lsecciones);
-			request.setAttribute("lecciones", llecciones);
-			request.setAttribute("materiales", lmateriales);
 			
 		}catch(javax.persistence.NoResultException e){
 			System.out.println("Descripcion: " + e.getMessage());  

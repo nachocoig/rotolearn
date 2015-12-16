@@ -157,8 +157,12 @@
 				<div class="row" id="descrip">
 			<ul class="nav nav-pills nav-justified">
 			  <li class="active"><a data-toggle="tab" href="#descripcion">Descripci&oacute;n</a></li>
+			  <%
+			   if(request.getAttribute("inscrito").equals("si")){
+			  %>
 			  <li><a data-toggle="tab" href="#menu2">Temario del curso</a></li>
 			  <li><a data-toggle="tab" href="#chat">Chat</a></li>
+			  <%} %>
 			</ul>
 			
 			<div class="tab-content opciones col-md-6 col-md-offset-3">
@@ -166,7 +170,9 @@
 			    <h3>Descripci&oacute;n del curso</h3>
 			    <p><%=aux.getDescripcion() %></p>
 			  </div>
-			  
+			  <%
+			   if(request.getAttribute("inscrito").equals("si")){
+			  %>
 			  <div id="menu2" class="tab-pane fade">
 			    <h3>Temario del curso</h3>
 			    
@@ -178,15 +184,15 @@
 				ArrayList<Material> auxMateriales = new ArrayList<Material>();
 			    
 			    
-		    for(int i = 0; i < secciones.size(); i++){    %>
-			    <h4>Seccion <%=i+1%>: <%=secciones.get(i).getNombre() %></h4>
-		    	<%
-		    	for(int j = 0; j < lecciones.size(); j++)
-		    		if(lecciones.get(j).getSeccion().getId() == secciones.get(i).getId())
+			    for(int i = 0; i < secciones.size(); i++){    %>
+				<h4>Seccion <%=i+1%>: <%=secciones.get(i).getNombre() %></h4>
+		    	<%for(int j = 0; j < lecciones.size(); j++){
+		    		if(lecciones.get(j).getSeccion().getId() == secciones.get(i).getId()){
 		    			auxLecciones.add(lecciones.get(j));
-		    	
-		    	for(int j = 0; j < auxLecciones.size(); j++){
-		    	%>
+		    		}
+		    	  }
+		    	 
+		    	for(int j = 0; j < auxLecciones.size(); j++){%>
 			     <div class="panel-group" id="accordion">
 				  <div class="panel panel-default">
 				    <div class="panel-heading">
@@ -200,11 +206,12 @@
 						
 						<div class="list-group">
 						<%
-		    			for(int k = 0; k < materiales.size(); k++)
-		    				if(materiales.get(k).getLeccion().getId() == auxLecciones.get(j).getId())
+		    			for(int k = 0; k < materiales.size(); k++){
+		    				if(materiales.get(k).getLeccion().getId() == auxLecciones.get(j).getId()){
 		    					auxMateriales.add(materiales.get(k));
+		    				}
+		    			}
 		    			for(int k = 0; k < auxMateriales.size(); k++){
-		    				
 		    				String glyphicon = "";
 		    				if(auxMateriales.get(k).getTipo().toLowerCase().equals("mp3"))
 		    					glyphicon = "music";
@@ -212,23 +219,21 @@
 		    					glyphicon = "film";
 		    				else
 		    					glyphicon = "file";
-		    			%>
-					        <a href="materiales/<%=auxMateriales.get(k).getId()%>_mat.<%=auxMateriales.get(k).getTipo() %>" download="<%=auxMateriales.get(k).getNombre()%>.<%=auxMateriales.get(k).getTipo() %>" class="list-group-item">
-					            <span class="glyphicon glyphicon-<%=glyphicon%>"></span> 
-					            <%=auxMateriales.get(k).getNombre()%> 
-					        </a>
-					    <%auxMateriales.clear();
-					    }  %>
+							%>
+							<a href="materiales/<%=auxMateriales.get(k).getId()%>_mat.<%=auxMateriales.get(k).getTipo() %>" download="<%=auxMateriales.get(k).getNombre()%>.<%=auxMateriales.get(k).getTipo() %>" class="list-group-item">
+								<span class="glyphicon glyphicon-<%=glyphicon%>"></span> 
+								<%=auxMateriales.get(k).getNombre()%> 
+							</a>
+							<%
+							}
+						 auxMateriales.clear();%>
 					    </div>
-						
-						
-						
 				      </div>
 				    </div>
 				  </div>
 				</div> 
-			<%	auxLecciones.clear();
-		    	}
+			<%	
+		      }auxLecciones.clear();
 		    } %>
 			  </div>
 			  <div id="chat" class="tab-pane fade">
@@ -237,21 +242,17 @@
 			    <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
 					function popitup(url)
 					{
-						newwindow=window.open(url,'name','menubar=0,toolbar=0,height=400,width=400'); 
+						newwindow=window.open(url,'name','menubar=0,toolbar=0,height=800,width=800'); 
 						if (window.focus) {newwindow.focus()}
 						return false;
 					}
 				</SCRIPT>
 			    
 			    <a href="Chat.jsp" onClick="return popitup('Chat.jsp')">Accede al chat</a>
-			    
-			    
-			    </form>
-			    
-			    
-
 			  </div>
-			  
+			  <%
+			   }
+			  %>
 			</div>
 
 		</div>

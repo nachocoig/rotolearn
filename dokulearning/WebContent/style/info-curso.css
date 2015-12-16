@@ -84,3 +84,7 @@ h2{
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
             background-color: #34a853;
 }
+
+.list-group-item{
+	border:0px;
+}
