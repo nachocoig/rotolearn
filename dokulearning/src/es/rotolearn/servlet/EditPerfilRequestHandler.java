@@ -140,13 +140,14 @@ public class EditPerfilRequestHandler implements RequestHandler {
 					actualizado.setImagen(false);
 				} else {
 					actualizado.setImagen(true);
+					byte[] auxiliar = obtenerFicheroBytes(request, foto,
+							Integer.toString(actualizado.getId()));
+					aux.setImagen(auxiliar);
+					cargarImagen(auxiliar,request, actualizado.getNickName());
+					actualizado.setImagen(true);
 				}
 
-				byte[] auxiliar = obtenerFicheroBytes(request, foto,
-						Integer.toString(actualizado.getId()));
-				aux.setImagen(auxiliar);
-				cargarImagen(auxiliar,request, actualizado.getNickName());
-				actualizado.setImagen(true);
+				
 				tx.commit();
 				em.close();
 			} catch (Exception x) {
