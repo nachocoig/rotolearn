@@ -46,7 +46,6 @@ public class Authorization {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/conciliacionEmpresa/{importe}/{mes}/{anio}")
 	public String conciliacionEmpresa(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
-		System.out.println("CONCILIACION EMPRESA");
 		int dinero = Integer.parseInt(importe);
 		dinero =  (int) (dinero*0.99);
 	    return  Integer.toString(dinero);
@@ -56,7 +55,6 @@ public class Authorization {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/conciliacionProfesor/{importe}/{mes}/{anio}")
 	public String conciliacionProfesor(@PathParam("importe") String importe,@PathParam("mes") String mes, @PathParam("anio") String anio){
-		System.out.println("CONCILIACION PROFESORES");
 		int dinero = Integer.parseInt(importe);
 		return Integer.toString(dinero);
 	}
