@@ -18,12 +18,11 @@ public class EscrituraChatRequestHandler implements RequestHandler {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		String user = (String) session.getAttribute("usuario");
 		InteraccionJMS mq=new InteraccionJMS();
-/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
+		/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
 
-		System.out.println("ESTOY EN EL SERVLET DE ESCRITURA");
-		System.out.println("Me escriben esto:"+request.getParameter("mensaje"));
-		mq.escrituraJMS(request.getParameter("mensaje"),session.getAttribute("correlationID").toString(),user);
-		return "Chat.jsp";
+		if(request.getParameter("mensaje") != null && !request.getParameter("mensaje").equals(""))
+			mq.escrituraJMS(request.getParameter("mensaje"),session.getAttribute("correlationID").toString(),user);
+		return "leerChat.form";
 	}
 
 }

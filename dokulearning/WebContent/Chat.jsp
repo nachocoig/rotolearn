@@ -8,13 +8,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-
+	<title>Chat</title>
 </head>
 <body>
 	<div id="wrapper">
 	    <div id="menu">
-	        <p class="welcome">Welcome, <b></b></p>
-	        <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
+	        <p class="welcome"><b></b></p>
 	        <div style="clear:both"></div>
 	    </div>
 	    <% String mensaje;
