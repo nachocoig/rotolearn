@@ -22,7 +22,7 @@ public class Authorization {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/operacion/{importe}/{tarjeta}/{codpedido}")
 	public String generarCodigoOperacion(@PathParam("importe") String importe,@PathParam("tarjeta") String tarjeta, @PathParam("codpedido") String codpedido){
-		//comprobar tarjeta
+		//comprobar tarjeta 
 		if(tarjeta.length()==20 && (tarjeta.charAt(0)=='A' || tarjeta.charAt(0)=='B') ){
 			ValesPedidoOperacion _valesPedidoOperacion = new ValesPedidoOperacion();
 		   	String codigoOp = _valesPedidoOperacion.generacionCodigoOperacion();
