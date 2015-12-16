@@ -202,7 +202,7 @@
                 		ArrayList<Curso> dest = (ArrayList<Curso>) request.getAttribute("destacados");
                 		if(dest.isEmpty()){
                 	%>
-                		<h2>No existen cursos recomendados</h2>
+                		<h2>No existen cursos destacados</h2>
                 	<%
                 		}else{
 	                		int h;
@@ -210,8 +210,12 @@
                 	%>
                     <li class="portfolio-item col-md-2">
                         <div class="itemCatalogo">
+                        	<%if(dest.get(i).getImagen()==null){ %>
+                        	<img src="images/im_cursos/defecto.jpg" alt="">
+                        	<%}else{ %>
                             <img src="images/im_cursos/<%=dest.get(i).getId()%>_curso.jpg" alt="">
-                            <h5><%=dest.get(i).getTitulo() %></h5>
+                            <%} %>
+                            <h5 style="text-align : center;"><%=dest.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=dest.get(i).getPrecio() %>&euro;</span></h1>
                             <div class="overlay">
                              <% h=dest.get(i).getId();%>
@@ -237,13 +241,22 @@
                 <ul class="portfolio-items">
                 	<%
                 		ArrayList<Curso> rec = (ArrayList<Curso>) request.getAttribute("recomendados");
+                		if(rec.isEmpty()){
+                    	%>
+                    		<h2 style="color:white;">No existen cursos recomendados</h2>
+                    	<%
+                    }else{
                 		int a;
                 		for(int i=0; i<rec.size();i++){
                 	%>
                     <li class="portfolio-item col-md-2">
                         <div class="itemCatalogo">
+                            <%if(rec.get(i).getImagen()==null){ %>
+                        	<img src="images/im_cursos/defecto.jpg" alt="">
+                        	<%}else{ %>
                             <img src="images/im_cursos/<%=rec.get(i).getId()%>_curso.jpg" alt="">
-                            <h5><%=rec.get(i).getTitulo() %></h5>
+                            <%} %>
+                            <h5 style="text-align : center;"><%=rec.get(i).getTitulo() %></h5>
                             <h1 class="precios"><span class="precio"><%=rec.get(i).getPrecio() %>&euro;</span></h1>
                             <div class="overlay">
                             <% a=rec.get(i).getId();%>
@@ -253,7 +266,7 @@
                         </div>           
                     </li>
                     <%
-                    	}
+                    	}}
                     %>
                 </ul>
                 <%

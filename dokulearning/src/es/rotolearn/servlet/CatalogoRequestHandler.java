@@ -112,7 +112,7 @@ public class CatalogoRequestHandler implements RequestHandler {
 						query = query +"i.categoria LIKE '%"+resultado[i]+"%' OR ";
 					}
 				}
-				recomendados = em.createQuery("SELECT i FROM Curso i WHERE "+query+ " AND i.validado='SI'").setMaxResults(10).getResultList();	
+				recomendados = em.createQuery("SELECT i FROM Curso i WHERE ("+query+ ") AND i.validado='SI'").setMaxResults(10).getResultList();	
 				if(!recomendados.isEmpty()){
 					for(int i=0; i<recomendados.size();i++){
 						System.out.println("ENTRA A RECOMENDADOS");

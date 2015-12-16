@@ -81,7 +81,11 @@
     %>
     
 	<div id="cuerpo" class="container-fluid">
+	<%if(aux.getImagen()==null){ %>
+		<div class="row" id="cabeza" style="background-image:url('images/im_cursos/defecto.jpg')">
+	<%}else{ %>
 		<div class="row" id="cabeza" style="background-image:url('images/im_cursos/<%=aux.getId()%>_curso.jpg')">
+		<%} %>	
 			<div class="col-md-3 col-md-offset-1" >
 			<% if(request.getAttribute("deseo")!=null) 
 				

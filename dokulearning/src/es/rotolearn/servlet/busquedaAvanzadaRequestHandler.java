@@ -109,13 +109,13 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 			String categoria8 = request.getParameter("cat8");
 			String categoria9 = request.getParameter("cat9");
 			
-			query = "SELECT i from Curso i";
+			query = "";
 			
 			if((palabra != null && !palabra.equals(""))|| categoria1 != null || categoria2 != null || 
 		       categoria3 != null || categoria4 != null || categoria5 != null || 
 		       categoria6 != null || categoria7 != null || categoria8 != null || 
 		       categoria9 != null){
-				query = query+" WHERE ";
+				//query = query+" WHERE ";
 				if(palabra != null && !palabra.equals("")){ //buscamos la palabra
 					System.out.println("PARALABRA: "+palabra);
 					String delimitadores= "[ .,;?!¡¿\'\"\\[\\]]+";
@@ -188,7 +188,10 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 					query = query+")";
 				}
 			}
-			cursos = em.createQuery(query).setMaxResults(20).getResultList();	
+			if(categorias.size()==0)
+				cursos = em.createQuery("SELECT i from Curso i WHERE i.validado='SI'").setMaxResults(20).getResultList();	
+			else
+				cursos = em.createQuery("SELECT i from Curso i WHERE i.validado='SI' AND "+ query ).setMaxResults(20).getResultList();		
 			if(!cursos.isEmpty()){
 				for(int i=0; i<cursos.size();i++){
 					System.out.println("ENTRA A TODOS");

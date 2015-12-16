@@ -239,8 +239,12 @@
                 	%>
 	                    <li class="portfolio-item col-md-2">
 	                        <div class="itemCatalogo">
+	                        <% if(cur.get(i).getImagen() == null){ %>
+                            	<img src="images/im_cursos/defecto.jpg" alt="">
+                            	<% }else{ %>
                             	<img src="images/im_cursos/<%=cur.get(i).getId()%>_curso.jpg" alt="">
-	                            <h5><%=cur.get(i).getTitulo() %></h5>
+                            	<%} %>
+	                            <h4 style="text-align : center;"><%=cur.get(i).getTitulo() %></h4>
 	                            <h1 class="precios"><span class="precio"><%=cur.get(i).getPrecio() %>&euro;</span></h1>
 	                            <div class="overlay">
 	                            <% h=cur.get(i).getId();%>
