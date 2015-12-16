@@ -48,33 +48,27 @@ public class PagoRequestHandler implements RequestHandler {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
-				/*try{
-					CursoAlumno pet = new CursoAlumno();
-					pet = em.createQuery("SELECT i FROM CursoAlumno i WHERE i. = ?1").setParameter(1, nick).getSingleResult();
-				pet.
-				}catch(Exception e3){
-					
-					System.out.println("HE CASCAO");
-				}*/
+		
 		Curso verCurso;
 		Usuario userio;
 		CursoAlumno curAl;
 		
 		//Obtenemos los datos del curso
 		try{
-			System.out.println("Entro en el try");
+			
 			verCurso = em.find(Curso.class, id_curso);
 			userio = em.find(Usuario.class, user.getId());
+			
 			CursoAlumnoPK prueba = new CursoAlumnoPK();
 			prueba.setID_c(id_curso);
 			prueba.setID_u(user.getId());
-			System.out.println("Entro el find");
+		
 			curAl = em.find(CursoAlumno.class, prueba);
-			System.out.println("Salgo del find");
+		
 			request.setAttribute("curso", verCurso);
 			if(curAl!=null ){
 				if(!curAl.getEstado().equals("lista deseos")){
-					System.out.println("YA ESTA INSCRITO");
+					
 					/****** AVISARLE****/
 					return "catalogo.form";
 					
@@ -83,12 +77,12 @@ public class PagoRequestHandler implements RequestHandler {
 			}
 		}catch(javax.persistence.NoResultException e){
 			System.out.println("Descripcion: " + e.getMessage()); 
-			return "pagos.jsp";//ojo
+			return "pagos.jsp";
 	
 		}
 		
 		//1 . Pedir codigo de pedido
-			//String codigoPedido
+			
 		try {
 			_vales = (ValesPedidoOperacionBeanRemote) InitialContext.doLookup("ejb/ValesPedidoOperacionBean");
 		} catch (NamingException e) {
@@ -99,18 +93,17 @@ public class PagoRequestHandler implements RequestHandler {
 			return "pagos.jsp";
 		}
 		String codPed = _vales.generacionCodigoPedido();
-		System.out.println("Remote EJB: "+ codPed);
+		
 		
 		//2 . Pedir codigo de operacion
-		//System.out.println("ENTRO A PEDIR EL CODIGO");
+		
 
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
 		
 		WebTarget wt = client.target("http://localhost:8080/Banco/ws");
 		
-		System.out.println(request.getParameter("totalprecio"));
-		System.out.println(request.getParameter("tarjeta"));
+
 		
 		String result = wt.path("codigo").path("operacion").path(request.getParameter("totalprecio")).path(request.getParameter("tarjeta")).path(codPed).request().accept(MediaType.TEXT_PLAIN).get(String.class);
 		
@@ -120,8 +113,7 @@ public class PagoRequestHandler implements RequestHandler {
 		request.setAttribute("valor", aux1[1]);
 		request.setAttribute("bank", aux1[0]);
 		
-		System.out.println(result);
-		//descomponer result OPERACION201512110409590902PM;300;ORDER777;201509110459902+0100
+		
 		if(result.equalsIgnoreCase("error")){
 			/*****************REVISAR CUANDO HAY ERROR*********************/
 			return "index.jsp";
@@ -129,15 +121,13 @@ public class PagoRequestHandler implements RequestHandler {
 		}
 		String mensajes[] = result.split("-");
 		
-		//String codigoOp
+		
 		Curso aux = (Curso) request.getAttribute("curso");
 		
 		//3 . Escribir en la cola
-		//String mensaje = codigpPedido + "-" + codigoOp + "-" + request.getAtributte("precio") + "-" + request.getAtributte("numbreCurso");
 		String mensaje = codPed+ "-" +mensajes[0]+ "-" +request.getParameter("totalprecio")+ "-" +request.getParameter("valePromocional")+ "-" +request.getParameter("valeAdmin")+ "-" +request.getParameter("precioOriginal")+ "-" +request.getParameter("profesor");
 		InteraccionJMS mq=new InteraccionJMS();
-		/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
-		System.out.println("Me escriben esto: "+mensaje);
+				
 		mq.escrituraPago(mensaje);
 		//4 . Insertar usuario en base de datos curso
 		if(curAl!=null && curAl.getEstado().equals("lista deseos")){
@@ -155,24 +145,20 @@ public class PagoRequestHandler implements RequestHandler {
 		pk.setID_u(userio.getId());
 		nuevoalumno.setCurso(verCurso);
 		nuevoalumno.setUsuario(userio);
-		nuevoalumno.setEstado("INCOMPLETO");//YOKSE
+		nuevoalumno.setEstado("INCOMPLETO");
 		nuevoalumno.setId(pk);
-		//System.out.println(" CURSOID "+id_curso +"USERID "+verCurso.getId());
 		try{
-		System.out.println("Intento persist");
-		em.persist(nuevoalumno);
-		em.getTransaction().commit();
-		System.out.println("Salgo persist");
-		em.close();
+		
+			em.persist(nuevoalumno);
+			em.getTransaction().commit();
+		
+			em.close();
 		}catch(Exception e){
-			System.out.println("YA EXISTE EL USUARIO INSCRIBICIONADO");
+			
 			/******* AVISAR QUE YA ESTA INSCRITO*******/
 			return "catalogo.jsp";
 		}
 		
-		
-		
-		System.out.println("redirijo al recibo_pago");
 		return "recibo_pago.jsp";
 	}
 

@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ReadMessageQueueBrowserServlet  {
 	private static final long serialVersionUID = 1L;
-    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
+
 	
 	public String leerbw(String correlation)  {
 
 		StringBuffer _sB = new StringBuffer(32);
-		//_sB.append("<br>");
+		
 
 		try {
 
@@ -41,7 +41,7 @@ public class ReadMessageQueueBrowserServlet  {
 				connection.createSession(bTransacted, iAcknowledgeMode);
 		 			   
 			javax.jms.QueueBrowser browser;
-			//browser = session.createBrowser(queue,"JMSCorrelationID = 'RUSH'");
+			
 			String correlationn = "JMSCorrelationID = '"+correlation+"'";
 			browser = session.createBrowser(queue, correlationn);
 
@@ -51,26 +51,20 @@ public class ReadMessageQueueBrowserServlet  {
 			java.util.Enumeration enum1 = browser.getEnumeration();
 
 			java.util.Vector vctMessage = new java.util.Vector();
-			System.out.println("VOY A LEER MENSAJE");
-
+			
 			while (enum1.hasMoreElements()) {
-				System.out.println("haselements");
-				javax.jms.Message message =
-					(javax.jms.Message) enum1.nextElement();
+				
+				javax.jms.Message message =(javax.jms.Message) enum1.nextElement();
 				javax.jms.Message message2 = message;
 				if (message2 != null) {
-					System.out.println("message2");
+					
 					if (message2 instanceof javax.jms.TextMessage) {
-						System.out.println("RARO");
-						javax.jms.TextMessage Tmensaje =
-							(javax.jms.TextMessage) message2;
-						System.out.println("  Message: " +Tmensaje.getText()+" </br>");
+						
+						javax.jms.TextMessage Tmensaje =(javax.jms.TextMessage) message2;						
 						_sB.append(Tmensaje.getText()+" </br>"); 
 					}
 				}
 			}
-			// Stop connection
-			//connection.stop();
 			
 			// Close browser
 			browser.close();
@@ -82,9 +76,7 @@ public class ReadMessageQueueBrowserServlet  {
 			connection.close();
 			
 		} catch (Exception e) {
-			System.out.println(
-				"JHC *************************************** Error in doPost: "
-					+ e);
+			System.out.println(	"JHC *************************************** Error in doPost: "	+ e);
 		}
 
 		return _sB.toString();

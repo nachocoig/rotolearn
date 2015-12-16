@@ -14,7 +14,7 @@ public class LogoutRequestHandler implements RequestHandler {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "login.jsp";
 		HttpSession miSession = ((HttpServletRequest) request).getSession(false);
-		System.out.println("Entro al logout");
+		
 		
 		if(miSession!=null){
 			miSession.invalidate();

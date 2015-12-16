@@ -11,17 +11,14 @@ import javax.servlet.http.HttpSession;
 public class LecturaChatRequestHandler implements RequestHandler{
 
 	@Override
-	public String handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String handleRequest(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
+		
 		ReadMessageQueueBrowserServlet lect = new ReadMessageQueueBrowserServlet();
 		String strAux="";
 		HttpSession session = ((HttpServletRequest) request).getSession();
-		System.out.println("ESTOY EN EL SERVLET DE Lectura");
-/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A leerbw POR PARAMETRO EL ID DEL CURSO*/
-			strAux=lect.leerbw(session.getAttribute("correlationID").toString());
-			System.out.println("LEO esto: "+strAux);
-			request.setAttribute("mensajes", strAux);
-			return "Chat.jsp";
+		strAux=lect.leerbw(session.getAttribute("correlationID").toString());
+		request.setAttribute("mensajes", strAux);
+		return "Chat.jsp";
 	}
 
 }

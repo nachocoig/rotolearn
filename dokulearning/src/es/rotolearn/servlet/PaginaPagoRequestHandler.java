@@ -44,11 +44,7 @@ public class PaginaPagoRequestHandler implements RequestHandler {
 				
 				double rebaja = Math.rint((precio*(descuento/100))*100)/100;
 				total = Math.rint((precio-rebaja)*100)/100;		
-				
-				System.out.println("El precio es: "+precio);
-				System.out.println("El descuento es: "+descuento);
-				System.out.println("La rebaja es: "+rebaja);
-				
+								
 				request.setAttribute("descuento", ""+desc.get(0).getDescuento());
 				request.setAttribute("rebaja", String.valueOf(rebaja));
 			}
@@ -61,13 +57,11 @@ public class PaginaPagoRequestHandler implements RequestHandler {
 						Descuento cuponDescuento = (Descuento) em.createQuery("SELECT i FROM Descuento i WHERE i.curso = ?1").setParameter(1, verCurso).getSingleResult();
 						
 						if(cuponDescuento!=null){
-							System.out.println("HAGO LA COMPARACION DE CUPONES");
+							
 							if(cuponDescuento.getCupon().equals(cuponDesc)){
 								int precio = verCurso.getPrecio();
-								System.out.println("Cupon valido, descontamos el precio");
-								String cuponazo = cuponDesc.substring(cuponDesc.length()-2);//cuponDesc.charAt(cuponDesc.length()-2) + cuponDesc.charAt(cuponDesc.length()-1) + ""
-								
-								System.out.println("El vale descuento es de: "+cuponazo);
+								String cuponazo = cuponDesc.substring(cuponDesc.length()-2);
+							
 								double cupo = (double) Integer.parseInt(cuponazo);
 								double des = Math.rint((precio*(cupo/100))*100)/100;
 								
@@ -79,12 +73,13 @@ public class PaginaPagoRequestHandler implements RequestHandler {
 							
 								
 							}else{
-								System.out.println("Cupon no valido");
+							
 							}
 						}
 						
 					}catch(Exception e1){
-						System.out.println("DA EXCEPCION Al no encontrar nada");
+						System.out.println("¡Error!" + e1.getMessage());
+						
 					}
 				}
 			}

@@ -13,12 +13,11 @@ import es.rotolearn.javaBean.RegistroBean;
 public class EscrituraChatRequestHandler implements RequestHandler {
 
 	@Override
-	public String handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String handleRequest(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = ((HttpServletRequest) request).getSession();
 		String user = (String) session.getAttribute("usuario");
 		InteraccionJMS mq=new InteraccionJMS();
-		/* CUANDO ESTE INTEGRADO EL CHAT HAY QUE PASARLE A ESCRITURA POR PARAMETRO EL ID DEL CURSO EN VEZ DE AAAAAAAA*/
 
 		if(request.getParameter("mensaje") != null && !request.getParameter("mensaje").equals(""))
 			mq.escrituraJMS(request.getParameter("mensaje"),session.getAttribute("correlationID").toString(),user);

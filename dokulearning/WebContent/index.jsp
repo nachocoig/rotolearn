@@ -125,7 +125,11 @@
 				<h3>Ya no necesitas vaciar tus bolsillos para aprender en Internet</h3>
 				<h5>Los mejores cursos de la red aqu&iacute;, en RotoLearn</h5><br>
 				<a href="#porque" class="btn-masinfo btn btn-lg">M&aacute;s informaci&oacute;n</a>
+				<%
+			if(session.getAttribute("usuario") == null){
+			%>
 				<a href="formulario_registro.jsp" class="btn-registro btn btn-lg">Reg&iacute;strate</a>
+				<%} %>
 			</div>
 			<div class="limpiador"></div>
 		</div>
@@ -136,7 +140,11 @@
 			<div class="col-md-6">
 				<h1>&iquest;Porqu&eacute; quedarme?</h1>
 				<p>En <span>rotolearn</span> te ofrecemos los mejores cursos de toda la red. Podr&aacute;s inscribirte en cualquier curso por un precio m&aacute;s que jugoso, y podr&aacute;s disfrutar de nuestros cursos gratuitos.</p>
+				<%
+			if(session.getAttribute("usuario") == null){
+			%>
 				<p>No dejes escapar esta oportunidad y <a href="formulario_registro.jsp">Reg&iacute;strate</a></p>
+				<% } %>
 			</div>
 			<div class="limpiador"></div>
 		</div>

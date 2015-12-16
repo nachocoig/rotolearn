@@ -36,7 +36,7 @@ public class LoginRequestHandler implements RequestHandler {
 		    fos.write(img);
 		    fos.close();
 	    }catch (Exception e){
-	    	System.out.println("Error al cargar la imagen de usuario");
+	    	System.out.println("Error " + e.getMessage());
 	    }
 		return rutaCompleta;
 	}
@@ -44,11 +44,11 @@ public class LoginRequestHandler implements RequestHandler {
 	
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Handler login received the request");
+		
 
 		HttpSession session;
 		
-		//HAY QUE AÑADIR/MODIFICAR PARA METERLE LA BBDD
+	
 		String ruta = null;
 		String nick = request.getParameter("Nickname");
 		String pass = String.valueOf(request.getParameter("Password").hashCode());
@@ -58,8 +58,7 @@ public class LoginRequestHandler implements RequestHandler {
 		aux.setNickname(nick);
 		aux.setPass(pass);
 		Usuario resultado;
-		//PARA BUSCAR EL USUARIO QUE HEMOS RECIBIDO POR PARAMETROS, si devuelve null no existe si devuelve algo es que existe
-		
+				
 		//Conexion con JPA
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();
@@ -67,9 +66,7 @@ public class LoginRequestHandler implements RequestHandler {
 		tx.begin();
 
 		try{
-			resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, nick).getSingleResult();
-			//System.out.println("Comparo users " + resultado.getNickname() + " " + nick);
-			//System.out.println("Comparo pass " + resultado.getPass() + " " + pass);					
+			resultado = (Usuario) em.createQuery("SELECT i FROM Usuario i WHERE i.nickname = ?1").setParameter(1, nick).getSingleResult();		
 			if(resultado.getPass().equals(pass)){
 				
 					RegistroBean regbean = new RegistroBean();
@@ -102,7 +99,7 @@ public class LoginRequestHandler implements RequestHandler {
 					ruta = "Notificacion.form";
 					
 				}else{
-					System.out.println("Pass incorrecta, no puede entrar");
+					
 					request.setAttribute("error", "pass");
 					request.setAttribute("tipo", "index");
 					ruta = "login.jsp";

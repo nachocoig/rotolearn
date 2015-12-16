@@ -51,17 +51,16 @@ public class NotificacionRequestHandler implements RequestHandler {
 		
 		
 		
-	//	else{
+
 			//******************************************************************************************************************************
 			//******************************************leer notificaciones*****************************************************************
 			//******************************************************************************************************************************
-			//if(ruta.equals("/marcarLeido.form")){
-			//	ruta="perfil.form";
-			MultipartRequest mr = new MultipartRequest(request);
 			
-			String leido = mr.getParameter("leido");
+		MultipartRequest mr = new MultipartRequest(request);
+			
+		String leido = mr.getParameter("leido");
 		if(leido != null){
-			System.out.println("Entro en leido con valor" + leido);
+			
 			if (leido.equals("SI")){
 			
 				List<Notificacion> leidos = null;
@@ -69,38 +68,38 @@ public class NotificacionRequestHandler implements RequestHandler {
 					leidos =em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido=2").setParameter(1, user.getId()).getResultList();	
 					
 				}catch(Exception E){
-					
+					System.out.println("Error: " + E.getMessage());
 				}
-				System.out.println("Entro aqui");
+				
 				if(leidos != null){
 					Iterator<Notificacion> it= leidos.iterator();
-					int size = 0;
+					
 					while(it.hasNext()){
 						Notificacion aux = em.find(Notificacion.class, it.next().getId());
 						aux.setLeido(1);
-						//em.getTransaction().commit();
+						
 					}			
 				}
 			}
-		//}
+		
 	}
-	System.out.println("Aqui no llego");
+	
 	String path = (String)request.getAttribute("tipo");
 	if(mr.getParameter("tipo")!=null){path = mr.getParameter("tipo");}	
-				System.out.println("Aqui tampoco"); 				
+				 				
 				try{
-				notificaciones = em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido=1").setParameter(1, user.getId()).getResultList();	
-				System.out.println("Notificaciones size: " + notificaciones.size());
+					notificaciones = em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido=1").setParameter(1, user.getId()).getResultList();	
+				
 				}catch(Exception E){
-					System.out.println("WEJEJEJE YOLO1");
-					ruta = "perfil.jsp";
+					System.out.println("Error: " + E.getMessage());
+					
 				}	
 				try{
-				noLeidas = em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido<>1").setParameter(1, user.getId()).getResultList();	
-				System.out.println("Notificaciones size: " + noLeidas.size());
+					noLeidas = em.createQuery("SELECT i FROM Notificacion i WHERE i.usuario.id = ?1 AND i.leido<>1").setParameter(1, user.getId()).getResultList();	
+				
 				}catch(Exception E){
-					System.out.println("WEJEJEJE YOLO2");
-					//ruta = "perfil.jsp";
+					System.out.println("Error: " + E.getMessage());
+					
 				}
 				if(notificaciones.size() == 0 && noLeidas.size() == 0){
 					request.setAttribute("Notificaciones", "no");
@@ -115,7 +114,7 @@ public class NotificacionRequestHandler implements RequestHandler {
 						while(it.hasNext()){
 							Notificacion aux = it.next();
 							listaNoLeidas.add(aux);
-							System.out.println("ID : " + aux.getId());
+							
 							Notificacion aux2 = em.find(Notificacion.class, aux.getId());
 							aux2.setLeido(2);
 							
@@ -126,19 +125,19 @@ public class NotificacionRequestHandler implements RequestHandler {
 					}
 					//Listamos las notificaciones leidas
 					Iterator<Notificacion> it= notificaciones.iterator();
-					int size = 0;
+					
 					while(it.hasNext()){
 						Notificacion aux = it.next();
 						
 						listaLeidas.add(aux);
-						size++;
+						
 					}
 					request.setAttribute("ListaNotificaciones", listaLeidas);
-					//En jsp hay que comprobar que lista leidas y lista no leidas no son null.
+					
 				}
 			em.getTransaction().commit();
 			em.close();
-			System.out.println(path);
+			
 			if(path == null){ruta = "index.jsp";}
 			else if(path.equals("curso")){ruta="showCurso.form";
 			request.setAttribute("id", mr.getParameter("id"));
@@ -149,7 +148,7 @@ public class NotificacionRequestHandler implements RequestHandler {
 			else if(path.equals("busqueda")){ruta = "busquedaAvanzada.jsp";}
 			else if(path.equals("index")){ruta = "index.jsp";}
 			else{ruta = "index.jsp";}
-	//	}
+
 		return ruta;
 	}
 

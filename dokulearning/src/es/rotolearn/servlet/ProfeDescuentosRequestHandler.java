@@ -44,39 +44,41 @@ public class ProfeDescuentosRequestHandler implements RequestHandler {
 		
 		try{
 			//Recojo los cursos del profesor logueado
-			System.out.println("Voy a pillar los curso del profesor "+user.getNickName());
+		
 			Usuario aux = new Usuario();
-			aux.setId(user.getId());
-			
+			aux.setId(user.getId());			
 			cursosProfe = em.createQuery("SELECT i FROM Curso i WHERE i.usuario = ?1 AND i.validado='SI'").setParameter(1, aux).getResultList();	
+			
 			if(!cursosProfe.isEmpty()){
 				
 				for(int i=0; i<cursosProfe.size();i++){
 					curso.add(cursosProfe.get(i));
 				}
+				
 			}else{
-				System.out.println("Ha encontrao cero cosas ");
+				
 			}
 		}catch(Exception e){
-			System.out.println("excepcion al pillar los cursos");
+			System.out.println("¡Error! Descripcion: ");
 			e.printStackTrace();
 		}
 		
 		try{
-			//Recojo los descuentos del profesor logueado
-			System.out.println("Voy a pillar los descuentos del profesor "+user.getNickName());
+			//Recojo los descuentos del profesor logueado			
 			
 			valesProfe = em.createQuery("SELECT i FROM Descuento i WHERE i.profesor = ?1").setParameter(1, user.getNickName()).getResultList();	
+			
 			if(!valesProfe.isEmpty()){
 				
 				for(int i=0; i<valesProfe.size();i++){
 					descuentos.add(valesProfe.get(i));
 				}
+				
 			}else{
-				System.out.println("pilla cero cupones");
+				
 			}
 		}catch(Exception e){
-			System.out.println("excepcion al pillar los cupones");
+			System.out.println("¡Error! Descripcion:");
 			e.printStackTrace();
 		}
 		

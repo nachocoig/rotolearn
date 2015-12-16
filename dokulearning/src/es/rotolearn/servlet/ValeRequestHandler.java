@@ -101,7 +101,7 @@ public class ValeRequestHandler implements RequestHandler {
 				System.out.println("Descripcion: " + e.getMessage());  
 			}	
 		}else{
-			System.out.println("Aqui no deberia de pasar nunca");
+			
 		}
 		
 		em.close();

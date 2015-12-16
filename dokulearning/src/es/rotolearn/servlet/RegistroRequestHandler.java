@@ -31,8 +31,7 @@ public class RegistroRequestHandler implements RequestHandler {
 	    final String path = context.getRealPath("/images/im_usuarios");
 	    byte ficheroTotal[] = null;
 	    
-	    if(foto == null)
-	    	System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
+	   
 
 	    //final String fileName = foto.getFileName();
 
@@ -93,7 +92,7 @@ public class RegistroRequestHandler implements RequestHandler {
 			String [] it = mr.getParameterValues("intereses");
 			if(it!=null){
 				for(int i=0;i<it.length;i++){
-					System.out.println("Elemento "+ i + ": " + it[i] );
+					
 					if(it[i]!=null){
 						intereses = intereses + it[i] +"/";
 					}
@@ -115,19 +114,13 @@ public class RegistroRequestHandler implements RequestHandler {
 			nAux.setIntereses(intereses);
 			nAux.setTelefono(Integer.parseInt(mr.getParameterValues("tlf")[0]));
 		    
-			UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");
-			
-			
-			//System.out.println(foto.getData());
+			UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");			
 			nAux.setImagen(obtenerFicheroBytes(request, foto, mr.getParameterValues("nick")[0] ));
-			//nAux.setImagen(request.getParameter("exampleInputFile"));
 			
-			try {
-				//em = factory.createEntityManager();
-				//em.getTransaction().begin();
+			
+			try{
 				em.persist(nAux);
 				em.getTransaction().commit();
-				//em.close();
 		    	} catch (Exception e2) {
 				em.close();
 				System.out.println("Descripcion: " + e2.getMessage());

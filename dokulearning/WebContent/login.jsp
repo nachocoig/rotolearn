@@ -78,7 +78,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-12">
-                <a href="Notificacion.form" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</a>
+                <a href="index.jsp" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</a>
       		    </div>	
             </div>
         </div>

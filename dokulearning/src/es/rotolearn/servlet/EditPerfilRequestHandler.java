@@ -35,7 +35,7 @@ public class EditPerfilRequestHandler implements RequestHandler {
 		    fos.write(img);
 		    fos.close();
 	    }catch (Exception e){
-	    	System.out.println("Error al cargar la imagen de usuario");
+	    	System.out.println("Error: " + e.getMessage());
 	    }
 		return rutaCompleta;
 	}
@@ -46,11 +46,6 @@ public class EditPerfilRequestHandler implements RequestHandler {
 		ServletContext context = request.getServletContext();
 		final String path = context.getRealPath("/images/im_usuarios");
 		byte ficheroTotal[] = null;
-
-		if (foto == null)
-			System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
-
-		// final String fileName = foto.getFileName();
 
 		OutputStream out = null;
 		InputStream filecontent = null;
@@ -84,9 +79,7 @@ public class EditPerfilRequestHandler implements RequestHandler {
 	}
 
 	@Override
-	public String handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("al menos entramos aqui...");
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ruta = "perfil.form";
 		HttpSession miSession = request.getSession(true);
 		String intereses = "";
@@ -94,7 +87,6 @@ public class EditPerfilRequestHandler implements RequestHandler {
 		String[] it = mr.getParameterValues("intereses");
 		if (it != null) {
 			for (int i = 0; i < it.length; i++) {
-				System.out.println("Elemento " + i + ": " + it[i]);
 				if (it[i] != null) {
 					intereses = intereses + it[i] + "/";
 				}
@@ -112,7 +104,6 @@ public class EditPerfilRequestHandler implements RequestHandler {
 
 		RegistroBean actualizado = (RegistroBean) miSession.getAttribute("perfil");
 
-		System.out.println("PO AQUI");
 		actualizado.setNombre(Nombre);
 		actualizado.setApellido1(Apellido1);
 		actualizado.setApellido2(Apellido2);
@@ -130,13 +121,11 @@ public class EditPerfilRequestHandler implements RequestHandler {
 			EntityTransaction tx = em.getTransaction();
 			Usuario aux = null;
 
-			System.out.println("deberia de ir hasta aqui");
 			try {
 				aux = em.find(Usuario.class, actualizado.getId());
 
 				tx.begin();// Comenzamos la transaccion
 
-				System.out.println("al menos entramos aqui...2");
 				aux.setNombre(Nombre);
 				aux.setApellido1(Apellido1);
 				aux.setApellido2(Apellido2);
@@ -147,31 +136,26 @@ public class EditPerfilRequestHandler implements RequestHandler {
 				aux.setIntereses(intereses);
 				aux.setTelefono(Telefono);
 				UploadedFile foto = (UploadedFile) mr.getUploadedFile("file");
-				//System.out.println(foto);
-				//if (!foto.isValid()) {
-					//actualizado.setImagen(false);
-				//} else {
-					//actualizado.setImagen(true);
-				//}
+				if (!foto.isValid()) {
+					actualizado.setImagen(false);
+				} else {
+					actualizado.setImagen(true);
+				}
 
-				// System.out.println(foto.getData());
 				byte[] auxiliar = obtenerFicheroBytes(request, foto,
 						Integer.toString(actualizado.getId()));
 				aux.setImagen(auxiliar);
 				cargarImagen(auxiliar,request, actualizado.getNickName());
 				actualizado.setImagen(true);
-				System.out.println("al menos entramos aqui...3");
 				tx.commit();
 				em.close();
-				System.out.println("Y hasta aqui llega?");
 			} catch (Exception x) {
-				System.out.println("problema al encontrar el usuario con id: "
-						+ actualizado.getId());
+				System.out.println("Error: ");
 				x.printStackTrace();
 			}
 
 		} catch (Exception e) {
-
+				System.out.println("Error: "+e.getMessage());
 		}
 		request.setAttribute("modificado", "si");
 	

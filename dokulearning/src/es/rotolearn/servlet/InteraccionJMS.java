@@ -74,8 +74,6 @@ public class InteraccionJMS {
 
 	}
 	public void escrituraPago(String mensaje) {
-	    /* HAY QUE PONER QUE LEA DEL CORRELATIONID QUE SE PASA POR PARAMETRO*/
-        /* HAY QUE CONCATENAR AL MENSAJE EL NICK DEL USUARIO OBTENIDO DEL BEAN*/
 		
 		try {
 
@@ -92,7 +90,7 @@ public class InteraccionJMS {
 			Mpro = QSes.createProducer(cola);
 			javax.jms.TextMessage men = QSes.createTextMessage();
 
-			men.setText(mensaje); //PONER EL NOMBRE DEL BEAN
+			men.setText(mensaje); 
 			Qcon.start();
 			Mpro.send(men);
 
