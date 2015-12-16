@@ -108,13 +108,14 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 			String categoria7 = request.getParameter("cat7");
 			String categoria8 = request.getParameter("cat8");
 			String categoria9 = request.getParameter("cat9");
+			String categoria10 = request.getParameter("cat10");
 			
 			query = "";
 			
 			if((palabra != null && !palabra.equals(""))|| categoria1 != null || categoria2 != null || 
 		       categoria3 != null || categoria4 != null || categoria5 != null || 
 		       categoria6 != null || categoria7 != null || categoria8 != null || 
-		       categoria9 != null){
+		       categoria9 != null || categoria10 != null ){
 				//query = query+" WHERE ";
 				if(palabra != null && !palabra.equals("")){ //buscamos la palabra
 					System.out.println("PARALABRA: "+palabra);
@@ -129,7 +130,7 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 				if(categoria1 != null || categoria2 != null || 
 			       categoria3 != null || categoria4 != null || categoria5 != null || 
 			       categoria6 != null || categoria7 != null || categoria8 != null || 
-			       categoria9 != null){
+			       categoria9 != null || categoria10 != null){
 					if(palabra != null && !palabra.equals(""))
 						query = query + " AND ";
 					query = query + " (";
@@ -184,6 +185,12 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria9+"%'";
 						categorias.add(categoria9);
+					}
+					if(categoria10 != null){
+						if(categorias.size()>0)
+							query = query+" OR";
+						query = query+" i.categoria LIKE '%"+categoria10+"%'";
+						categorias.add(categoria10);
 					}
 					query = query+")";
 				}

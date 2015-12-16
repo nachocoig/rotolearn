@@ -198,13 +198,14 @@
 	      					<label><input type="checkbox" name="cat2" value="IT y Software"<%if(cats != null && cats.contains("IT y Software")){%>checked<%} %>> IT y Software</label><br>
 	      					<label><input type="checkbox" name="cat3" value="Negocios"<%if(cats != null && cats.contains("Negocios")){%>checked<%} %>> Negocios</label><br>
 	      					<label><input type="checkbox" name="cat4" value="Diseño"<%if(cats != null && cats.contains("Diseño")){%>checked<%} %>> Dise&ntilde;o</label><br>
-	      				</div>
-					    <div class="col-md-6">
 	      					<label><input type="checkbox" name="cat5" value="Fotografia"<%if(cats != null && cats.contains("Fotografia")){%>checked<%} %>> Fotograf&iacute;a</label><br>
+	      				</div>
+					    <div class="col-md-6">	      					
 	      					<label><input type="checkbox" name="cat6" value="Salud y Fitness"<%if(cats != null && cats.contains("Salud y Fitness")){%>checked<%} %>> Salud y Fitness</label><br>
 	      					<label><input type="checkbox" name="cat7" value="Lifestyle"<%if(cats != null && cats.contains("Lifestyle")){%>checked<%} %>> Lifestyle</label><br>
 	      					<label><input type="checkbox" name="cat8" value="Musica"<%if(cats != null && cats.contains("Musica")){%>checked<%} %>> M&uacute;sica</label><br>
 	      					<label><input type="checkbox" name="cat9" value="Idioma"<%if(cats != null && cats.contains("Idioma")){%>checked<%} %>> Idioma</label><br>
+	      					<label><input type="checkbox" name="cat10" value="Academico"<%if(cats != null && cats.contains("Academico")){%>checked<%} %>> Acad&eacute;mico</label><br>
 	      				</div>
 					    <button id="palabra_clave_submit" type="submit" class="btn btn-default btn-block">Buscar</button>
                 </form>
