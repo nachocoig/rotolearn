@@ -32,25 +32,17 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 		ServletContext context = request.getServletContext();
 	    final String path = context.getRealPath("/images/im_cursos");
 	    String rutaCompleta = path + File.separator + idCurso + "_curso.jpg";
-		//File fichero = new File(rutaCompleta);
-		//if(!fichero.exists()){
-			//fichero.delete();
+	
 		    try{
 			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
 			    fos.write(img);
 			    fos.close();
-			    System.out.println("Pues se supone que la imagen deberia estar cargada...");
 			    return 0;
 		    }catch (Exception e){
-		    	System.out.println("Error al cargar la imagen de usuario");
+		    	System.out.println("Error: ");
 		    	e.printStackTrace();
 		    }
-		//}else{
-		//	fichero.delete();
-		//	System.out.println("Ya existe? WTF?");
-		//	System.out.println("Se supone que existe '"+idCurso+"_curso.jpg' en "+rutaCompleta);
-		//}
-		System.out.println("termino de cargar la imagen, por donde no debo");
+		
 		return -1;
 	}
 	
@@ -58,7 +50,6 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		System.out.println("Entro al handler de busquedaAvanzada");
 		
 		ArrayList<String> categorias = new ArrayList<String>();
 		String[] palabrasSeparadas = null;
@@ -81,19 +72,15 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 		
 		if(destacados != null && destacados.equals("SI")){	
 			try{
-				//Recojo los 10 primeros cursos destacados ES NORMAL QUE NO SAQUE NADA PORQUE LOS CURSOS LOS DESTACA EL ADMIN Y POR DEFECTO AL CREARLOS SON NO
-				System.out.println("Voy a recojer los curso destacados que tenemos");
 				cursos = em.createQuery("SELECT i FROM Curso i WHERE i.destacado='SI'").setMaxResults(20).getResultList();	
 				if(!destacados.isEmpty()){
 					for(int i=0; i<cursos.size();i++){
-						System.out.println("ENTRA A DESTACADOS");
 						cargarImagen(cursos.get(i).getImagen(), request, cursos.get(i).getId());
-						System.out.println("SALE DE DESTACADOS");
 						cur.add(cursos.get(i));
 					}
 				}
 			}catch(Exception e){
-				System.out.println("Pilla excepcion nuse porque");
+				System.out.println("Error: " + e.getMessage());
 			}
 			
 			
@@ -116,12 +103,12 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 		       categoria3 != null || categoria4 != null || categoria5 != null || 
 		       categoria6 != null || categoria7 != null || categoria8 != null || 
 		       categoria9 != null || categoria10 != null ){
-				//query = query+" WHERE ";
-				if(palabra != null && !palabra.equals("")){ //buscamos la palabra
-					System.out.println("PARALABRA: "+palabra);
+				if(palabra != null && !palabra.equals("")){ 
+					
 					String delimitadores= "[ .,;?!¡¿\'\"\\[\\]]+";
 					palabrasSeparadas = palabra.split(delimitadores);
 					query = query+" (i.titulo LIKE '%"+palabrasSeparadas[0]+"%'";
+					
 					for(int i = 1; i < palabrasSeparadas.length; i++){
 						query = query+" OR i.titulo LIKE '%"+palabrasSeparadas[i]+"%'";
 					}
@@ -131,84 +118,98 @@ public class busquedaAvanzadaRequestHandler implements RequestHandler {
 			       categoria3 != null || categoria4 != null || categoria5 != null || 
 			       categoria6 != null || categoria7 != null || categoria8 != null || 
 			       categoria9 != null || categoria10 != null){
+					
 					if(palabra != null && !palabra.equals(""))
 						query = query + " AND ";
 					query = query + " (";
+					
 					if(categoria1 != null){
 						query = query+" i.categoria LIKE '%"+categoria1+"%'";
 						categorias.add(categoria1);
 					}
+					
 					if(categoria2 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria2+"%'";
 						categorias.add(categoria2);
 					}
+					
 					if(categoria3 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria3+"%'";
 						categorias.add(categoria3);
 					}
+					
 					if(categoria4 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria4+"%'";
 						categorias.add(categoria4);
 					}
+					
 					if(categoria5 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria5+"%'";
 						categorias.add(categoria5);
 					}
+					
 					if(categoria6 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria6+"%'";
 						categorias.add(categoria6);
 					}
+					
 					if(categoria7 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria7+"%'";
 						categorias.add(categoria7);
 					}
+					
 					if(categoria8 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria8+"%'";
 						categorias.add(categoria8);
 					}
+					
 					if(categoria9 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria9+"%'";
 						categorias.add(categoria9);
 					}
+					
 					if(categoria10 != null){
 						if(categorias.size()>0)
 							query = query+" OR";
 						query = query+" i.categoria LIKE '%"+categoria10+"%'";
 						categorias.add(categoria10);
 					}
+					
 					query = query+")";
 				}
 			}
+			
 			if(categorias.size()==0)
 				cursos = em.createQuery("SELECT i from Curso i WHERE i.validado='SI'").setMaxResults(20).getResultList();	
 			else
 				cursos = em.createQuery("SELECT i from Curso i WHERE i.validado='SI' AND "+ query ).setMaxResults(20).getResultList();		
+			
 			if(!cursos.isEmpty()){
 				for(int i=0; i<cursos.size();i++){
-					System.out.println("ENTRA A TODOS");
+
 					cargarImagen(cursos.get(i).getImagen(), request, cursos.get(i).getId());
-					System.out.println("SALE DE TODOS");
+
 					cur.add(cursos.get(i));
 				}
 			}
 		}
-		System.out.println("Me piro chaval");
+
 		request.setAttribute("tipo", "busqueda");
 		request.setAttribute("categorias", categorias);
 		request.setAttribute("palabras", palabrasSeparadas);

@@ -39,10 +39,10 @@ public class CrearCursoRequestHandler implements RequestHandler {
 	    final String path = context.getRealPath("/images/im_cursos");
 	    byte ficheroTotal[] = null;
 	    
-	    if(foto == null)
-	    	System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
+	 
 
-	    //final String fileName = foto.getFileName();
+
+	   
 
 	    OutputStream out = null;
 	    InputStream filecontent = null;
@@ -107,7 +107,6 @@ public class CrearCursoRequestHandler implements RequestHandler {
 		
 		aux.setImagen(obtenerFicheroBytes(request, foto, user.getId()));
 
-		//aux.setImagen(request.getParameter("imagen"));
 		
 		// 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");

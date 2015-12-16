@@ -40,21 +40,6 @@ public class ControladorServlet extends HttpServlet {
         handlerHash.put("/pagina_pago.form", new es.rotolearn.servlet.PaginaPagoRequestHandler());
         handlerHash.put("/Notificacion.form", new es.rotolearn.servlet.NotificacionRequestHandler());
         handlerHash.put("/respuestaExamen.form", new es.rotolearn.servlet.RespuestaExamenRequestHandler());
-       //.put("/enviarAlerta.form", new es.rotolearn.servlet.NotificacionRequestHandler());
-        /*
-         * Todos estos handlers hay que dejarlos en 1... Si hacemos esto para toda la web, acabamos con 10131341u34234231321thwfghasfuhg2342342343 x INF handlers
-         *  (NO HEMOS BORRADO NADA DE TU CODIGO, SOLO HAY QUE MOVER Y MODIFICAR T0DO AL ADRMINISTRARCURSOREQUESTHANDLER
-        handlerHash.put("/administrarCurso.form", new es.rotolearn.servlet.ShowCursoRequestHandler());  //1
-        handlerHash.put("/eliminarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler()); //2
-        handlerHash.put("/editarCurso.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //3
-        handlerHash.put("/mostrarInscritos.form", new es.rotolearn.servlet.ListarUsuariosRequestHandler()); //4
-        handlerHash.put("/eliminarInscrito.form", new es.rotolearn.servlet.EliminarRequestHandler()); //5
-        handlerHash.put("/listarAsociados.form", new es.rotolearn.servlet.ListadoProfesoresRequestHandler()); //6
-        handlerHash.put("/asociarProfe.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //7
-        handlerHash.put("/eliminarAsociados.form", new es.rotolearn.servlet.EditarCursoRequestHandler());//8
-        handlerHash.put("/denegarCurso.form", new es.rotolearn.servlet.EliminarRequestHandler()); //9 
-        handlerHash.put("/validarPeticion.form", new es.rotolearn.servlet.EditarCursoRequestHandler()); //10 
-        */
         handlerHash.put("/leerChat.form", new es.rotolearn.servlet.LecturaChatRequestHandler());
         handlerHash.put("/escribirChat.form", new es.rotolearn.servlet.EscrituraChatRequestHandler());
 	}
@@ -67,10 +52,8 @@ public class ControladorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Complete. Retrieve from the HashMap the instance of the class which
 		// implements the logic of the requested url
-		System.out.println("RUTA DE LA QUE ME LLAMAN "+request.getServletPath());
 		RequestHandler rh = (RequestHandler) handlerHash.get(request.getServletPath());
 
-		System.out.println("Servlet received the request");
 
 		// Complete. If no instance is retrieved redirects to error
 		if (rh == null) {
@@ -78,13 +61,10 @@ public class ControladorServlet extends HttpServlet {
 
 		} else {
 
-			System.out.println("Servlet passed the request to a handler");
 
 			// Complete. Call the method handleRequsest of the instance in order
 			// to obtain the url
 			String viewURL = rh.handleRequest(request, response);
-
-			System.out.println("Servlet sent the response");
 
 			// Complete. Dispatch the request to the url obtained
 			if (viewURL != null) {

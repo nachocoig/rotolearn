@@ -35,24 +35,18 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 	    final String path = context.getRealPath("/materiales/");
 	    
 	    String rutaCompleta = path + File.separator + idMaterial + "_mat."+tipo;
-		//File fichero = new File(rutaCompleta);
-		//if(!fichero.exists()){
-			//fichero.delete();
+		
 		    try{
 			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
 			    fos.write(fichero);
 			    fos.close();
 			    return 0;
 		    }catch (Exception e){
-		    	System.out.println("Error al cargar el fichero.");
+		    	System.out.println("Error: ");
 		    	e.printStackTrace();
 		    }
-		//}else{
-		//	fichero.delete();
-		//	System.out.println("Ya existe? WTF?");
-		//	System.out.println("Se supone que existe '"+idCurso+"_curso.jpg' en "+rutaCompleta);
-		//}
-		System.out.println("termino de cargar el fichero por donde no debo");
+		
+		
 		return -1;
 	}
 	
@@ -60,25 +54,17 @@ public class MostrarCursoRequestHandler implements RequestHandler {
 		ServletContext context = request.getServletContext();
 	    final String path = context.getRealPath("/images/im_cursos");
 	    String rutaCompleta = path + File.separator + idCurso + "_curso.jpg";
-		//File fichero = new File(rutaCompleta);
-		//if(!fichero.exists()){
-			//fichero.delete();
+		
 		    try{
 			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
 			    fos.write(img);
 			    fos.close();
-			    System.out.println("Pues se supone que la imagen deberia estar cargada...");
 			    return 0;
 		    }catch (Exception e){
-		    	System.out.println("Error al cargar la imagen de usuario");
+		    	System.out.println("Error: ");
 		    	e.printStackTrace();
 		    }
-		//}else{
-		//	fichero.delete();
-		//	System.out.println("Ya existe? WTF?");
-		//	System.out.println("Se supone que existe '"+idCurso+"_curso.jpg' en "+rutaCompleta);
-		//}
-		System.out.println("termino de cargar la imagen, por donde no debo");
+		
 		return -1;
 	}
 	

@@ -37,26 +37,22 @@ public class CursosProfeRequestHandler implements RequestHandler {
 	em.getTransaction().begin();
 	ArrayList <Curso> listaCursos = new ArrayList <Curso> ();
 	try{
-		System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR A TODOS");
 		List <Curso> aux = null;
 		RegistroBean user = (RegistroBean)miSession.getAttribute("perfil");
 		aux=em.createQuery("SELECT i FROM Curso i WHERE i.usuario.id= ?1").setParameter(1,user.getId()).getResultList();
 			
 		
-		System.out.println("HE SALIDO DE LA QUERY CON "+ aux.size() +" RESULTADOS");
 		if(aux.size() == 0){
 					request.setAttribute("curso","no");    			
-				}
-				else{
+		}
+		else{
 					request.setAttribute("curso","si"); 
 					Iterator<Curso> d = aux.iterator();
 					while(d.hasNext()){
 						Curso aux2=d.next();
 						listaCursos.add(aux2);
-						System.out.println("AÑADIDO, AHORA HAY " + listaCursos.size() + " ELEMENTOS");								
 						}
 					}
-					System.out.println("NOLLEGO");
 					request.setAttribute("listaCursos", listaCursos);
 					em.close();
 				

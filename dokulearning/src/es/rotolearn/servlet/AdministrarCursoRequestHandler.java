@@ -41,24 +41,17 @@ public class AdministrarCursoRequestHandler implements RequestHandler {
 	    final String path = context.getRealPath("/materiales/");
 	    
 	    String rutaCompleta = path + File.separator + idMaterial + "_mat."+tipo;
-		//File fichero = new File(rutaCompleta);
-		//if(!fichero.exists()){
-			//fichero.delete();
+	
 		    try{
 			    FileOutputStream fos = new FileOutputStream(rutaCompleta);
 			    fos.write(fichero);
 			    fos.close();
 			    return 0;
 		    }catch (Exception e){
-		    	System.out.println("Error al cargar la imagen de usuario");
+		    	System.out.println("Error: ");
 		    	e.printStackTrace();
 		    }
-		//}else{
-		//	fichero.delete();
-		//	System.out.println("Ya existe? WTF?");
-		//	System.out.println("Se supone que existe '"+idCurso+"_curso.jpg' en "+rutaCompleta);
-		//}
-		System.out.println("termino de cargar la imagen, por donde no debo");
+		
 		return -1;
 	}
 	
@@ -68,11 +61,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 	    
 		final String path = context.getRealPath("/materiales/");
 	    byte ficheroTotal[] = null;
-	    
-	    if(material == null)
-	    	System.out.println("NULLLLLLLLLLLLLLLLLLLLLLL");
-
-	    //final String fileName = foto.getFileName();
+	
 
 	    OutputStream out = null;
 	    InputStream filecontent = null;
@@ -112,11 +101,8 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		String ruta = "profes_administrarcurso.jsp";
 		
 		MultipartRequest mr = new MultipartRequest(request);
-		System.out.println("Paso 1");
 		String tipo = mr.getParameterValues("tipo")[0];
-		System.out.println("Paso 2");
 		int idCurso = Integer.parseInt(mr.getParameterValues("curso")[0]);
-		System.out.println("Paso 3");
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
@@ -146,18 +132,20 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 		ArrayList <Material> lmateriales = new ArrayList <Material> ();
 
 		ArrayList <CursoAlumno> lexaminados = new ArrayList<CursoAlumno>();
+		
 		if(tipo.equals("editarDescripcion")){ //Para modificar la descripcion del curso
-			System.out.println("Modificar descripcion.");
 			try{
 				
 				editar.setDescripcion(mr.getParameterValues("descripcion")[0]);
 				em.getTransaction().commit();
 				request.setAttribute("aviso","SI/Descripci&oacute;n modificada correctamente");
 			}catch(Exception e){
-				//e.printStackTrace();
+				System.out.println("Error: ");
+				e.printStackTrace();
 				request.setAttribute("aviso","NO/La descripci&oacute;n no ha podido ser modificada");
 			}
 			request.setAttribute("actual", "info");
+			
 		}else if(tipo.equals("eliminarAsociado") || tipo.equals("denegarAsociado")){ //para eliminar un profesor asociado
 			int idProfesor = Integer.parseInt(mr.getParameterValues("asociado")[0]);
 			em.createQuery("DELETE FROM ProfesorAsociado i WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
@@ -165,7 +153,8 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			request.setAttribute("aviso","SI/Profesor asociado eliminado correctamente");
 			request.setAttribute("actual", "profes");
 			if(tipo.equals("denegarAsociado")){ ruta = "/perfil.form";}
-		}else if(tipo.equals("agregarAsociado")){ //agregar de la lista de tooodos los profesores 
+			
+		}else if(tipo.equals("agregarAsociado")){ 
 			String profesor = mr.getParameterValues("asociado")[0];
 			try{
 				//buscamos ese profesor
@@ -173,7 +162,6 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				if(asociado != null){
 					ProfesorAsociado nuevo = new ProfesorAsociado();
 					ProfesorAsociadoPK npk = new ProfesorAsociadoPK();
-					System.out.println("El ID del curso es el siguiente:--________________--------____--__"+idCurso);
 					npk.setID_c(idCurso);
 					npk.setID_p(asociado.getId());
 					nuevo.setCurso(editar);
@@ -188,9 +176,11 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				}
 
 			}catch(Exception e){
+				System.out.println("Error: ");
 				e.printStackTrace();
 			}
 			request.setAttribute("actual", "profes");
+			
 		}else if(tipo.equals("validarAsociado")){ //validar un profesor no validado
 			int idProfesor = Integer.parseInt(mr.getParameterValues("asociado")[0]);
 			em.createQuery("UPDATE ProfesorAsociado i SET i.validado ='SI' WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
@@ -198,17 +188,19 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			request.setAttribute("aviso","SI/Profesor asociado validado correctamente");
 			request.setAttribute("actual", "profes");
 			ruta = "/perfil.form";
+			
 		}else if(tipo.equals("eliminarAlumno")){
 			int idAlumno = Integer.parseInt(mr.getParameterValues("alumno")[0]);
 			em.createQuery("DELETE FROM CursoAlumno i WHERE i.id.ID_c = ?1 AND i.id.ID_u = ?2").setParameter(1, idCurso).setParameter(2, idAlumno).executeUpdate();
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Usuario eliminado correctamente");
 			request.setAttribute("actual", "alumn");
+			
 		}else if(tipo.equals("eliminar")){
 			em.createQuery("DELETE FROM Curso i WHERE i.id = ?1").setParameter(1, idCurso).executeUpdate();
 			em.getTransaction().commit();
-			//request.setAttribute("aviso","SI/Curso eliminado correctamente");
 			return "verCursosProfe.form";
+			
 		}else if(tipo.equals("crearSeccion")){
 			String nombreSeccion = mr.getParameterValues("nombre")[0];
 			Seccion nuevaSeccion = new Seccion();
@@ -280,38 +272,34 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 				Iterator<CursoAlumno> it1 = alumnos2.iterator();
 				Iterator<ProfesorAsociado> it2 = profes.iterator();
 				Curso curs = em.find(Curso.class,Integer.parseInt(mr.getParameterValues("curso")[0]) );
-				System.out.println("paso1" + alumnos2.size() + 'y' + profes.size());
 				String descripcion = mr.getParameterValues("descripcion")[0];
-				System.out.println("paso2:" + descripcion);
-				//if(mr.getParameter("al")!=null){
+				
 				while(it1.hasNext()){	
-					System.out.println("paso3");
 					Notificacion nueva = new Notificacion();
 					nueva.setDescripcion("Notificacion del curso " + curs.getTitulo() + " : " + descripcion);
 					nueva.setLeido(0);
 					nueva.setUsuario(em.find(Usuario.class,it1.next().getId().getID_u()));
 					em.persist(nueva);
 				
-				}//}
-				//if(mr.getParameter("profe")!=null){
+				}
 					
 				while(it2.hasNext()){	
-					System.out.println("paso4");
 					Notificacion nueva = new Notificacion();
 					nueva.setDescripcion("Notificacion del curso " + curs.getTitulo() + " : " + descripcion);
 					nueva.setLeido(0);
 					nueva.setUsuario(em.find(Usuario.class,it2.next().getId().getID_p()));
 					em.persist(nueva);
-				}//}
+				}
 				
 				em.getTransaction().commit();
-				//em.close();
+				
 		}else if(tipo.equals("eliminarSeccion")){
 			int seccion = Integer.parseInt(mr.getParameterValues("seccion")[0]);
 			em.createQuery("DELETE FROM Seccion i WHERE i.id = ?1").setParameter(1, seccion).executeUpdate();
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Secci&oacute;n eliminada correctamente");
 			request.setAttribute("actual", "material");
+			
 		}else if(tipo.equals("editarSeccion")){
 			int seccion = Integer.parseInt(mr.getParameterValues("seccion")[0]);
 			String nombre = mr.getParameterValues("nombre")[0];
@@ -320,6 +308,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Secci&oacute;n modificada correctamente");
 			request.setAttribute("actual", "material");
+			
 		}else if(tipo.equals("editarLeccion")){
 			int leccion = Integer.parseInt(mr.getParameterValues("leccion")[0]);
 			String nombre = mr.getParameterValues("nombre")[0];
@@ -330,18 +319,21 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Lecci&oacute;n modificada correctamente");
 			request.setAttribute("actual", "material");
+			
 		}else if(tipo.equals("eliminarLeccion")){
 			int leccion = Integer.parseInt(mr.getParameterValues("leccion")[0]);
 			em.createQuery("DELETE FROM Leccion i WHERE i.id = ?1").setParameter(1, leccion).executeUpdate();
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Lecci&oacute;n eliminada correctamente");
 			request.setAttribute("actual", "material");
+			
 		}else if(tipo.equals("eliminarMaterial")){
 			int material = Integer.parseInt(mr.getParameterValues("material")[0]);
 			em.createQuery("DELETE FROM Material i WHERE i.id = ?1").setParameter(1, material).executeUpdate();
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Material eliminado correctamente");
 			request.setAttribute("actual", "material");
+			
 		}else if(tipo.equals("aprobarExamen")){
 			int usuario = Integer.parseInt(mr.getParameterValues("examinado")[0]);
 			CursoAlumnoPK capk = new CursoAlumnoPK();
@@ -354,6 +346,7 @@ public byte []obtenerFicheroBytes(HttpServletRequest request, UploadedFile mater
 			em.getTransaction().commit();
 			request.setAttribute("aviso","SI/Usuario aprobado con &eacute;xito");
 			request.setAttribute("actual", "examen");
+			
 		}else if(tipo.equals("suspenderExamen")){
 			int usuario = Integer.parseInt(mr.getParameterValues("examinado")[0]);
 			CursoAlumnoPK capk = new CursoAlumnoPK();
