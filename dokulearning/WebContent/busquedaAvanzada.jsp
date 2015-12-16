@@ -148,7 +148,13 @@
 					                                	</form>
                         	</div>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <%if(perfil.getImagen()){%>
+                            <img src="images/im_usuarios/<%=perfil.getNickName()%>_perfil.jpg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
+                            <%}else{ %>
+                            <img src="./images/perfil/anonimo.jpeg" class="img-circle" alt="Cinque Terre" width="30" height="30"/> <%=session.getAttribute("usuario")%> <span class="caret"> </span></a>
+                            
+                            <%} %>
                             <ul class="dropdown-menu">
                                 <li><a href="perfil.form"><span class="glyphicon glyphicon-user"></span>Mi perfil</a></li>
                                 <% if(!perfil.getTipo().equals("alumn")){%>
