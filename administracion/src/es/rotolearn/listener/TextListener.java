@@ -44,10 +44,7 @@ public class TextListener implements MessageListener {
 				msg = (TextMessage) message;
 				System.out.println("Lectura AsÃ­ncrona-->: " + msg.getText());
 				mensaje = msg.getText();
-				mensajes = mensaje.split("-");
-				//String mensaje = codPed+ "-" +codOP+ "-" +request.getParameter("totalprecio")+ "-" +request.getParameter("valePromocional")+ "-" +request.getParameter("valeAdmin")+ "-" +request.getParameter("precioOriginal")+ "-" +request.getParameter("profesor");
-				System.out.println("Copiando parametros");
-				
+				mensajes = mensaje.split("-");	
 				//Sacando datos
 				codpe = mensajes[0];
 				codop = mensajes[1];
@@ -70,12 +67,9 @@ public class TextListener implements MessageListener {
 				conc.setUsuario(cobrador);
 				if(valepromo!=null){
 					conc.setDescuento(valepromo);//substring(cuponDesc.length()-2);
-					System.out.println(Integer.parseInt(valepromo.substring(valepromo.length() - 2)));
 					int descuento = Integer.parseInt(valepromo.substring(valepromo.length() - 2));
 					double fraccion = descuento*0.01;
-					System.out.println("fraccion"+fraccion);
 					double descuentod = 1 - fraccion;
-					System.out.println("EL DESCUENTO"+descuentod);
 					descuentod = descuentod * 0.7;
 					dineroprofe = (int) ((int) (precioorig*descuentod));
 				}else{
@@ -109,14 +103,12 @@ public class TextListener implements MessageListener {
 				conc2.setMes(mes);
 				
 				//INSERTAR EN LA BASE DE DATOS CADA CAMPO
-				System.out.println("ENtro a insertar");
 				EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 				EntityManager em = factory.createEntityManager();
 				em.getTransaction().begin();
 				em.persist(conc);
 				em.persist(conc2);
 				em.getTransaction().commit();
-				System.out.println("Salgo persist");
 				em.close();
 				//92668751	
 			} else {

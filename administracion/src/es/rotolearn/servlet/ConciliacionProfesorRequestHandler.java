@@ -34,12 +34,10 @@ public class ConciliacionProfesorRequestHandler implements RequestHandler{
 		Conciliacion concil  = new Conciliacion();
 		int recuento = 0;
 		int profeactual, primeravez=0;
-		System.out.println("CONSULTA CONCILIACION PROFESOR");
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		List <Conciliacion> lista = em.createQuery("SELECT i FROM Conciliacion i WHERE i.usuario.id NOT IN (1) AND i.pagado='NO' ORDER BY i.usuario.id ASC").getResultList();// 1 es el id del usuario empresa
-		System.out.println("QUERY CONCILIACION EMPRESA");
 		Date dNow = new Date( );
 	    SimpleDateFormat an = new SimpleDateFormat ("yyyy");
 	    SimpleDateFormat me = new SimpleDateFormat ("MM");
@@ -56,19 +54,11 @@ public class ConciliacionProfesorRequestHandler implements RequestHandler{
 					recuento = recuento + concil.getImporte();					
 					concil=d.next();
 			}
-			System.out.println("RECUENTO "+recuento);
 			WebTarget wt = client.target("http://localhost:8080/Banco/ws");
-			System.out.println("PIDO AL WS");
 			int result = Integer.parseInt(wt.path("codigo").path("conciliacionProfesor").path(Integer.toString(recuento)).path(anio).path(mes).request().accept(MediaType.TEXT_PLAIN).get(String.class));
-			System.out.println("RECIBO WS "+result);
 			em.createQuery("UPDATE Conciliacion i SET i.pagado='SI' WHERE i.usuario.id="+profeactual+" AND i.pagado='NO'").executeUpdate();
 		}
-
 		
-		//em.createQuery("UPDATE ProfesorAsociado i SET i.validado ='SI' WHERE i.id.ID_c = ?1 AND i.id.ID_p = ?2").setParameter(1, idCurso).setParameter(2, idProfesor).executeUpdate();
-
-		
-		System.out.println("UPDATE CONCILIACION PROFESOR");
 		em.getTransaction().commit();
 		em.close();
 		return "admin_index.jsp";

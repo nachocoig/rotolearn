@@ -18,7 +18,6 @@ public class ActualizarCursoRequestHandler implements RequestHandler {
 			HttpServletResponse response) throws ServletException, IOException {
 		String ruta = request.getServletPath();
 	 	
-	    System.out.println("Procedemos a actualizar el curso");
 	    int ID = Integer.parseInt(request.getParameter("ID"));
 	 // 1 Create the factory of Entity Manager
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
@@ -54,10 +53,10 @@ public class ActualizarCursoRequestHandler implements RequestHandler {
 			}catch(javax.persistence.NoResultException e){ 
 				//em.close();
 				request.setAttribute("act", "no");
-				System.out.println("Descripcion: " + e.getMessage());  
+				 
 			}	
 		em.close();
-		System.out.println("VAMOS A" + ruta);
+		
 	 return ruta;
 	}
 

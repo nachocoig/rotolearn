@@ -21,7 +21,6 @@ public class ValidarRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Handler validar received the request");
 		//HAY QUE AÑADIR/MODIFICAR PARA METERLE LA BBDD
 		String ruta = "admin_altacursos.form";
 		String validar = request.getParameter("validar");
@@ -37,10 +36,7 @@ public class ValidarRequestHandler implements RequestHandler {
 					Connection conexion = miDS.getConnection();
 
 					Statement myStatement = conexion.createStatement();
-					System.out.println("Antes de la query:    "+validar);
-					int updateOk = myStatement.executeUpdate("UPDATE CURSO SET Validado='SI' WHERE Titulo='"+validar+"'");
-					System.out.println("EL UPDATE SE HA EJECUTADO: "+updateOk);
-					
+					int updateOk = myStatement.executeUpdate("UPDATE CURSO SET Validado='SI' WHERE Titulo='"+validar+"'");					
 					//existe el nick, comparar contraseñas
 					myStatement.close();
 					conexion.close();				

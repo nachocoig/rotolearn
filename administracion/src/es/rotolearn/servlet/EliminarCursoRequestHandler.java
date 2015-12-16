@@ -15,8 +15,6 @@ public class EliminarCursoRequestHandler implements RequestHandler {
 
 public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	String ruta = request.getServletPath();
- 	
-    System.out.println("Procedemos a borrar el curso");
     int ID = Integer.parseInt(request.getParameter("ID"));
  // 1 Create the factory of Entity Manager
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("ProyectoJPA");//ESTO ES CLAVE
@@ -52,7 +50,6 @@ public String handleRequest(HttpServletRequest request, HttpServletResponse resp
 			System.out.println("Descripcion: " + e.getMessage());  
 		}	
 	em.close();
-	System.out.println("VAMOS A" + ruta);
  return ruta;
 }
 }

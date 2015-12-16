@@ -28,9 +28,7 @@ public class AltaCursosRequestHandler implements RequestHandler {
 		
 		String ruta="admin_altacursos.jsp";
 		
-		/*Consulta a la BBDD con DataSource*/
-		System.out.println("Vamos a probar a hacer la consulta de cursos por DATASOURCE");
-		
+		/*Consulta a la BBDD con DataSource*/		
 		InitialContext miInitialContext;
 		DataSource miDS;
 		
@@ -63,9 +61,7 @@ public class AltaCursosRequestHandler implements RequestHandler {
 					aux.setImagen(validados.getString("Imagen"));
 					validar.add(aux);
 				}
-			}
-			System.out.println("SALTA EXCEPCION 1");
-			
+			}			
 			validados.close();
 			myStatement.close();
 			conexion.close();

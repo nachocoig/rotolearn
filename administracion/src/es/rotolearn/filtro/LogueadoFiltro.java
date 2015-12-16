@@ -25,16 +25,16 @@ public class LogueadoFiltro implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Entra al filtro de logueado");
+		
 
 		HttpSession session;
 		if(request instanceof HttpServletRequest){
 			session = ((HttpServletRequest) request).getSession();
 			if(session.getAttribute("logueado")!=null){
-				System.out.println("Usuario logueado, puede ver la pagina");
+				
 				chain.doFilter(request, response);
 			}else{
-				System.out.println("Usuario no logueado, no puede ver la pagina");
+				
 				RequestDispatcher redireccion = request.getRequestDispatcher("admin_login.jsp");
 				redireccion.forward(request, response);
 			}

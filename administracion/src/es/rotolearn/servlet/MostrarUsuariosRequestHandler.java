@@ -39,7 +39,6 @@ public class MostrarUsuariosRequestHandler implements RequestHandler {
 		em.getTransaction().begin();
 		ArrayList <Usuario> listaUsuarios = new ArrayList <Usuario> ();
 		try{
-			System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR A TODOS");
 			List <Usuario> aux = null;
 			if(ruta.equals("/veralumn.form")){
 				ruta="admin_listadoalumnos.jsp";
@@ -47,7 +46,6 @@ public class MostrarUsuariosRequestHandler implements RequestHandler {
 			else{
 				aux=em.createQuery("SELECT i FROM Usuario i WHERE i.tipo='profe'").getResultList();
 				ruta="admin_listadoprofesores.jsp";}
-			System.out.println("HE SALIDO DE LA QUERY CON "+ aux.size() +" RESULTADOS");
 			if(aux.size() == 0){
 						request.setAttribute("usuarios","no");    			
 					}

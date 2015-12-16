@@ -34,7 +34,6 @@ public class ListarCursosRequestHandler implements RequestHandler {
 	em.getTransaction().begin();
 	ArrayList <Curso> listaCursos = new ArrayList <Curso> ();
 	try{
-		System.out.println("HAGO LA PRIMERA QUERY PARA BUSCAR A TODOS");
 		List <Curso> aux = null;
 		if(ruta.equals("/listadocursos.form")){
 			ruta="admin_listadocursos.jsp";
@@ -46,7 +45,6 @@ public class ListarCursosRequestHandler implements RequestHandler {
 			aux=em.createQuery("SELECT i FROM Curso i WHERE i.destacado= 'SI'").getResultList();
 			ruta="admin_destacadocursos.jsp";}
 		
-		System.out.println("HE SALIDO DE LA QUERY CON "+ aux.size() +" RESULTADOS");
 		if(aux.size() == 0){
 					request.setAttribute("curso","no");    			
 				}

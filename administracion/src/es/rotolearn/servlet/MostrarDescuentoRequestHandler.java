@@ -41,9 +41,7 @@ public class MostrarDescuentoRequestHandler implements RequestHandler {
 		em.getTransaction().begin();
 		
 		try{
-			//Recojo los cursos del profesor logueado
-			System.out.println("Voy a pillar los cursos validados");
-			
+			//Recojo los cursos del profesor logueado			
 			cursosProfe = em.createQuery("SELECT i FROM Curso i WHERE i.validado='SI'").getResultList();	
 			if(!cursosProfe.isEmpty()){
 				
@@ -59,9 +57,7 @@ public class MostrarDescuentoRequestHandler implements RequestHandler {
 		}
 		
 		try{
-			//Recojo los descuentos existentes
-			System.out.println("Voy a pillar los descuentos existentes");
-			
+			//Recojo los descuentos existentes			
 			promos = em.createQuery("SELECT i FROM Promocion i").getResultList();
 			
 			if(!promos.isEmpty()){
@@ -78,8 +74,6 @@ public class MostrarDescuentoRequestHandler implements RequestHandler {
 		}
 		
 		em.close();
-		request.setAttribute("listaCursos", curso);
-		request.setAttribute("listaDescuentos", descuentos);
 		
 		return ruta;
 	}

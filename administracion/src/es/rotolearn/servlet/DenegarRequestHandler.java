@@ -19,7 +19,6 @@ public class DenegarRequestHandler implements RequestHandler {
 
 	@Override
 	public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Handler denegar received the request");
 		//HAY QUE AÑADIR/MODIFICAR PARA METERLE LA BBDD
 		String ruta = "admin_altacursos.form";
 		String denegar = request.getParameter("denegar");
@@ -35,10 +34,7 @@ public class DenegarRequestHandler implements RequestHandler {
 					Connection conexion = miDS.getConnection();
 
 					Statement myStatement = conexion.createStatement();
-					System.out.println("Antes de la query:    "+denegar);
-					int updateOk = myStatement.executeUpdate("DELETE FROM CURSO WHERE Titulo='"+denegar+"'");
-					System.out.println("EL UPDATE SE HA EJECUTADO: "+updateOk);
-					
+					int updateOk = myStatement.executeUpdate("DELETE FROM CURSO WHERE Titulo='"+denegar+"'");					
 					//existe el nick, comparar contraseñas
 					myStatement.close();
 					conexion.close();				
